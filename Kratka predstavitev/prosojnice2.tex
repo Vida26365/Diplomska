@@ -1,0 +1,102 @@
+\documentclass{beamer}
+
+%------------------------------------------------
+%   PACKAGES
+%------------------------------------------------
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{shadings}
+
+\usepackage{mdframed}
+
+%------------------------------------------------
+%   COLORS & BASIC SETTINGS
+%------------------------------------------------
+
+% Violet background
+\definecolor{myviolet}{RGB}{90,0,150}
+
+% Global text color
+\setbeamercolor{normal text}{fg=white,bg=myviolet}
+
+% Transparent title bar
+\setbeamercolor{frametitle}{bg=none, fg=white}
+
+% Remove navigation symbols
+\setbeamertemplate{navigation symbols}{}
+
+%------------------------------------------------
+%   DEFINE RAINBOW SHADING
+%------------------------------------------------
+% This creates a left→right rainbow gradient
+\pgfdeclarehorizontalshading{rainbowshading}{100bp}{
+    color(0bp)=(red);
+    color(20bp)=(orange);
+    color(40bp)=(yellow);
+    color(60bp)=(green);
+    color(80bp)=(blue);
+    color(100bp)=(violet)
+}
+
+%------------------------------------------------
+%   FRAME BACKGROUND TEMPLATE
+%------------------------------------------------
+
+\usebackgroundtemplate{
+\begin{tikzpicture}[remember picture,overlay]
+
+    % Entire violet background
+    \fill[myviolet] (current page.south west) rectangle (current page.north east);
+
+    % Rainbow border
+    \shade[shading=rainbowshading]
+        (current page.south west) rectangle (current page.north east);
+
+    % Inner rectangle to create border thickness
+    \fill[myviolet]
+        ([xshift=10pt,yshift=10pt]current page.south west)
+        rectangle
+        ([xshift=-10pt,yshift=-10pt]current page.north east);
+
+\end{tikzpicture}
+}
+
+%------------------------------------------------
+%   SPECIAL MATH ENVIRONMENT
+%------------------------------------------------
+
+\newmdenv[
+    backgroundcolor=white,
+    linecolor=black,
+    skipabove=\baselineskip,
+    skipbelow=\baselineskip,
+    innerleftmargin=10pt,
+    innerrightmargin=10pt,
+    innertopmargin=8pt,
+    innerbottommargin=8pt
+]{whitemath}
+
+%------------------------------------------------
+%   DOCUMENT
+%------------------------------------------------
+\begin{document}
+
+\begin{frame}
+    \frametitle{}  % transparent title bar
+
+    \Large This slide has a violet background, white text,  
+    a transparent title bar, and a rainbow gradient border.
+
+    \vspace{1cm}
+
+    Here is the **special math environment**:
+
+    \begin{whitemath}
+        \[
+            \int_0^\infty e^{-x^2}\, dx = \frac{\sqrt{\pi}}{2}
+        \]
+    \end{whitemath}
+
+\end{frame}
+
+\end{document}

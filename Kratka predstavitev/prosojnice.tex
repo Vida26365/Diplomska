@@ -1,0 +1,109 @@
+\documentclass{beamer}
+
+%------------------------------------------------
+%   PACKAGES
+%------------------------------------------------
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{shadings}
+\usepackage[most]{tcolorbox}
+
+%------------------------------------------------
+%   COLORS & TEXT
+%------------------------------------------------
+\definecolor{myviolet}{RGB}{240, 121, 242}
+
+\setbeamercolor{normal text}{fg=black,bg=myviolet}
+\setbeamercolor{frametitle}{bg=none, fg=black}
+\setbeamertemplate{navigation symbols}{}
+
+%------------------------------------------------
+%   RAINBOW SHADING
+%------------------------------------------------
+\pgfdeclarehorizontalshading{rainbowshading}{100bp}{
+    % color(0bp)=(red);
+    % color(40bp)=(orange);
+    % color(80bp)=(yellow);
+    % color(120bp)=(green);
+    % color(160bp)=(blue);
+    % color(200bp)=(violet)
+	color(0bp)=(red);
+    color(20bp)=(orange);
+    color(40bp)=(yellow);
+    color(60bp)=(green);
+    color(80bp)=(blue);
+    color(100bp)=(violet)
+}
+
+%------------------------------------------------
+%   SLIDE BACKGROUND (RAINBOW BORDER)
+%------------------------------------------------
+\usebackgroundtemplate{
+\begin{tikzpicture}[remember picture,overlay]
+
+    \fill[myviolet]
+        (current page.south west) rectangle (current page.north east);
+
+    \shade[shading=rainbowshading]
+        (current page.south west) rectangle (current page.north east);
+
+    \fill[myviolet]
+        ([xshift=4pt,yshift=4pt]current page.south west)
+        rectangle
+        ([xshift=-4pt,yshift=-4pt]current page.north east);
+
+\end{tikzpicture}
+}
+
+%------------------------------------------------
+%   RAINBOW-BORDERED MATH ENVIRONMENT
+%------------------------------------------------
+\tcbset{
+    rainbow math/.style={
+        enhanced,
+        colback=white,
+        coltext=black,
+        arc=6pt,                            % rounded corners
+        outer arc=6pt,
+        boxrule=2pt,
+        opacityback=1,
+        frame code={
+            % draw the rainbow border
+            \shade[shading=rainbowshading, rounded corners=6pt]
+                (frame.south west) rectangle (frame.north east);
+        },
+        interior code={
+            % draw inner white box
+            \fill[white, rounded corners=4pt]
+                (interior.south west) rectangle (interior.north east);
+        },
+        left=10pt, right=10pt, top=8pt, bottom=8pt,
+    }
+}
+
+\newenvironment{whitemath}
+{\begin{tcolorbox}[rainbow math]}
+{\end{tcolorbox}}
+
+%------------------------------------------------
+%   DOCUMENT
+%------------------------------------------------
+\begin{document}
+
+\begin{frame}
+\frametitle{}
+
+\Large
+Here is the aligned, rounded-corner rainbow math box:
+
+\begin{whitemath}
+\[
+    \int_0^\infty e^{-x^2}\,dx = \frac{\sqrt{\pi}}{2},
+    \qquad
+    \nabla \cdot \mathbf{E} = \frac{\rho}{\varepsilon_0}
+\]
+\end{whitemath}
+
+\end{frame}
+
+\end{document}
