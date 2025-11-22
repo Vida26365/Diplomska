@@ -15,10 +15,128 @@
 %   COLORS & TEXT
 %------------------------------------------------
 \definecolor{myviolet}{RGB}{240, 121, 242}
+% \definecolor{lightviolet}{RGB}{255, 200, 255}
+\definecolor{lightviolet}{RGB}{255, 179, 255}
+\definecolor{lighterviolet}{RGB}{252, 220, 252}
+
 
 \setbeamercolor{normal text}{fg=black,bg=myviolet}
-\setbeamercolor{frametitle}{bg=, fg=black}
+
 \setbeamertemplate{navigation symbols}{}
+
+%------------------------------------------------
+%   GLAVNI NASLOV
+%------------------------------------------------
+
+% Rainbow-bordered title box (reuses rainbow math border)
+\tcbset{
+    rainbow title/.style={
+        enhanced,
+        colback=lightviolet,     % background inside the box
+        coltext=black,
+        arc=6pt,
+        outer arc=6pt,
+        boxrule=2pt,
+        opacityback=1,
+        frame code={
+            % draw the rainbow border (same as rainbow math)
+            \shade[shading=rainbowshading, rounded corners=6pt]
+                (frame.south west) rectangle (frame.north east);
+        },
+        interior code={
+            % draw inner light-violet box
+            \fill[lightviolet, rounded corners=4pt]
+                (interior.south west) rectangle (interior.north east);
+        },
+        left=12pt, right=12pt, top=10pt, bottom=10pt,
+    }
+}
+
+% Title page with rainbow-bordered box
+\defbeamertemplate*{title page}{rainbowstyle}{
+    \begin{center}
+        \begin{tcolorbox}[rainbow title]
+            \centering
+            {\ttfamily\bfseries\Huge\inserttitle}
+        \end{tcolorbox}
+
+        \vspace{1em}
+
+        {\large\insertauthor}
+
+        \vspace{0.5em}
+
+        {\small\insertdate}
+    \end{center}
+}
+
+
+
+% \setbeamercolor{frametitle}{bg=lightviolet, fg=black}
+% \setbeamertemplate{frametitle}{
+%     \begin{beamercolorbox}[ht=1.8em,wd=\paperwidth]{frametitle}
+%         \centering
+%         {\ttfamily\bfseries\Large\insertframetitle}
+%     \end{beamercolorbox}
+% }
+%------------------------------------------------
+%   FRAMETITLE
+%------------------------------------------------
+
+\usepackage{tikz}
+\usepackage[most]{tcolorbox}
+
+\makeatletter
+\tcbset{
+    rainbow frametitle/.style={
+        % enhanced,
+        colback=lightviolet,
+        coltext=black,
+        % outer arc=0pt,
+        boxrule=0pt,
+        opacityback=1,
+        left=0pt, right=0pt, top=10pt, bottom=10pt,
+        width=\paperwidth-8pt,
+        frame code={
+        },
+        overlay={
+            % position the box absolutely at the top of the page
+            \path[shift={(current page.north west)}] 
+                (0,0) rectangle (\paperwidth,-\ht\strutbox);
+        }        
+    }
+}
+
+\setbeamertemplate{frametitle}{
+    % use a tcolorbox absolutely positioned
+    \begin{tikzpicture}[remember picture,overlay]
+        \node[anchor=north west, xshift=-1pt, yshift=1pt] at (current page.north west) {
+            \begin{tcolorbox}[rainbow frametitle]
+                \centering
+                {\ttfamily\bfseries\Large\insertframetitle}
+            \end{tcolorbox}
+        };
+    \end{tikzpicture}
+}
+\makeatother
+
+
+
+
+
+% \setbeamertemplate{frametitle}{width={\dimexpr\paperwidth-2\slideinset\relax}}
+
+
+% \setbeamertemplate{frametitle}{%
+%     \noindent\hspace*{\slideinset}% place at inner left edge (do not cover outer border)
+%     \begin{tcolorbox}[rainbow frametitle,width={\dimexpr\paperwidth-2\slideinset\relax}]
+%         	tfamily\bfseries\large\insertframetitle
+%     \end{tcolorbox}
+% }
+
+
+
+
 
 %------------------------------------------------
 %   RAINBOW SHADING
@@ -52,6 +170,8 @@
 \end{tikzpicture}
 }
 
+
+
 %------------------------------------------------
 %   RAINBOW-BORDERED MATH ENVIRONMENT
 %------------------------------------------------
@@ -59,6 +179,7 @@
     rainbow math/.style={
         enhanced,
         colback=white,
+        % colback=lightviolet,
         coltext=black,
         arc=6pt,                            % rounded corners
         outer arc=6pt,
@@ -71,7 +192,7 @@
         },
         interior code={
             % draw inner white box
-            \fill[white, rounded corners=4pt]
+            \fill[lighterviolet, rounded corners=4pt]
                 (interior.south west) rectangle (interior.north east);
         },
         left=10pt, right=10pt, top=8pt, bottom=8pt,
@@ -81,3 +202,5 @@
 \newenvironment{whitemath}
 {\begin{tcolorbox}[rainbow math]}
 {\end{tcolorbox}}
+
+

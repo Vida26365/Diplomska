@@ -1,0 +1,132 @@
+
+
+\begin{frame}{Teorija tipov}
+
+\begin{whitemath}
+\begin{align*}
+    \Gamma &\vdash A \type \\
+    \Gamma &\vdash A \doteq B \type \\
+    \Gamma &\vdash a : A \\
+    \Gamma &\vdash a \doteq b: A
+\end{align*}
+\end{whitemath}
+
+\end{frame}
+\begin{frame}[plain]
+    \begin{whitemath}
+    \begin{prooftree}
+        \AXC{\(A \type\)}
+        \AXC{\(B \type\)}
+        \RL{\(\rightarrow\) form}
+        \BIC{\(A \rightarrow B\)}
+    \end{prooftree}
+    \begin{prooftree}
+        \AXC{\(a:A\)}
+        \AXC{\(b:B\)}
+        \RL{\(\rightarrow \mathcal{I}\)}
+        \BIC{\(\lambda x:A. b : A \rightarrow B\)}
+    \end{prooftree}
+    \begin{prooftree}
+        \AXC{\(f: A \rightarrow B\)}
+        \AXC{\(a:A\)}
+        \RL{\(\rightarrow \mathcal{E}\)}
+        \BIC{\(f~a : B\)}
+    \end{prooftree}
+    \end{whitemath}
+    \onslide<2->{
+    \begin{whitemath}
+        \begin{prooftree}
+            \AXC{\(\onslide<3>{\Gamma \vdash} A \type\)}
+            \AXC{\(\onslide<3>{\Gamma \vdash} B \type\)}
+            \RL{\(K\) form}
+            \BIC{\(\onslide<3>{\Gamma \vdash} C_1\ A\ |\ C_2\ B \type\)}
+        \end{prooftree}
+        % \begin{prooftree}
+            
+            \begin{equation*}
+                \AXC{\(\onslide<3>{\Gamma \vdash} a: A\)}
+                \RL{\(K \mc{I}\)}
+                \UIC{\(\onslide<3>{\Gamma \vdash} C\ a : K\)}
+                \DP
+                \qquad
+                \AXC{\(\onslide<3>{\Gamma \vdash} b:B\)}
+                \RL{\(K \mc{I}\)}
+                \UIC{\(\onslide<3>{\Gamma \vdash} C\ b : K\)}
+                \DP
+            \end{equation*}
+        % \end{prooftree}
+        \begin{prooftree}
+            \AXC{\(\onslide<3>{\Gamma \vdash} u:K\)}
+            \AXC{\(\onslide<3>{\Gamma,}~a:A \vdash v:V\)}
+            \AXC{\(\onslide<3>{\Gamma,}~b:B \vdash w:V\)}
+            \RL{\(K\mc{E}\)}
+            \TIC{\(\onslide<3>{\Gamma \vdash} (\cd{case}\ u\ \cd{of}\ C_1 a \rightarrow v\ |\ C_2\ b \rightarrow w) : V\)}
+        \end{prooftree}}
+    \end{whitemath}
+\end{frame}
+
+
+\begin{frame}{Primeri}
+    \begin{whitemath}
+        \begin{prooftree}
+            \AXC{\(\cdot\)}
+            \RL{\cd{Bool}\ \text{form}}
+            \UIC{\cd{Bool} \type}
+        \end{prooftree}
+        \begin{align*}
+            \AXC{\(\cdot\)}
+            \RL{\(\cd{Bool}\ \mc{I}_1\)}
+            \UIC{\cd{True} : \cd{Bool}}
+            \DP
+            \qquad
+            \AXC{\(\cdot\)}
+            \RL{\(\cd{Bool}\ \mc{I}_2\)}
+            \UIC{\cd{False} : \cd{Bool}}
+            \DP
+        \end{align*}
+    \end{whitemath}
+
+    \onslide<2->{\begin{whitemath}
+        
+        \begin{prooftree}
+            \AXC{\(A \type\)}
+            \UIC{\(A\ \cd{List} \type\)}
+        \end{prooftree}
+        \begin{align*}
+            \AXC{\(A \type\)}
+            \UIC{\(\cd{Nil} : A\ \cd{List}\)}
+            \DP
+            \qquad
+            \AXC{\(A \type\)}
+            \UIC{\(\cd{Cons} : A \rightarrow A\ \cd{List} \rightarrow A\ \cd{List}\)}
+            \DP
+        \end{align*}
+    \end{whitemath}}
+\end{frame}
+
+
+\begin{frame}{Pravilo šibenja \only<2>{in pravilo rezanja}}
+    \begin{whitemath}
+        \begin{align*}
+            \AXC{\(\Gamma \vdash \Delta\)}
+            \RL{\(\mc{LW}\)}
+            \UIC{\(\Gamma,\ A \vdash \Delta\)}
+            \DP
+            \qquad
+            \AXC{\(\Gamma \vdash \Delta\)}
+            \RL{\(\mc{RW}\)}
+            \UIC{\(\Gamma \vdash \Delta,\ A\)}
+            \DP
+        \end{align*}
+    \end{whitemath}
+
+    \onslide<2->{\begin{whitemath}
+        \begin{align*}
+            \AXC{\(\Gamma \vdash A\)}
+            \AXC{\(\Delta, A \vdash B\)}
+            \RL{cut}
+            \BIC{\(\Gamma, \Delta \vdash B\)}
+            \DP
+        \end{align*}
+    \end{whitemath}}
+\end{frame}
