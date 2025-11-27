@@ -1,14 +1,62 @@
 
 
+
+
+
+
+
+\begin{frame}[plain]
+    % \includegraphics{Posnetek zaslona 2025-11-27 093812.png}
+    \begin{whitemath}
+        \begin{align*}
+            \AXC{\(\cdot\)}
+            \UIC{\(\cd{edge}(1, 2)\)}
+            \DP
+            \quad
+            \AXC{\(\cdot\)}
+            \UIC{\(\cd{edge}(1, 3)\)}
+            \DP
+            \quad
+            \AXC{\(\cdot\)}
+            \UIC{\(\cd{edge}(1, 4)\)}
+            \DP \\
+            \AXC{\(\cdot\)}
+            \UIC{\(\cd{edge}(2, 5)\)}
+            \DP
+            \quad
+            \AXC{\(\cdot\)}
+            \UIC{\(\cd{edge}(3, 4)\)}
+            \DP
+            \quad
+            \AXC{\(\cdot\)}
+            \UIC{\(\cd{edge}(3, 5)\)}
+            \DP
+        \end{align*}
+    \end{whitemath}
+    
+    \begin{whitemath}
+        
+        \begin{prooftree}
+            \AXC{\(\cd{edge}(x, y)\)}
+            \UIC{\(\cd{edge}(y, x)\)}
+        \end{prooftree}
+    \end{whitemath}
+\end{frame}
+
 \begin{frame}{Teorija tipov}
 
 \begin{whitemath}
-\begin{align*}
-    \Gamma &\vdash A \type \\
-    \Gamma &\vdash A \doteq B \type \\
-    \Gamma &\vdash a : A \\
-    \Gamma &\vdash a \doteq b: A
-\end{align*}
+    
+    \begin{align*}
+        \cd{lookup} &: I_x \rightarrow Arr \rightarrow Val \\
+        \cd{update} &: I_x \rightarrow Val \rightarrow Arr \rightarrow Arr
+    \end{align*}
+% \begin{align*}
+%     \Gamma &\vdash A \type \\
+%     \Gamma &\vdash A \doteq B \type \\
+%     \Gamma &\vdash a : A \\
+%     \Gamma &\vdash a \doteq b: A
+% \end{align*}
 \end{whitemath}
 
 \end{frame}
