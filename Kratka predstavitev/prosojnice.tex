@@ -40,37 +40,29 @@
 \frame{\maketitle}
 
 \begin{frame}{Naravna dedukcija}
+    
+\end{frame}
+
+\begin{frame}{Naravna dedukcija}
     \begin{whitemath}
         \begin{center}
-            \AXC{\(\G \vdash A\)}
-            \AXC{\(\G \vdash B\)}
+            \AXC{\(\os{6-}{\textcolor<6>{vijolcna}{\G} \vdash} A\)}
+            \AXC{\(\os{6-}{\textcolor<6>{vijolcna}{\G} \vdash} B\)}
             \RL{\(\land\)-intro}
-            \BIC{\(\G \vdash A \land B\)}
+            \BIC{\(\os{6-}{\textcolor<6>{vijolcna}{\G} \vdash} A \land B\)}
             \DP\\
-            \os{2-}{\AXC{\(\G \vdash A \land B\)}
+            \os{2-}{\AXC{\(\os{6-}{\textcolor<6>{vijolcna}{\G} \vdash} A \land B\)}
             \RL{\(\land_1\)-elim}
-            \UIC{\(\G \vdash A\)}
+            \UIC{\(\os{6-}{\textcolor<6>{vijolcna}{\G} \vdash} A\)}
             \DP
             \quad
-            \AXC{\(\G \vdash A \land B\)}
+            \AXC{\(\os{6-}{\textcolor<6>{vijolcna}{\G} \vdash} A \land B\)}
             \RL{\(\land_2\)-elim}
-            \UIC{\(\G \vdash B\)}
+            \UIC{\(\os{6-}{\textcolor<6>{vijolcna}{\G} \vdash} B\)}
             \DP}
         \end{center}
     \end{whitemath}
     \os{3-}{\begin{whitemath}
-        % \begin{prooftree}
-        %     \AXC{\(\G, A \vdash B\)}
-        %     \RL{\(\Rightarrow\)-intro}
-        %     \UIC{\(\G \vdash A \Rightarrow B\)}
-        % \end{prooftree}
-        
-        % \begin{prooftree}
-        %     \AXC{\(\G \vdash A \Rightarrow B\)}
-        %     \AXC{\(\G \vdash A\)}
-        %     \RL{\(\Rightarrow\)-elim}
-        %     \BIC{\(\G \vdash B\)}
-        % \end{prooftree}
         \begin{center}
             \os{5-}{\AXC{\(\os{6-}{{\textcolor<6>{vijolcna}\G},} A \vdash B\)}
             \RL{\(\Rightarrow\)-intro}
@@ -92,6 +84,10 @@
             \UIC{\(\G \vdash A\)}
         \end{prooftree}
     \end{whitemath}}
+\end{frame}
+
+
+\begin{frame}{Linearna logika}
 \end{frame}
 
 \begin{frame}{Linearna logika}
@@ -120,26 +116,31 @@
     \os{5}{}
 \end{frame}
 
+
 \begin{frame}{Curry-Howardov izomorfizem}
-    \begin{whitemath}
+    
+\end{frame}
+
+\begin{frame}{Curry-Howardov izomorfizem}
+    \os{1-}{\begin{whitemath}
         \begin{prooftree}
-            \AXC{\(x: A \in \G\)}
+            \AXC{\(\textcolor<4->{vijolcna}{x}: A \in \G\)}
             \RL{var}
-            \UIC{\(\G \vdash x:A\)}
+            \UIC{\(\G \vdash \textcolor<4->{vijolcna}{x}:A\)}
         \end{prooftree}
-    \end{whitemath}
+    \end{whitemath}}
     
     \os{2-}{\begin{whitemath}
         \begin{prooftree}
-        \AXC{\(\G, \textcolor<2,3>{vijolcna}{x}:A \vdash \textcolor<2,3>{vijolcna}{M}:B\)}
+        \AXC{\(\G, \textcolor<4->{vijolcna}{x}:A \vdash \textcolor<4->{vijolcna}{M}:B\)}
         \RL{\(\rightarrow\)-intro}
-        \UIC{\(\G \vdash \textcolor<2-3>{vijolcna}{(x \mapsto M)}: A \rightarrow B\)}           
+        \UIC{\(\G \vdash \textcolor<4->{vijolcna}{(x \mapsto M)}: A \rightarrow B\)}           
         \end{prooftree}
         \os{3-}{\begin{prooftree}
-            \AXC{\(\G \vdash \textcolor<3>{vijolcna}{M}: A \rightarrow B\)}
-            \AXC{\(\G \vdash {\textcolor<3>{vijolcna}N}: A\)}
+            \AXC{\(\G \vdash \textcolor<4->{vijolcna}{M}: A \rightarrow B\)}
+            \AXC{\(\G \vdash {\textcolor<4->{vijolcna}N}: A\)}
             \RL{\(\rightarrow\)-elim}
-            \BIC{\(\G \vdash \textcolor<3>{vijolcna}{M N} : B\)}
+            \BIC{\(\G \vdash \textcolor<4->{vijolcna}{M N} : B\)}
         \end{prooftree}}       
     \end{whitemath}}
     \os{4}{}
