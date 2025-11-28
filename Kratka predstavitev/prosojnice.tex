@@ -1,10 +1,13 @@
 \documentclass{beamer}
 \usepackage{bussproofs}
+\usepackage{xcolor}
 
 
 %------------------------------------------------
 %   MOJE DEFINICIJE
 %------------------------------------------------
+
+\definecolor{vijolcna}{RGB}{229, 72, 240}
 
 \newcommand{\type}{\text{ type}}
 \newcommand{\mc}[1]{\mathcal{#1}}
@@ -36,171 +39,137 @@
 
 \frame{\maketitle}
 
-\begin{frame}{Klasična logika}
+\begin{frame}{Naravna dedukcija}
     \begin{whitemath}
         \begin{center}
-            \AXC{\(\G \vdash P\)}
-            \AXC{\(\G \vdash Q\)}
+            \AXC{\(\G \vdash A\)}
+            \AXC{\(\G \vdash B\)}
             \RL{\(\land\)-intro}
-            \BIC{\(\G \vdash P \land Q\)}
+            \BIC{\(\G \vdash A \land B\)}
             \DP\\
-            \AXC{\(\G \vdash P \land Q\)}
+            \os{2-}{\AXC{\(\G \vdash A \land B\)}
             \RL{\(\land_1\)-elim}
-            \UIC{\(\G \vdash P\)}
+            \UIC{\(\G \vdash A\)}
             \DP
             \quad
-            \AXC{\(G \vdash P \land Q\)}
+            \AXC{\(\G \vdash A \land B\)}
             \RL{\(\land_2\)-elim}
-            \UIC{\(\G \vdash Q\)}
-            \DP
+            \UIC{\(\G \vdash B\)}
+            \DP}
         \end{center}
     \end{whitemath}
-    \begin{whitemath}
+    \os{3-}{\begin{whitemath}
+        % \begin{prooftree}
+        %     \AXC{\(\G, A \vdash B\)}
+        %     \RL{\(\Rightarrow\)-intro}
+        %     \UIC{\(\G \vdash A \Rightarrow B\)}
+        % \end{prooftree}
+        
+        % \begin{prooftree}
+        %     \AXC{\(\G \vdash A \Rightarrow B\)}
+        %     \AXC{\(\G \vdash A\)}
+        %     \RL{\(\Rightarrow\)-elim}
+        %     \BIC{\(\G \vdash B\)}
+        % \end{prooftree}
         \begin{center}
-            \AXC{\(\G, P \vdash Q\)}
+            \os{5-}{\AXC{\(\os{6-}{{\textcolor<6>{vijolcna}\G},} A \vdash B\)}
             \RL{\(\Rightarrow\)-intro}
-            \UIC{\(\G \vdash P \Rightarrow Q\)}
-            \DP
+            \UIC{\(\os{6-}{{\textcolor<6>{vijolcna}\G} \vdash} A \Rightarrow B\)}
+            \DP}
             \quad
-            \AXC{\(\G \vdash P \Rightarrow Q\)}
-            \AXC{\(\G \vdash P\)}
+            \os{4-}{\AXC{\(\os{6-}{{\textcolor<6>{vijolcna}\G} \vdash} A \Rightarrow B\)}
+            \AXC{\(\os{6-}{{\textcolor<6>{vijolcna}\G} \vdash} A\)}
             \RL{\(\Rightarrow\)-elim}
-            \BIC{\(\G \vdash Q\)}
-            \DP
+            \BIC{\(\os{6-}{{\textcolor<6>{vijolcna}\G} \vdash} B\)}
+            \DP}
         \end{center}
-    \end{whitemath}
+    \end{whitemath}}
     
-    \begin{whitemath}
+    \os{7-}{\begin{whitemath}
         \begin{prooftree}
-            \AXC{\(P \in \G\)}
-            \UIC{\(\G \vdash P\)}
+            \AXC{\(A \in \G\)}
+            \RL{hip}
+            \UIC{\(\G \vdash A\)}
         \end{prooftree}
-    \end{whitemath}
-\end{frame}
-
-
-\begin{frame}
-    \begin{whitemath}
-        \begin{prooftree}
-            \AXC{\(P \in P\)}
-            \UIC{\(P \vdash P\)}
-            \AXC{\(P \in P\)}
-            \UIC{\(P \vdash P\)}
-            \BIC{\(P \vdash P \land P\)}
-        \end{prooftree}
-    \end{whitemath}
-    Kako se naredi kill()?
+    \end{whitemath}}
 \end{frame}
 
 \begin{frame}{Linearna logika}
-    \begin{whitemath}
-        \begin{center}
-            \AXC{\(\G \vdash P\)}
-            \AXC{\(\D \vdash Q\)}
-            \RL{\(\land\)-intro}
-            \BIC{\(\G, \D \vdash P \land Q\)}
-            \DP\\
-            \AXC{\(\G \vdash P \land Q\)}
-            \RL{\(\land_1\)-elim}
-            \UIC{\(\G \vdash P\)}
-            \DP
-            \quad
-            \AXC{\(\G \vdash P \land Q\)}
-            \RL{\(\land_2\)-elim}
-            \UIC{\(\G \vdash Q\)}
-            \DP
-        \end{center}
-    \end{whitemath}
-    \begin{whitemath}
-        \begin{center}
-            \AXC{\(\G, P \vdash Q\)}
-            \RL{\(\Rightarrow\)-intro}
-            \UIC{\(\G \vdash P \Rightarrow Q\)}
-            \DP
-            \quad
-            \AXC{\(\G \vdash P \Rightarrow Q\)}
-            \AXC{\(\D \vdash P\)}
-            \RL{\(\Rightarrow\)-elim}
-            \BIC{\(\G \vdash Q\)}
-            \DP
-        \end{center}
+
+    \begin{whitemath}     
+        \begin{prooftree}
+            \AXC{\(\)}
+            \RL{hip}
+            \UIC{\(\only<1>{\G,} A \vdash A\)}
+        \end{prooftree}
     \end{whitemath}
     
-    \begin{whitemath}
-        
+    \os{3-}{\begin{whitemath}
         \begin{prooftree}
-            \AXC{\(P \in \G\)}
-            \UIC{\(\G \vdash P\)}
+            \AXC{\(\G, A \vdash B\)}
+            \RL{\(\multimap\)-intro}
+            \UIC{\(\G \vdash A \multimap B\)}
         \end{prooftree}
-    \end{whitemath}
+        \os{4-}{\begin{prooftree}
+            \AXC{\(\G \vdash A \multimap B\)}
+            \AXC{\({\textcolor<4>{vijolcna}{\D}} \vdash A\)}
+            \RL{\(\multimap\)-elim}
+            \BIC{\(\G, {\textcolor<4>{vijolcna}{\D}} \vdash B\)}
+        \end{prooftree}}
+    \end{whitemath}}
+    \os{5}{}
 \end{frame}
 
-\begin{frame}
-    Klasična logika:
+\begin{frame}{Curry-Howardov izomorfizem}
     \begin{whitemath}
-        \begin{prooftree}
-            \AXC{\(P \in P\)}
-            \UIC{\(P \vdash P\)}
-            \AXC{\(P \in P\)}
-            \UIC{\(P \vdash P\)}
-            \BIC{\(P \vdash P \land P\)}
-        \end{prooftree}
-    \end{whitemath}
-    %
-    Linearna logika:
-    \begin{whitemath}
-        \begin{prooftree}
-            \AXC{\(P \in P\)}
-            \UIC{\(P \vdash P\)}
-            \AXC{\(P \in P\)}
-            \UIC{\(P \vdash P\)}
-            \BIC{\(P, P \vdash P \land P\)}
-        \end{prooftree}
-    \end{whitemath}
-\end{frame}
-
-
-\begin{frame}
-    
-    \begin{whitemath}
-        
         \begin{prooftree}
             \AXC{\(x: A \in \G\)}
+            \RL{var}
             \UIC{\(\G \vdash x:A\)}
         \end{prooftree}
     \end{whitemath}
-    \begin{whitemath}
-        \begin{center}
-            \AXC{\(\G \vdash M_1 : A_1\)}
-            \AXC{\(\G \vdash M_2 : A_2\)}
-            \BIC{\(\G \vdash (M_1, M_2) : A_1 \times A_2\)}
-            \DP\\\ \\
-            \AXC{\(\G \vdash M: A_1 \times A_2\)}
-            \UIC{\(\G \vdash fst(M): A_1\)}
-            \DP
-            \qquad
-            \AXC{\(\G \vdash M: A_1 \times A_2\)}
-            \UIC{\(\G \vdash snd(M): A_2\)}
-            \DP
-        \end{center}
-    \end{whitemath}
-    \begin{whitemath}
-    \begin{center}
-        \AXC{\(\G, x:A \vdash M:B\)}
-        \UIC{\(\G \vdash (x \mapsto M): A \rightarrow B\)}
-        \DP\\\ \\
-        \AXC{\(\G M_1: A \rightarrow B\)}
-        \AXC{\(\G \vdash M_2: A\)}
-        \BIC{\(\G \vdash M_1 M_2 : B\)}
-        \DP
-    \end{center}
-        
-    \end{whitemath}
+    
+    \os{2-}{\begin{whitemath}
+        \begin{prooftree}
+        \AXC{\(\G, \textcolor<2,3>{vijolcna}{x}:A \vdash \textcolor<2,3>{vijolcna}{M}:B\)}
+        \RL{\(\rightarrow\)-intro}
+        \UIC{\(\G \vdash \textcolor<2-3>{vijolcna}{(x \mapsto M)}: A \rightarrow B\)}           
+        \end{prooftree}
+        \os{3-}{\begin{prooftree}
+            \AXC{\(\G \vdash \textcolor<3>{vijolcna}{M}: A \rightarrow B\)}
+            \AXC{\(\G \vdash {\textcolor<3>{vijolcna}N}: A\)}
+            \RL{\(\rightarrow\)-elim}
+            \BIC{\(\G \vdash \textcolor<3>{vijolcna}{M N} : B\)}
+        \end{prooftree}}       
+    \end{whitemath}}
+    \os{4}{}
 \end{frame}
 
-% \section{Teorija tipov}
-% \input{Navadni_tipi.tex}
+\begin{frame}{Linearni tipi}
+    \begin{whitemath}
+        
+        \begin{prooftree}
+            \AXC{}
+            \RL{var}
+            \UIC{\(x:A \vdash x:A\)}
+        \end{prooftree}
+    \end{whitemath}
+    %
+    \begin{whitemath}
+        \begin{prooftree}
+        \AXC{\(\G, x:A \vdash M:B\)}
+        \RL{\(\multimap\)-intro}
+        \UIC{\(\G \vdash (x \mapsto M): A \multimap B\)}           
+        \end{prooftree}
+        \begin{prooftree}
+            \AXC{\(\G \vdash M: A \multimap B\)}
+            \AXC{\(\textcolor<1>{vijolcna}{\D} \vdash N: A\)}
+            \RL{\(\multimap\)-elim}
+            \BIC{\(\G, \textcolor<1>{vijolcna}{\D} \vdash M N : B\)}
+        \end{prooftree}       
+    \end{whitemath}
+    \os{2}{}
+\end{frame}
 
-\section{Linearni tipi}
 
 \end{document}

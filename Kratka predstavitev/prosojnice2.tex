@@ -1,0 +1,231 @@
+\documentclass{beamer}
+\usepackage{bussproofs}
+
+
+%------------------------------------------------
+%   MOJE DEFINICIJE
+%------------------------------------------------
+
+\newcommand{\type}{\text{ type}}
+\newcommand{\mc}[1]{\mathcal{#1}}
+\newcommand{\cd}[1]{\texttt{#1}}
+\newcommand{\G}{\Gamma}
+\newcommand{\D}{\Delta}
+\newcommand{\os}[2]{\onslide<#1>{#2}}
+
+\newcommand{\AXC}[1]{\AxiomC{#1}}
+\newcommand{\UIC}[1]{\UnaryInfC{#1}}
+\newcommand{\BIC}[1]{\BinaryInfC{#1}}
+\newcommand{\TIC}[1]{\TrinaryInfC{#1}}
+\newcommand{\RL}[1]{\RightLabel{#1}}
+\newcommand{\DP}{\DisplayProof}
+
+
+\input{moj_stil.tex}
+
+\title{Linearni tipi}
+\author{Vida Mlinar}
+\institute[FMF]{Fakulteta za matematiko in fiziko}
+\date{}
+
+
+%------------------------------------------------
+%   DOCUMENT
+%------------------------------------------------
+\begin{document}
+
+\frame{\maketitle}
+
+\begin{frame}{Klasična logika}
+    \begin{whitemath}
+        \begin{center}
+            \AXC{\(\G \vdash P\)}
+            \AXC{\(\G \vdash Q\)}
+            \RL{\(\land\)-intro}
+            \BIC{\(\G \vdash P \land Q\)}
+            \DP\\
+            \os{2-}{\AXC{\(\G \vdash P \land Q\)}
+            \RL{\(\land_1\)-elim}
+            \UIC{\(\G \vdash P\)}
+            \DP}
+            \quad
+            \os{3-}{\AXC{\(G \vdash P \land Q\)}
+            \RL{\(\land_2\)-elim}
+            \UIC{\(\G \vdash Q\)}
+            \DP}
+        \end{center}
+    \end{whitemath}
+    \os{4-}{\begin{whitemath}
+        \begin{center}
+            \os{6-}{\AXC{\(\G, P \vdash Q\)}
+            \RL{\(\Rightarrow\)-intro}
+            \UIC{\(\G \vdash P \Rightarrow Q\)}
+            \DP}
+            \quad
+            \os{5-}{\AXC{\(\G \vdash P \Rightarrow Q\)}
+            \AXC{\(\G \vdash P\)}
+            \RL{\(\Rightarrow\)-elim}
+            \BIC{\(\G \vdash Q\)}
+            \DP}
+        \end{center}
+    \end{whitemath}}
+    
+    \begin{whitemath}
+        \begin{prooftree}
+            \AXC{\(P \in \G\)}
+            \UIC{\(\G \vdash P\)}
+        \end{prooftree}
+    \end{whitemath}
+\end{frame}
+
+
+\begin{frame}
+    \begin{whitemath}
+        \begin{center}
+            \AXC{}
+            \UIC{\(P \in P\)}
+            \UIC{\(P \vdash P\)}
+            \AXC{}
+            \UIC{\(P \in P\)}
+            \UIC{\(P \vdash P\)}
+            \BIC{\(P \vdash P \land P\)}
+            \DP
+            {\huge\(\rightsquigarrow\)}
+            \AXC{}
+            \UIC{\(P \vdash P \land P\)}
+            \DP
+        \end{center}
+            
+    
+    \end{whitemath}
+    
+    \begin{whitemath}
+        
+        \begin{center}
+            \AXC{}
+            \UIC{\(A \in \G \cup A\)}
+            \UIC{\(\G, A \vdash A\)}
+            \AXC{\(\G \vdash B\)}
+            \BIC{\(\G, A \vdash A \land B\)}
+            \UIC{\(\G, A \vdash B\)}
+            \DP
+            {\huge\(\rightsquigarrow\)}
+            \AXC{\(\G \vdash B\)}
+            \UIC{\(\G, A \vdash B\)}
+            \DP
+        \end{center}
+    \end{whitemath}
+\end{frame}
+
+% \begin{frame}{Linearna logika}
+%     \begin{whitemath}
+%         \begin{center}
+%             \AXC{\(\G \vdash P\)}
+%             \AXC{\(\D \vdash Q\)}
+%             \RL{\(\land\)-intro}
+%             \BIC{\(\G, \D \vdash P \land Q\)}
+%             \DP\\
+%             \AXC{\(\G \vdash P \land Q\)}
+%             \RL{\(\land_1\)-elim}
+%             \UIC{\(\G \vdash P\)}
+%             \DP
+%             \quad
+%             \AXC{\(\G \vdash P \land Q\)}
+%             \RL{\(\land_2\)-elim}
+%             \UIC{\(\G \vdash Q\)}
+%             \DP
+%         \end{center}
+%     \end{whitemath}
+%     \begin{whitemath}
+%         \begin{center}
+%             \AXC{\(\G, P \vdash Q\)}
+%             \RL{\(\Rightarrow\)-intro}
+%             \UIC{\(\G \vdash P \Rightarrow Q\)}
+%             \DP
+%             \quad
+%             \AXC{\(\G \vdash P \Rightarrow Q\)}
+%             \AXC{\(\D \vdash P\)}
+%             \RL{\(\Rightarrow\)-elim}
+%             \BIC{\(\G \vdash Q\)}
+%             \DP
+%         \end{center}
+%     \end{whitemath}
+    
+%     \begin{whitemath}
+        
+%         \begin{prooftree}
+%             \AXC{\(P \in \G\)}
+%             \UIC{\(\G \vdash P\)}
+%         \end{prooftree}
+%     \end{whitemath}
+% \end{frame}
+
+% \begin{frame}
+%     Klasična logika:
+%     \begin{whitemath}
+%         \begin{prooftree}
+%             \AXC{\(P \in P\)}
+%             \UIC{\(P \vdash P\)}
+%             \AXC{\(P \in P\)}
+%             \UIC{\(P \vdash P\)}
+%             \BIC{\(P \vdash P \land P\)}
+%         \end{prooftree}
+%     \end{whitemath}
+%     %
+%     Linearna logika:
+%     \begin{whitemath}
+%         \begin{prooftree}
+%             \AXC{\(P \in P\)}
+%             \UIC{\(P \vdash P\)}
+%             \AXC{\(P \in P\)}
+%             \UIC{\(P \vdash P\)}
+%             \BIC{\(P, P \vdash P \land P\)}
+%         \end{prooftree}
+%     \end{whitemath}
+% \end{frame}
+
+
+\begin{frame}
+    
+    \begin{whitemath}
+        
+        \begin{prooftree}
+            \AXC{\(x: A \in \G\)}
+            \UIC{\(\G \vdash x:A\)}
+        \end{prooftree}
+    \end{whitemath}
+    \begin{whitemath}
+        \begin{center}
+            \AXC{\(\G \vdash M_1 : A_1\)}
+            \AXC{\(\G \vdash M_2 : A_2\)}
+            \BIC{\(\G \vdash (M_1, M_2) : A_1 \times A_2\)}
+            \DP\\\ \\
+            \AXC{\(\G \vdash M: A_1 \times A_2\)}
+            \UIC{\(\G \vdash fst(M): A_1\)}
+            \DP
+            \qquad
+            \AXC{\(\G \vdash M: A_1 \times A_2\)}
+            \UIC{\(\G \vdash snd(M): A_2\)}
+            \DP
+        \end{center}
+    \end{whitemath}
+    \begin{whitemath}
+    \begin{center}
+        \AXC{\(\G, x:A \vdash M:B\)}
+        \UIC{\(\G \vdash (x \mapsto M): A \rightarrow B\)}
+        \DP\\\ \\
+        \AXC{\(\G M_1: A \rightarrow B\)}
+        \AXC{\(\G \vdash M_2: A\)}
+        \BIC{\(\G \vdash M_1 M_2 : B\)}
+        \DP
+    \end{center}
+        
+    \end{whitemath}
+\end{frame}
+
+% \section{Teorija tipov}
+% \input{Navadni_tipi.tex}
+
+\section{Linearni tipi}
+
+\end{document}
