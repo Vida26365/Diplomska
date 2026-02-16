@@ -9,17 +9,25 @@ Notacija je zelo podobna, kot ta ki smo jo obravnavali v prejšnjem poglavju. Sp
         \RL{\(\land I\).} %\mathcal{I}
         \BIC{\(\G \vdash A \land B\) \tru}
     \end{bprooftree}
-    \qquad&
+    \qquad
     \begin{bprooftree}
         \AXC{\(\G \vdash a:A\)}
         \AXC{\(\G \vdash b:B\)}
         \RL{\(\times I\).}
         \BIC{\(\G \vdash (a,b): A \times B\)}
     \end{bprooftree}
-    \\\\
+\end{align*}
+
+\begin{align*}
     \begin{bprooftree}
         \AXC{\(A \land B\) \tru}
         \RL{\(\land E_L\)}
+        \UIC{\(A\) \tru}
+    \end{bprooftree}
+    \qquad&
+     \begin{bprooftree}
+        \AXC{\(A \land B\) \tru}
+        \RL{\(\land E_D\)}
         \UIC{\(A\) \tru}
     \end{bprooftree}
     \qquad&
@@ -28,16 +36,124 @@ Notacija je zelo podobna, kot ta ki smo jo obravnavali v prejšnjem poglavju. Sp
         \RL{\(\times E_1\)}
         \UIC{\(fst(x):A\)}
     \end{bprooftree}
-    \\\\
-     \begin{bprooftree}
-        \AXC{\(A \land B\) \tru}
-        \RL{\(\land E_D\)}
-        \UIC{\(A\) \tru}
-    \end{bprooftree}
     \qquad&
      \begin{bprooftree}
         \AXC{\(x: A \times B\)}
         \RL{\(\times E_2\)}
         \UIC{\(snd(x) : A\)}
     \end{bprooftree}
+\end{align*}
+\begin{align*}
+    \begin{bprooftree}
+        \AXC{\(\)}
+        \RL{\(u\)}
+        \UIC{\(A\) \tru}
+        \noLine
+        \UIC{\(\vdots\)}
+        \noLine
+        \UIC{\(B\) \tru}
+        \RL{\(\Rightarrow I^u\)}
+        \UIC{\(A \implies B\) \tru.}
+    \end{bprooftree}
+    \qquad&
+    \begin{bprooftree}
+        \AXC{\(\)}
+        \RL{\(u\)}
+        \UIC{\(a: A\)}
+        \noLine
+        \UIC{\(\vdots\)}
+        \noLine
+        \UIC{\(b: B\)}
+        \RL{\(\rightarrow I^u\)}
+        \UIC{\(f: A \rightarrow B\).}
+    \end{bprooftree}    
+    \\\\
+    \begin{bprooftree}
+        \AXC{\(A \implies B\) \tru}
+        \AXC{\(A\) \tru}
+        \RL{\(\Rightarrow E\)}
+        \BIC{\(B\) \tru}
+    \end{bprooftree}
+    \qquad&
+    \begin{bprooftree}
+        \AXC{\(f: A \rightarrow B\)}
+        \AXC{\(a: A\)}
+        \RL{\(\rightarrow E\)}
+        \BIC{\(f(a) : B\)}
+\end{bprooftree}
+\end{align*}
+
+% Disjunkcija
+\begin{align*}
+    \begin{bprooftree}
+        \AXC{\(A\) \tru}
+        \RL{\(\lor I_L\)}
+        \UIC{\(A \lor B\) \tru}
+    \end{bprooftree}
+    \qquad&
+    \begin{bprooftree}
+        \AXC{\(B\) \tru}
+        \RL{\(\lor I_D\)}
+        \UIC{\(A \lor B\) \tru}
+    \end{bprooftree}
+    \qquad&
+    %
+    % TODO: vsotni tip
+    \begin{bprooftree}
+        \AXC{\(a: A\)}
+        \RL{\(\lor I_L\)}
+        \UIC{\(A \lor B\)}
+    \end{bprooftree}
+    \qquad&
+    \begin{bprooftree}
+        \AXC{\(B\)}
+        \RL{\(\lor I_D\)}
+        \UIC{\(A \lor B\)}
+    \end{bprooftree}
+\end{align*}
+
+\begin{align*}
+    \begin{bprooftree}
+    \AXC{\(A \lor B\)}
+%
+    \AXC{}
+    \RL{\(u\)}
+    \UIC{\(A\) \tru}
+    \noLine
+    \UIC{\(\vdots\)}
+    \noLine
+    \UIC{\(C\) \tru}
+%
+    \AXC{}
+    \RL{\(w\)}
+    \UIC{\(B\) \tru}
+    \noLine
+    \UIC{\(\vdots\)}
+    \noLine
+    \UIC{\(C\) \tru}
+    \RL{\(\lor E^{u, w}\) }
+    \TIC{\(C\) \tru}
+\end{bprooftree}
+\qquad&
+\begin{bprooftree}
+    \AXC{\(A \lor B\)}
+%
+    \AXC{}
+    \RL{\(u\)}
+    \UIC{\(A\)}
+    \noLine
+    \UIC{\(\vdots\)}
+    \noLine
+    \UIC{\(C\)}
+%
+    \AXC{}
+    \RL{\(w\)}
+    \UIC{\(B\)}
+    \noLine
+    \UIC{\(\vdots\)}
+    \noLine
+    \UIC{\(C\)}
+    \RL{\(\lor E^{u, w}\) }
+    \TIC{\(C\)}
+\end{bprooftree}
 \end{align*}
