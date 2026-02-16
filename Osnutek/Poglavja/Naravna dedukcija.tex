@@ -1,0 +1,211 @@
+V tem poglavju bomo najprej predstavili pravila sklepanja na katerih temelji naravna dedukcija oziroma ``standardna'' logika in s tem bomo tudi predstavili notacijo, ki bo uporabljena v tem diplomskem delu.
+
+\pravilo{Konjunkcija} 
+Pravilo vpeljave za konjunkcijo pravi, če sta izjavi \(A\) in \(B\) res, potem je tudi izjava \(A\) in \(B\) res. To lahko zapišemo kot
+%
+\begin{prooftree}
+    \AXC{\(A\) \tru}
+    \AXC{\(B\) \tru}
+    \RL{\(\land I\).} %\mathcal{I}
+    \BIC{\(A \land B\) \tru}
+\end{prooftree}
+%
+Nad črto zapišemo končno število predpostavk in pod črto zapišemo sklep. Desno od črte zapišemo ime pravila, ki ga ponavadi okrajšamo. V našem primeru \(\land\)I predstavlja pravilo vpeljave za konjuncijo (ang.~conjunction introduction). 
+Splošna oblika pravila sklepanja je torej oblike
+%
+\begin{prooftree}
+    \AXC{\(\mathcal{H}_1\)}
+    \AXC{\(\mathcal{H}_2\)}
+    \AXC{\(\ldots\)}
+    \AXC{\(\mathcal{H}_n\)}
+    \RL{ime}
+    \QuaternaryInfC{\(\mathcal{S}\)}
+\end{prooftree}
+%
+kjer so \(\mathcal{H}_1, \ldots \mathcal{H}_n\) \emph{premise} in \(\mathcal{S}\) sklep
+%~\cite[stran 7]{Jazbec_2022}. 
+Izjavam \(S, \mathcal{H}_1, \ldots \mathcal{H}_n\) pravimo sodbe~\cite[Section 2]{pfenning2009lecture}. Kasneje bomo videli kako lahko taka pravila sestavljamo skupaj, da dobimo izpeljana pravila.
+
+Za konjunkcijo imamo dva pravila uporabe (ang.~elimination rule).
+%
+\begin{equation*}
+    \begin{bprooftree}
+        \AXC{\(A \land B\) \tru}
+        \RL{\(\land E_L\)}
+        \UIC{\(A\) \tru}
+    \end{bprooftree}
+    \qquad
+     \begin{bprooftree}
+        \AXC{\(A \land B\) \tru}
+        \RL{\(\land E_D\)}
+        \UIC{\(A\) \tru}
+    \end{bprooftree}
+\end{equation*}
+
+\pravilo{Implikacija}
+Malce bolj zahtevno pravilo vpeljave ima implikacija. Pravilo se glasi, če lahko iz \(A\) izpeljemo \(B\) potem velja \(A \implies B\). To zapišemo kot
+%
+\begin{prooftree}
+    \AXC{\(\cdot\)}
+    \RL{u}
+    \UIC{\(A\) \tru}
+    \noLine
+    \UIC{\(\vdots\)}
+    \noLine
+    \UIC{\(B\) \tru}
+    \RL{\(\Rightarrow I^u\)}
+    \UIC{\(A \implies B\) \tru.}
+\end{prooftree}
+%
+% TODO: grozn, grozn, grozn odstavk. Odtsani besedo predpostavka, in odstrani piko, ker je kasneje nikoli ne uporabim
+Tri pike \(\vdots\) predstavljajo, da iz \(A\) pokažemo \(B\). Na vrhu \(\cdot\) predstavlja prazn nabor premis. Navadno se pike ne piše in se pusti prostor nad črto prazen. Tu je napisana, da poudarimo, da nimamo začetnih pogojev. Ne predpostavimo, da \(A\) velja in potem pokažemo \(B\), temveč brez dodatnih predpostavk pokažemo, da iz \(A\) sledi \(B\). Končno pravilo označimo z \(\Rightarrow I^u\), da poudarimo, da implikacija pride iz vrhnjega pravila označenega s črko \(u\).
+
+Za lažje razumevanje notacije pravila si poglejmo primer dokaza za \(A \Rightarrow (B \Rightarrow (A \land B))\)~\cite[stran 6]{pfenning2009lecture}.
+%
+\begin{prooftree}
+    \AXC{}
+    \RL{\(u\)}
+    \UIC{\(A\) \tru}
+    \AXC{}
+    \RL{\(w\)}
+    \UIC{\(B\) \tru}
+    \RL{\(\land I\)}
+    \BIC{\(A \land B\) \tru}
+    \RL{\(\Rightarrow I^w\)}
+    \UIC{\(B \implies (A \land B)\) \tru}
+    \RL{\(\Rightarrow I^u\)}
+    \UIC{\(A \implies (B \implies (A \land B))\)}
+\end{prooftree}
+%
+Pri tem primeru bi radi poudarili strukturo \emph{drevesa dokaza}. Pravila dokazovanja se gradijo v večja \emph{izpeljana pravila} v obliki usmerjenega drevesnega grafa, kjer so vozlišča sodbe in povezave pravila med njimi.
+Razvidno je tudi, da trditev \(A \Rightarrow (B \Rightarrow (A \land B))\) drži sama po sebi in nismo potrebovali nobenih premis, da smo to pokazali, pravili \(u\) in \(v\) pa sta le simbolne narave in delujeta kot ``predpostavimo da,\ldots''.
+
+Pravilo uporabe za implikacijo je enostavnejše.
+%
+\begin{prooftree}
+    \AXC{\(A \implies B\) \tru}
+    \AXC{\(A\) \tru}
+    \RL{\(\Rightarrow E\)}
+    \BIC{\(B\) \tru}
+\end{prooftree}
+
+\pravilo{Disjunkcija}
+Disjunkcija ima dva pravila vpeljave.
+%
+\begin{equation*}
+    \begin{bprooftree}
+        \AXC{\(A\) \tru}
+        \RL{\(\lor I_L\)}
+        \UIC{\(A \lor B\) \tru}
+    \end{bprooftree}
+    \begin{bprooftree}
+        \AXC{\(B\) \tru}
+        \RL{\(\lor I_D\)}
+        \UIC{\(A \lor B\) \tru}
+    \end{bprooftree}
+\end{equation*}
+%
+Ko v dokazu želimo uporabiti disjunkcijo, ločimo na dva primera, če velja desna ali leva stan disjunkcije.
+%
+\begin{prooftree}
+    \AXC{\(A \lor B\)}
+
+    \AXC{}
+    \RL{\(u\)}
+    \UIC{\(A\) \tru}
+    \noLine
+    \UIC{\(\vdots\)}
+    \noLine
+    \UIC{\(C\) \tru}
+
+    \AXC{}
+    \RL{\(w\)}
+    \UIC{\(B\) \tru}
+    \noLine
+    \UIC{\(\vdots\)}
+    \noLine
+    \UIC{\(C\) \tru}
+    \RL{\(\lor E^{u, w}\) }
+    \TIC{\(C\) \tru}
+\end{prooftree}
+%
+Vidimo da je to pravilo sklepanja podobno pravilu uporabe za implikacijo, saj je spet potrebno pokazazati, da iz \(A\) lahko dobimo \(C\), kot da bi vpeljali implikacijo. 
+Poglejmo si primer kako uporabimo implikacijo, tako da dokažemo \((A \lor B) \implies (B \lor A)\). % \cite[stran 11]{pfenning2009lecture}
+%
+\begin{prooftree}
+    \AXC{}
+    \RL{\(u\)}
+    \UIC{\(A \lor B\) \tru}
+    \noLine
+    \UIC{\(\vdots\)}
+    \noLine
+    \UIC{\(B \lor A\) \tru}
+    \RL{\(\Rightarrow I^u\)}
+    \UIC{\((A  \lor B) \implies (B \lor A)\)}
+\end{prooftree}
+%
+Nadaljujemo na edini način,  ki nam je na voljo in sicer razdelitev \(A \lor B\) na primere.
+\begin{prooftree}
+    \AXC{}
+    \RL{\(u\)}
+    \UIC{\(A \lor B\) \tru}
+
+    \AXC{}
+    \RL{\(w\)}
+    \UIC{\(A\) \tru}
+    \noLine
+    \UIC{\(\vdots\)}
+    \noLine
+    \UIC{\(B \lor A\) \tru}
+
+    \AXC{}
+    \RL{\(v\)}
+    \UIC{\(B\) \tru}
+    \noLine
+    \UIC{\(\vdots\)}
+    \noLine
+    \UIC{\(B \lor A\) \tru}
+
+    \RL{\(\lor E^{v, w}\)}
+    \TIC{\(B \lor A\) \tru}
+    \RL{\(\Rightarrow I^u\)}
+    \UIC{\((A \lor B) \implies (B \lor A)\)}
+\end{prooftree}
+%
+Od tu je nadaljevanje preprosto, saj uporabimo le pravila vpeljave za disjunkcijo.
+%
+\begin{prooftree}
+    \AXC{}
+    \RL{\(u\)}
+    \UIC{\(A \lor B\) \tru}
+
+    \AXC{}
+    \RL{\(w\)}
+    \UIC{\(A\) \tru}
+    \RL{\(\lor I_D\)}
+    \UIC{\(B \lor A\) \tru}
+
+    \AXC{}
+    \RL{\(v\)}
+    \UIC{\(B\) \tru}
+    \RL{\(\lor I_L\)}
+    \UIC{\(B \lor A\) \tru}
+
+    \RL{\(\lor E^{v, w}\)}
+    \TIC{\(B \lor A\) \tru}
+    \RL{\(\Rightarrow I^u\)}
+    \UIC{\((A \lor B) \implies (B \lor A)\)}
+\end{prooftree}
+
+V kasnejših poglavjih bomo povedali še pravila za eksistenčni in univerzalni kvantifikator ter za negacijo.
+
+% \pravilo{Negacija}
+% Za negacijo imamo več možnosti osnovnih pravil. Navadno se negacija \(\neg A\) predstavi kot \(A \implies \bot\), se pravi, če iz \(A\) lahko pokažemo neresnico, potem \(A\) ne velja. To podre strukturo pravil vpeljave in uporabe
+
+% \pravilo{Resnica in neresnica}
+
+
+% pravila za konjunkcijo, impolikacijo, disjunkcijo (cases), negacija, resnica
+% univerzalni kvantifikator, [t/x]A
+% eliminacija, vpeljava in klasična logika
+% kontekst, konkatenacija, razlaga notacije

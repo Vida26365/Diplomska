@@ -1,0 +1,56 @@
+Sedaj lahko predstavimo linearno logiko. Glavna lastnost v linearni logiki je, da vsako premiso uporabiš natanko enkrat. Na prvi pogled se to zdi nenavadno, saj si resnico predstavljamo, kot neodvisno od tega ali smo jo že uporabili ali ne. Vendar videli bomo, da linearna logika v veliko primerih bolje opiše svet.
+
+Recimo, da stojimo pred avtomatom. Avtomat sprejema samo kovance za 50c in 1€ in potrebno je vstaviti točen znesek. Na avtomatu si lahko kupimo čokoladico za 1€, bombončke za 50c ali pa sladko pijačo za 1,5€. To lahko predstavimo s pravili sklepanja.
+%
+\begin{align*}
+    \begin{bprooftree}
+        \AXC{1,5€}
+        \UIC{pijača}
+    \end{bprooftree}
+    \qquad
+    \begin{bprooftree}
+        \AXC{1€}
+        \UIC{čokoladica}
+    \end{bprooftree}
+    \qquad
+    \begin{bprooftree}
+        \AXC{50c}
+        \UIC{bombončki}
+    \end{bprooftree}
+\end{align*}
+%
+Recimo, da imamo tri kovance za 1€ in štiri kovance za 50c.
+Skupina naslednjih sklepov je veljavna v linearni logiki.
+%
+\begin{align*}
+    \begin{bprooftree}
+        \AXC{1€}
+        \AXC{50c}
+        \BIC{pijača}
+    \end{bprooftree}
+    \quad
+    \begin{bprooftree}
+        \AXC{1€}
+        \UIC{čokoladica}
+    \end{bprooftree}
+    \quad
+    \begin{bprooftree}
+        \AXC{50c}
+        \AXC{50c}
+        \BIC{čokoladica}
+    \end{bprooftree}
+    \quad
+    \begin{bprooftree}
+        \AXC{50c}
+        \UIC{bombončki}
+    \end{bprooftree}
+    \quad
+    \begin{bprooftree}
+        \AXC{1€}
+        \UIC{1€}
+    \end{bprooftree}
+\end{align*}
+%
+Vidimo, da se vrednost ne izgubi. Začeli smo z 5€ in dobili ven 5€ vrednosti stvari. Ne moremo ničesar izgubiti in prav tako ne moremo ničesar pridobiti. Istega kovanca ne moremo uporabiti dvakrat, torej so sklepi, ki jih imamo na voljo odvisni od stanja virov in vsakič ko uporabimo sklep spremenimo stanje virov.
+
+Zato so pravila sklepanja v linearni logiki različna od pravil v navadni logiki. 

@@ -1,0 +1,103 @@
+\documentclass[12pt, titlepage, a4paper]{article}
+\usepackage[a4paper, inner=2.5cm, outer=2.5cm, top=2.25cm, bottom=2.25cm]{geometry} %Lepša postavitev strani
+%matematika
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{empheq}
+%
+\usepackage[slovene]{babel}
+\usepackage{hyperref}
+\usepackage{nameref}
+
+\usepackage{bussproofs}
+\usepackage{graphicx} 
+\usepackage{subcaption}
+
+
+% \newtheorem{theorem}{Izrek}
+% \newtheorem{lemma}{Lema}
+% \newtheorem*{remark}{Opomba}
+
+% \newcommand{\p}{\mathbb{P}}
+% \newcommand{\N}{\mathbb{N}}
+% \newcommand{\la}[2]{\lambda_{#1} (#2)}
+% \newcommand{\pnk}[2]{{#1}^{(#2)}}
+% \newcommand{\dnk}{{2}^{(k)}}
+% \newcommand{\lak}{\(\lambda_k\)}
+% \newcommand{\z}{\zeta}
+%
+
+% Okrajšave, ker je v dokumentaciji orajšano, in je lažje primerjati kodo z dokumentacijo
+\newcommand{\AXC}[1]{\AxiomC{#1}}
+\newcommand{\UIC}[1]{\UnaryInfC{#1}}
+\newcommand{\BIC}[1]{\BinaryInfC{#1}}
+\newcommand{\TIC}[1]{\TrinaryInfC{#1}}
+\newcommand{\RL}[1]{\RightLabel{#1}}
+\newcommand{\DP}{\DisplayProof}
+
+
+\newcommand{\pravilo}[1]{\textbf{#1.}}
+\newcommand{\tru}{\emph{res}}
+\newcommand{\geslo}[2]{\textbf{#1} #2 \\}
+
+\newenvironment{bprooftree}
+  {\leavevmode\hbox\bgroup}
+  {\DisplayProof\egroup}
+
+\title{Linearni tipi}
+\author{Vida Mlinar}
+\date{}
+
+
+\begin{document}
+%Dokazovalno drevo je ta zapis
+% sekventni račun
+% v toriji tipov, teoriji dokazov
+
+%sekvent gama v delta
+
+\section{Uvod}
+V tem diplomskem delu, bomo raziskali, kaj je linearna logika in kako se jo uporablja v računalništvu.
+Linearna logiko je prvi predstavil Jean-Yves Girard~\cite{girard1987linear}. Zelo hitro se je izkazala za uporabno, saj zahteva, 
+da smo pozorni na kaj imamo na voljo v danem trenutku, kar bolj odseva realni svet. Zato linearni logiki pravimo tudi \emph{logika stanja}. %TODO citat
+
+Preko Curry-Howardovega izomorfizma vemo, da lahko logične dokaze interpretiramo kot računalniške programe.
+%, kjer posamezna izjava v logiki predstavlja \emph{tip} v teoriji tipov
+
+
+
+% Teorija tipov
+% Tipi v računalništvu
+
+\section{Naravna dedukcija} % intuicijska naravna dedukcija
+\input{Poglavja/Naravna dedukcija.tex}
+% pravila za konjunkcijo, impolikacijo, disjunkcijo (cases), negacija, resnica
+% univerzalni kvantifikator, [t/x]A
+% eliminacija, vpeljava in klasična logika
+% kontekst, konkatenacija, razlaga notacije    
+
+
+\section{Linearna logika}
+\input{Poglavja/Linearna logika.tex}
+
+% Primerjava z intuistično logiko
+
+
+\subsection{Zakaj tipi}
+%Računalnik lahko v spomin zapiše objekte v binarnem zapisu. To pomeni, da je vse kar je shranjeno v računalniku, shranjeno z naravnimi števili. To pomeni da je `a' v kodianju utf-8 `01100001' `b' pa je `01100001'. Potem je a + 1 = b. Tega ponavadi nočemo. Za znak + želimo da se obnaša različno glede na to, kakšen argument dobi. 1 + 1 = 2, a + b = ab, a+1 = error. Zato je koristno, da programski jezik ločuje med različnimi tipi objektov. Ta ideja se je razvila že zelo zgodaj v računalništvu
+% Teorija tipov je način razmišljanja o matematičnme svetu. Vsak objekt ima svoj natanko določen tip. 
+
+\section{Slovarček}
+
+\geslo{judgment}{sodba}
+\geslo{premise}{premisa}
+\geslo{conclusion}{sklep}
+
+
+\bibliographystyle{plain}
+\bibliography{citati.bib}
+
+
+
+\end{document}

@@ -1,0 +1,49 @@
+\documentclass[12pt, titlepage, a4paper]{article}
+\usepackage[a4paper, inner=2.5cm, outer=2.5cm, top=2.25cm, bottom=2.25cm]{geometry} %Lepša postavitev strani
+%matematika
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{empheq}
+%
+\usepackage[slovene]{babel}
+\usepackage{hyperref}
+\usepackage{nameref}
+
+
+% \newtheorem{theorem}{Izrek}
+% \newtheorem{lemma}{Lema}
+% \newtheorem*{remark}{Opomba}
+
+% \newcommand{\p}{\mathbb{P}}
+% \newcommand{\N}{\mathbb{N}}
+% \newcommand{\la}[2]{\lambda_{#1} (#2)}
+% \newcommand{\pnk}[2]{{#1}^{(#2)}}
+% \newcommand{\dnk}{{2}^{(k)}}
+% \newcommand{\lak}{\(\lambda_k\)}
+% \newcommand{\z}{\zeta}
+
+\title{Implementacija linearnih tipov}
+\author{Vida Mlinar}
+\date{}
+
+
+\begin{document}
+    
+\section{Kaj so linearni tipi}
+
+\subsection{Zakaj tipi}
+Računalnik lahko v spomin zapiše objekte v binarnem zapisu. To pomeni, da je vse kar je shranjeno v računalniku, shranjeno z naravnimi števili. To pomeni da je `a' v kodianju utf-8 `01100001' `b' pa je `01100001'. Potem je a + 1 = b. Tega ponavadi nočemo. Za znak + želimo da se obnaša različno glede na to, kakšen argument dobi. 1 + 1 = 2, a + b = ab, a+1 = error. Zato je koristno, da programski jezik ločuje med različnimi tipi objektov. Ta ideja se je razvila že zelo zgodaj v računalništvu
+% Teorija tipov je način razmišljanja o matematičnme svetu. Vsak objekt ima svoj natanko določen tip. 
+
+\section{podvečnosti}
+
+\section{Posplošitev linearnih tipov -- linearne ženske}
+
+\section{Affini tipi -- bi tipi?}
+
+\section{Premikanje med linearnimi in afinimi -- trans(formacija)}
+
+
+
+\end{document}
