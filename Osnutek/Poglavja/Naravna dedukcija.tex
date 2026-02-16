@@ -24,7 +24,16 @@ Splošna oblika pravila sklepanja je torej oblike
 %
 kjer so \(\mathcal{H}_1, \ldots \mathcal{H}_n\) \emph{premise} in \(\mathcal{S}\) sklep
 %~\cite[stran 7]{Jazbec_2022}. 
-Izjavam \(S, \mathcal{H}_1, \ldots \mathcal{H}_n\) pravimo sodbe~\cite[Section 2]{pfenning2009lecture}. Kasneje bomo videli kako lahko taka pravila sestavljamo skupaj, da dobimo izpeljana pravila.
+Izjavam \(S, \mathcal{H}_1, \ldots \mathcal{H}_n\) pravimo sodbe~\cite[Section 2]{pfenning2009lecture}. Kasneje bomo videli kako lahko taka pravila sestavljamo skupaj, da dobimo izpeljana pravila. Takim zapisov dokazov pravimo \emph{sklepna drevesa}. Navadno pišemo zraven še kontekst, ki ga ponavadi označimo z \(\Gamma\). Sodba \(\G \vdash A\) pravi, da iz konteksta \(\G\) lahko vzamemo izjavo \(A\) in jo uporabimo. % \cite homotopy type theory, poglavje 1.1
+%
+\begin{prooftree}
+    \AXC{\(\G \vdash A\) \tru}
+    \AXC{\(\G \vdash B\) \tru}
+    \RL{\(\land I\).} %\mathcal{I}
+    \BIC{\(\G \vdash A \land B\) \tru}
+\end{prooftree}
+%
+Torej to preberemo, kot če imamo poljubni resnični izjavi \(A\) in \(B\), potem v tem kontekstu velja tudi \(A \land B\). V tem poglvju zaradi preglednosti ne bomo pisali zraven konteksta, vendar bo v kasnjejših poglavjih igral pomembno vlogo za razumevanje. % TODO: Slabo napisan stavek
 
 Za konjunkcijo imamo dva pravila uporabe (ang.~elimination rule).
 %

@@ -41,6 +41,8 @@
 \newcommand{\tru}{\emph{res}}
 \newcommand{\geslo}[2]{\textbf{#1} #2 \\}
 
+\newcommand{\G}{\Gamma}
+
 \newenvironment{bprooftree}
   {\leavevmode\hbox\bgroup}
   {\DisplayProof\egroup}
@@ -75,7 +77,10 @@ Preko Curry-Howardovega izomorfizma vemo, da lahko logične dokaze interpretiram
 % pravila za konjunkcijo, impolikacijo, disjunkcijo (cases), negacija, resnica
 % univerzalni kvantifikator, [t/x]A
 % eliminacija, vpeljava in klasična logika
-% kontekst, konkatenacija, razlaga notacije    
+% kontekst, konkatenacija, razlaga notacije
+
+\section{Curry-Howardov izomorfizem}
+\input{Poglavja/Curry-Howardov izomorfizem.tex}
 
 
 \section{Linearna logika}
@@ -84,7 +89,7 @@ Preko Curry-Howardovega izomorfizma vemo, da lahko logične dokaze interpretiram
 % Primerjava z intuistično logiko
 
 
-\subsection{Zakaj tipi}
+% \subsection{Zakaj tipi}
 %Računalnik lahko v spomin zapiše objekte v binarnem zapisu. To pomeni, da je vse kar je shranjeno v računalniku, shranjeno z naravnimi števili. To pomeni da je `a' v kodianju utf-8 `01100001' `b' pa je `01100001'. Potem je a + 1 = b. Tega ponavadi nočemo. Za znak + želimo da se obnaša različno glede na to, kakšen argument dobi. 1 + 1 = 2, a + b = ab, a+1 = error. Zato je koristno, da programski jezik ločuje med različnimi tipi objektov. Ta ideja se je razvila že zelo zgodaj v računalništvu
 % Teorija tipov je način razmišljanja o matematičnme svetu. Vsak objekt ima svoj natanko določen tip. 
 
@@ -93,6 +98,8 @@ Preko Curry-Howardovega izomorfizma vemo, da lahko logične dokaze interpretiram
 \geslo{judgment}{sodba}
 \geslo{premise}{premisa}
 \geslo{conclusion}{sklep}
+\geslo{inference rule}{pravilo sklepanja}
+\geslo{simultaneous conjunction}{hkratna konjunkcija}
 
 
 \bibliographystyle{plain}
