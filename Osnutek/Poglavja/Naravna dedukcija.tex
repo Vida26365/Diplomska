@@ -68,6 +68,8 @@ Malce bolj zahtevno pravilo vpeljave ima implikacija. Pravilo se glasi, če lahk
 %
 % TODO: grozn, grozn, grozn odstavk. Odtsani besedo predpostavka, in odstrani piko, ker je kasneje nikoli ne uporabim
 Tri pike \(\vdots\) predstavljajo, da iz \(A\) pokažemo \(B\). Na vrhu \(\cdot\) predstavlja prazn nabor premis. Navadno se pike ne piše in se pusti prostor nad črto prazen. Tu je napisana, da poudarimo, da nimamo začetnih pogojev. Ne predpostavimo, da \(A\) velja in potem pokažemo \(B\), temveč brez dodatnih predpostavk pokažemo, da iz \(A\) sledi \(B\). Končno pravilo označimo z \(\Rightarrow I^u\), da poudarimo, da implikacija pride iz vrhnjega pravila označenega s črko \(u\).
+Pomembno je, da \(A\), kasneje v dokazu ne moremo več uporabiti, namreč predpostavili smo \(A\) samo zato da lahko dokažemo \(A \implies B\), vendar \(A\) ne drži nujno na splošno. Zato takoj ko uporabimo pravilo \(I^u\), se veja drevesa od \(u\) do \(I^u\) zapre. Nikjer drugje ne moremo uporabiti več sodb, ki smo jih dobili pod pogojem da smo predpostavili \(A\)
+
 
 Za lažje razumevanje notacije pravila si poglejmo primer dokaza za \(A \Rightarrow (B \Rightarrow (A \land B))\)~\cite[stran 6]{pfenning2009lecture}.
 %
@@ -139,6 +141,7 @@ Ko v dokazu želimo uporabiti disjunkcijo, ločimo na dva primera, če velja des
 \end{prooftree}
 %
 Vidimo da je to pravilo sklepanja podobno pravilu uporabe za implikacijo, saj je spet potrebno pokazazati, da iz \(A\) lahko dobimo \(C\), kot da bi vpeljali implikacijo. 
+In spet oznaka \(E^{u, v}\) pove, da ne moremo uporabiti sodb na vejah med \(u\) in \(E^{u, v}\) in med \(w\) in \(E^{u, v}\) nikjer drugje.
 Poglejmo si primer kako uporabimo implikacijo, tako da dokažemo \((A \lor B) \implies (B \lor A)\). % \cite[stran 11]{pfenning2009lecture}
 %
 \begin{prooftree}
@@ -206,7 +209,8 @@ Od tu je nadaljevanje preprosto, saj uporabimo le pravila vpeljave za disjunkcij
     \UIC{\((A \lor B) \implies (B \lor A)\)}
 \end{prooftree}
 
-V kasnejših poglavjih bomo povedali še pravila za eksistenčni in univerzalni kvantifikator ter za negacijo.
+V kasnejših poglavjih bomo povedali še pravila za eksistenčni in univerzalni kvantifikator ter za negacijo. 
+
 
 % \pravilo{Negacija}
 % Za negacijo imamo več možnosti osnovnih pravil. Navadno se negacija \(\neg A\) predstavi kot \(A \implies \bot\), se pravi, če iz \(A\) lahko pokažemo neresnico, potem \(A\) ne velja. To podre strukturo pravil vpeljave in uporabe

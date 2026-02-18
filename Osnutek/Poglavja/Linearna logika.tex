@@ -1,10 +1,10 @@
 Sedaj lahko predstavimo linearno logiko. Glavna lastnost v linearni logiki je, da vsako premiso uporabiš natanko enkrat. Na prvi pogled se to zdi nenavadno, saj si resnico predstavljamo, kot neodvisno od tega ali smo jo že uporabili ali ne. Vendar videli bomo, da linearna logika v veliko primerih bolje opiše svet.
 
-Recimo, da stojimo pred avtomatom. Avtomat sprejema samo kovance za 50c in 1€ in potrebno je vstaviti točen znesek. Na avtomatu si lahko kupimo čokoladico za 1€, bombončke za 50c ali pa sladko pijačo za 1,5€. To lahko predstavimo s pravili sklepanja.
+Recimo, da stojimo pred avtomatom. Avtomat sprejema samo kovance za 50c in 1€ in potrebno je vstaviti točen znesek. Na avtomatu si lahko kupimo čokoladico za 1€, bombončke za 50c ali pa sladko pijačo za 1€. To lahko predstavimo s pravili sklepanja.
 %
 \begin{align*}
     \begin{bprooftree}
-        \AXC{1,5€}
+        \AXC{1€}
         \UIC{pijača}
     \end{bprooftree}
     \qquad
@@ -46,15 +46,160 @@ Skupina naslednjih sklepov je veljavna v linearni logiki.
     \end{bprooftree}
     \quad
     \begin{bprooftree}
-        \AXC{1€}
-        \UIC{1€}
+        \AXC{1,5€}
+        \UIC{1,5€}
     \end{bprooftree}
 \end{align*}
 %
-Vidimo, da se vrednost ne izgubi. Začeli smo z 5€ in dobili ven 5€ vrednosti stvari. Ne moremo ničesar izgubiti in prav tako ne moremo ničesar pridobiti. Istega kovanca ne moremo uporabiti dvakrat, torej so sklepi, ki jih imamo na voljo odvisni od stanja virov in vsakič ko uporabimo sklep spremenimo stanje virov.
-Zato je spremljanje konteksta pomembno v linearni logiki. Poglejmo si nekaj več o kontekstu na splošno.
+Vidimo, da se vrednost ne izgubi. Začeli smo z 5€ in dobili ven 5€ vrednosti stvari. Ne moremo ničesar izgubiti in prav tako ne moremo ničesar pridobiti. Istega kovanca ne moremo uporabiti dvakrat, torej so sklepi, ki jih imamo na voljo odvisni od stanja virov in vsakič ko uporabimo sklep spremenimo stanje virov. 
 
-\emph{Kontekst} je končen nabor 
-% \pravilo{Hkratna konjunkcija}
+\pravilo{Hkratna konjunkcija}
+Recimo da lahko s pomočjo konteksta \(\G\) pokažemo izjavo \(A\) in s pomočjo konteksta \(\D\) pokažemo izjavo \(B\), Potem lahko s kontekstom \(\G, \D\) pokažemo da velja \(A\) in \(B\). Oznaka za tako konjunkcijo v linearni logiki je tenzor \(A \otimes B\). 
+%
+\begin{prooftree}
+    \AXC{\(\G \vdash A\)}
+    \AXC{\(\D \vdash B\)}
+    \RL{\(\otimes I\)}
+    \BIC{\(\G, \D \vdash A \otimes B\)}
+\end{prooftree}
+%
+Konteksta \(\G\) in \(\D\) združimo, oziroma \emph{konkateriramo} glede na spodnja pravila. % \cite pfeninng
+\begin{align*}
+    \G, (\D, u:A) = (\G, \D), u:A =(\G, u:A), \D
+\end{align*}
+%
+Pri zgornji enakosti ``\(,\)'' predstavlja dve različni operaciji. Ena operacija združi kontekste, druga pa kontekstu pridruži izjavo imenovano \(u\). V našem primeru kovancev, bi \(A\) predstavljal ``imam kovanec za 1€'', specifični konvenac, ki dokazuje to trditev, pa je označen z \(u\).
+
+Glede na to, da \(\otimes\) predstavlja konjunkcijo, bi lahko zmotno mislili, da je pravilo uporabe za \(\otimes\), enako kot za \(\la\), vendar pravilo za uporabo \(land\) izgubi del informacije.
+%
+\begin{prooftree}
+        \AXC{\(A \land B\) \tru}
+        \RL{\(\land E_L\)}
+        \UIC{\(A\) \tru}
+\end{prooftree}
+%
+Na vrhu imamo \(A\) in tudi \(B\), vendar v sklepu uporabimo samo \(A\). Ne seldimo pravilom linearne logike, ki pravi, da je potrebno vsako premiso uporabiti natanko enkrat. % TODO: premisa = vir?
+% TODO: od zdaj pravim temu vir in cilj
+Pravilo vpeljave hkratne konjunkcije pravi, če lahko dosežemo cilj \(C\) S pomočjo virov \(u:A\) in \(w:B\) in če imamo \(A \otimes B\), lahko dosežemo cilj \(C\).
+%
+\begin{prooftree}
+    \AXC{\(\G \vdash A \otimes B\)}
+    \AXC{\(\D, u: A, w: B \vdash C\)}
+    \RL{\(\otimes E^{u, w}\)}
+    \BIC{\(\G, \D \vdash C\)}
+\end{prooftree}
+%
+Oznaka \(U^{u,w}\) predstavlja, da sta vira označena z \(u\) in \(w\) porabljena, torej ju kasneje ne moremo več uporabiti.
+% Ali je res to smiselno na tej točki
+Na tej točki je smiselno omeniti, kaj v linearni logiki pomeni kontekst. To je tenzorski produkt \emph{virov} \(A_1 \otimes \ldots \otimes A_n = \G\). Navadno tenzorjev ne pišemo in vire preprosto ločimo z vejico \(A_1, \ldots A_n\). % cite luna
+Torej to nam pove, da morajo viri v kontekstu biti resnični oziroma na voljo v istem stanju.
+
+% TODO: delo s konteksti
+% TODO: razni tipi
+
+
+\pravilo{Alternativna konjunkcija}
+Recimo da imamo 1€. Potem sli lahko kupimo ali čokoladico ali pijačo, vendar ne oboje na enkrat. 
+%
+\begin{prooftree}
+    \AXC{\(\G \vdash A\)}
+    \AXC{\(\G \vdash B\)}
+    \RL{\(\& I\)}
+    \BIC{\(\G \vdash A \& B\)}
+\end{prooftree}
+%
+To pravilo vpeljave izgleda enako kot pravilo vpeljave za konjunkcijo \(\land\), vendar pomen je drugačen, saj \(A \& B\) predstavlja ``natanko eno od \(A\) in \(B\)''.
+
+Če imamo vire za \(A \& B\), vemo da imamo vire za natanko eno od \(A\) in \(B\). Torej pravili uporabe izgledata takole:
+%
+\begin{align*}
+    &
+    \begin{bprooftree}
+        \AXC{\(\G \vdash A \& B\)}
+        \RL{\(\& E_L\)}
+        \UIC{\(\G \vdash A\)}
+    \end{bprooftree}
+    &
+    \begin{bprooftree}
+        \AXC{\(\G \vdash A \& B\)}
+        \RL{\(\& E_D\)}
+        \UIC{\(\G \vdash B\)}
+    \end{bprooftree}
+    &
+\end{align*}
+%
+
+\pravilo{Linearna implikacija}\cite[poglavje 1.2]{barber1997linear}
+Za linearno implikacijo se uporablja znak \(\multimap\) imenovan \emph{lizika}~\cite[L20.3]{truthIsEphemeral}. 
+%
+\begin{prooftree}
+    \AXC{\(\G, A \vdash B\)}
+    \RL{\(\multimap I.\)}
+    \UIC{\(\G \vdash A \multimap B\)}
+\end{prooftree}
+%
+Linearna implikacija \(A \multimap B\) porabi vir \(A\), vendar implikacjo sama ostane, torej če imamo na voljo še kakšen vir \(A\), ga lahko ponovno uporabimo.
+%
+\begin{prooftree}
+    \AXC{\(\G \vdash A\)}
+    \AXC{\(\D \vdash A \multimap B\)}
+    \BIC{\(\G, \D \vdash B\)}
+\end{prooftree}
+%
+Pravilo uporabe za linearno implikacijo upošteva, da se viri, ki jih uporabimo, da dobimo \(A\) in viri, da dobimo \(A \multimap B\) lahko prekrivajo.
+
+Sedaj lahko pokažemo eno pomembno pravilo imenovano \emph{rez}. Intuitivno se nam zdi, da če z viri \(\G, A\) lahko dosežemo \(B\)  in z viri \(\G\) lahko dosežemo \(A\), potem bi viri \(\G\) zadostovali, da dosežemo \(B\).
+%
+\begin{prooftree}
+    \AXC{\(\G \vdash A\)}
+    \AXC{\(\G, A \vdash B\)}
+    \RL{cut}
+    \BIC{\(\G \vdash B\)}
+\end{prooftree}
+%
+In res s pravili iz poglavja~\nameref{natded} lahko izpeljemo rez.
+%
+\begin{prooftree}
+    \AXC{\(\G \vdash A\)}
+    \AXC{\(\G, A \vdash B\)}
+    \RL{\(\Rightarrow I\)}
+    \UIC{\(\G \vdash A \implies B\)}
+    \RL{\(\Rightarrow E\)}
+    \BIC{\(\G \vdash B\)}
+\end{prooftree}
+%
+V linearni logiki je to pravilo rahlo drugačno, saj pri \(\Rightarrow I\) uporabimo dvakrat isti kontekst, medtem ko pri \(\multimap I\) tega ne smemo narediti.
+%
+\begin{prooftree}
+    \AXC{\(\G \vdash A\)}
+    \AXC{\(\D, A\vdash B\)}
+    \RL{\(\multimap I\)}
+    \UIC{\(\D \vdash A \multimap B\)}
+    \BIC{\(\G, \D \vdash B\)}
+\end{prooftree}
+%
+Izpeljano pravilo je torej
+%
+\begin{prooftree}
+    \AXC{\(\G \vdash A\)}
+    \AXC{\(\D, A \vdash B\)}
+    \RL{cut.}
+    \BIC{\(\G, \D \vdash B\)}
+\end{prooftree}
+
+\pravilo{Disjunkcija (zunanja izbira)}
+% TODO: disjunkcija v draftu, 20-lin ma L R, sublogics23 ima drugačno oznako
+% TODO: omemba druge disjunkcije
+
+%TODO: končan osnutek
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%55
+\begin{prooftree}
+    \AXC{\(\G \vdash B\)}
+    \RL{weak}
+    \UIC{\(\G, A \vdash B\)}
+\end{prooftree}
 
 

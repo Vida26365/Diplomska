@@ -14,6 +14,7 @@
 \usepackage{graphicx} 
 \usepackage{subcaption}
 
+\usepackage{nameref}
 
 
 % \newtheorem{theorem}{Izrek}
@@ -43,6 +44,13 @@
 \newcommand{\geslo}[2]{\textbf{#1} #2 \\}
 
 \newcommand{\G}{\Gamma}
+\newcommand{\D}{\Delta}
+\newcommand{\la}{\lambda}
+\newcommand{\cd}[1]{\texttt{#1}}
+\newcommand{\type}{\text{ type}}
+
+% \newcommand{\darule}{\noindent\hdashrule{\textwidth}{0.4pt}}
+\newcommand{\darule}{\hdashrule[0.5ex][x]{\linewidth}{0.5pt}{1.5mm}}
 
 \newenvironment{bprooftree}
   {\leavevmode\hbox\bgroup}
@@ -73,7 +81,7 @@ Preko Curry-Howardovega izomorfizma vemo, da lahko logične dokaze interpretiram
 % Teorija tipov
 % Tipi v računalništvu
 
-\section{Naravna dedukcija} % intuicijska naravna dedukcija
+\section{Naravna dedukcija\label{natded}} % intuicijska naravna dedukcija
 \input{Poglavja/Naravna dedukcija.tex}
 % pravila za konjunkcijo, impolikacijo, disjunkcijo (cases), negacija, resnica
 % univerzalni kvantifikator, [t/x]A
@@ -84,7 +92,7 @@ Preko Curry-Howardovega izomorfizma vemo, da lahko logične dokaze interpretiram
 \input{Poglavja/Curry-Howardov izomorfizem.tex}
 
 
-\section{Linearna logika}
+\section{Linearna naravna dedukcija}
 \input{Poglavja/Linearna logika.tex}
 
 % Primerjava z intuistično logiko
@@ -100,7 +108,15 @@ Preko Curry-Howardovega izomorfizma vemo, da lahko logične dokaze interpretiram
 \geslo{premise}{premisa}
 \geslo{conclusion}{sklep}
 \geslo{inference rule}{pravilo sklepanja}
+\geslo{computation rule}{pravilo računanja}
+\geslo{\(\beta\)-reduction}{\(\beta\)-redukcija}
+\geslo{resource}{vir}
 \geslo{simultaneous conjunction}{hkratna konjunkcija}
+\geslo{alternative conjunction}{alternativna konjunkcija}
+\geslo{cut}{rez}
+% \geslo{weakening rule}{pravilo šibitve}
+\geslo{lolli}{lizika}
+\geslo{external choice}{zunanja izbira}
 
 
 \bibliographystyle{plain}
