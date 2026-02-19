@@ -39,10 +39,10 @@ Navadno pišemo zraven še kontekst, ki ga ponavadi označimo z \(\Gamma\). Sodb
     \BIC{\(\G \vdash A \land B\) \tru}
 \end{prooftree}
 %
-Torej to preberemo, kot če imamo poljubni resnični izjavi \(A\) in \(B\), potem v tem kontekstu velja tudi \(A \land B\).
+Torej to preberemo kot: če imamo poljubni resnični izjavi \(A\) in \(B\), potem v tem kontekstu velja tudi \(A \land B\).
 %  V tem poglvju zaradi preglednosti ne bomo pisali zraven konteksta, vendar bo v kasnjejših poglavjih igral pomembno vlogo za razumevanje. %  Slabo napisan stavek
 
-Za konjunkcijo imamo dva pravila uporabe (ang.~elimination rule).
+Za konjunkcijo imamo dva pravila uporabe (ang.~elimination rule) -- levega in desnega.
 %
 \begin{equation*}
     \begin{bprooftree}
@@ -59,7 +59,7 @@ Za konjunkcijo imamo dva pravila uporabe (ang.~elimination rule).
 \end{equation*}
 
 \pravilo{Implikacija}
-Malce bolj zahtevno pravilo vpeljave ima implikacija. Pravilo se glasi, če lahko iz \(A\) izpeljemo \(B\) potem velja \(A \implies B\). To zapišemo kot
+Malce bolj zahtevno pravilo vpeljave ima implikacija. Če lahko iz \(A\) izpeljemo \(B\) potem velja \(A \implies B\). To zapišemo kot
 %
 % \begin{prooftree} % TODO: Ali se res tako označi. Izpeljava, poeenotenje
 %     \AXC{\(\cdot\)}
@@ -79,45 +79,64 @@ Malce bolj zahtevno pravilo vpeljave ima implikacija. Pravilo se glasi, če lahk
     \UIC{\(\G \vdash A \implies B\)}
 \end{prooftree}
 %
-% TODO: spremenjena implikacija
-Tri pike \(\vdots\) predstavljajo, da iz \(A\) pokažemo \(B\). Na vrhu \(\cdot\) predstavlja prazn nabor premis. 
-Navadno se pike ne piše in se pusti prostor nad črto prazen. Tu je napisana, da poudarimo, da nimamo začetnih pogojev. 
-Ne predpostavimo, da \(A\) velja in potem pokažemo \(B\), temveč brez dodatnih predpostavk pokažemo, da iz \(A\) sledi \(B\). Končno pravilo označimo z \(\Rightarrow I^u\), da poudarimo, da implikacija pride iz vrhnjega pravila označenega s črko \(u\).
-Pomembno je, da \(A\), kasneje v dokazu ne moremo več uporabiti, namreč predpostavili smo \(A\) samo zato da lahko dokažemo \(A \implies B\), vendar \(A\) ne drži nujno na splošno. Zato takoj ko uporabimo pravilo \(I^u\), se veja drevesa od \(u\) do \(I^u\) zapre. Nikjer drugje ne moremo uporabiti več sodb, ki smo jih dobili pod pogojem da smo predpostavili \(A\)
+Torej če lahko iz konteksta \(\G\), ki mu je pridružena izjava \(A\), izpeljemo izjavo \(B\), potem lahko iz konteksta \(\G\) izpeljemo implikacijo \(A \implies B\). 
 
+Preden nadaljujemo na primer kako lahko izpeljemo implikacijo, si moramo pogledati eno od osnovnih pravil sklepanja in sicer pravilo hipoteze. % VPRAŠAJ: Ali je res pravilo hipoteze
+%
+\begin{prooftree}
+    \AXC{}
+    \RL{hip}
+    \UIC{\(\G, A \vdash A\)}
+\end{prooftree}
+%
+To pravilo pravi, da brez dodatnih pogojev lahko sklepamo, da iz konteksta, ki vsebuje \(A\) lahko vzamemo \(A\). Pogosto se v literaturi pojavlja tudi notacija
+%
+\begin{prooftree}
+    \AXC{\(A \in \G\)}
+    \RL{hip.}
+    \UIC{\(\G \vdash A\)}
+\end{prooftree}
 
-Za lažje razumevanje notacije pravila si poglejmo primer dokaza za \(A \Rightarrow (B \Rightarrow (A \land B))\)~\cite[stran 6]{pfenning2009lecture}.
+Sedaj si lahko pogledamo primer dokaza za \(A \Rightarrow (B \Rightarrow (A \land B))\)
+% ~\cite[stran 6]{pfenning2009lecture}.
 %
 % TODO: spremeni potek dokaza
 \begin{prooftree}
     \AXC{}
-    \RL{\(u\)}
-    \UIC{\(A\) \tru}
+    \RL{hip}
+    \UIC{\(A, B \vdash A\)}
     \AXC{}
-    \RL{\(w\)}
-    \UIC{\(B\) \tru}
+    \RL{hip}
+    \UIC{\(A, B \vdash B\)}
     \RL{\(\land I\)}
-    \BIC{\(A \land B\) \tru}
-    \RL{\(\Rightarrow I^w\)}
-    \UIC{\(B \implies (A \land B)\) \tru}
-    \RL{\(\Rightarrow I^u\)}
-    \UIC{\(A \implies (B \implies (A \land B))\)}
+    \BIC{\(A, B \vdash A \land B\)}
+    \RL{\(\Rightarrow I\)}
+    \UIC{\(A \vdash B \implies (A \land B)\)}
+    \RL{\(\Rightarrow I\)}
+    \UIC{\(\vdash A \implies (B \implies (A \land B))\)}
 \end{prooftree}
 %
-Pri tem primeru bi radi poudarili strukturo \emph{drevesa dokaza}. Pravila dokazovanja se gradijo v večja \emph{izpeljana pravila} v obliki usmerjenega drevesnega grafa, kjer so vozlišča sodbe in povezave pravila med njimi.
-Razvidno je tudi, da trditev \(A \Rightarrow (B \Rightarrow (A \land B))\) drži sama po sebi in nismo potrebovali nobenih premis, da smo to pokazali, pravili \(u\) in \(v\) pa sta le simbolne narave in delujeta kot ``predpostavimo da,\ldots''.
+Pri tem primeru bi radi poudarili strukturo \emph{dokaznega drevesa}. Pravila dokazovanja se gradijo v večja \emph{izpeljana pravila} v obliki usmerjenega drevesnega grafa, kjer so vozlišča sodbe in povezave pravila med njimi.
+Razvidno je tudi, da trditev \(A \Rightarrow (B \Rightarrow (A \land B))\) drži sama po sebi in nismo potrebovali nobenih premis, da smo to pokazali. Pravilo hipoteze deluje kot predpostavka. 
+
+Naj bralca ne zmoti dejstvo, da smo označevali pridružitev izjave h kontekstu ter združitev dveh izjav v kontekst z enako oznako ``\(,\)''. Kontekst namreč predstavlja izjave \(A_1, \ldots A_n\), torej notacija \(\G, A\) predstavlja \(A_1, \ldots A_n, A\). 
+
+Prav tako naj bralca ne zmoti pomankanje konteksta v zadnjem sklepu, namreč \(\G\) lahko predstavlja tudi prazen kontekst, torej smo še vedno upoštevali pravila sklepanja.
+Kljub temu, da nabor ponavadi v matematiki pomeni urejeno zaporedje, se tukaj zavedajmo, da zaporedje izjav v kontekstu ni pomembno.
 
 Pravilo uporabe za implikacijo je enostavnejše.
 %
 \begin{prooftree}
-    \AXC{\(A \implies B\) \tru}
-    \AXC{\(A\) \tru}
+    \AXC{\(\G \vdash A \implies B\)}
+    \AXC{\(\G \vdash A\)}
     \RL{\(\Rightarrow E\)}
-    \BIC{\(B\) \tru}
+    \BIC{\(\G \vdash B\)}
 \end{prooftree}
+%
+Če vemo da iz \(A\) sledi \(B\) in vemo \(A\), potem \(B\)
 
 \pravilo{Disjunkcija}
-Disjunkcija ima dva pravila vpeljave.
+Disjunkcija ima levo in desno pravilo vpeljave.
 %
 \begin{equation*}
     \begin{bprooftree}
@@ -132,98 +151,104 @@ Disjunkcija ima dva pravila vpeljave.
     \end{bprooftree}
 \end{equation*}
 %
-Ko v dokazu želimo uporabiti disjunkcijo, ločimo na dva primera, če velja desna ali leva stan disjunkcije.
+Ko v dokazu želimo uporabiti disjunkcijo, ne vemo, ali drži leva ali desna stran. Torej ju ločimo in pokažemo, da iz obeh lahko dobim željen cilj.
 %
-% TODO: boljši način disjunkcije
 \begin{prooftree}
-    \AXC{\(A \lor B\)}
+    \AXC{\(\G \vdash A \lor B\)}
 
-    \AXC{}
-    \RL{\(u\)}
-    \UIC{\(A\) \tru}
-    \noLine
-    \UIC{\(\vdots\)}
-    \noLine
-    \UIC{\(C\) \tru}
+    \AXC{\(\G, A \vdash C\)}
 
-    \AXC{}
-    \RL{\(w\)}
-    \UIC{\(B\) \tru}
-    \noLine
-    \UIC{\(\vdots\)}
-    \noLine
-    \UIC{\(C\) \tru}
-    \RL{\(\lor E^{u, w}\) }
-    \TIC{\(C\) \tru}
+    \AXC{\(\G, B \vdash C\)}
+    \RL{\(\lor E\) }
+    \TIC{\(\G \vdash C\) \tru}
 \end{prooftree}
 %
 Vidimo da je to pravilo sklepanja podobno pravilu uporabe za implikacijo, saj je spet potrebno pokazazati, da iz \(A\) lahko dobimo \(C\), kot da bi vpeljali implikacijo. 
-In spet oznaka \(E^{u, v}\) pove, da ne moremo uporabiti sodb na vejah med \(u\) in \(E^{u, v}\) in med \(w\) in \(E^{u, v}\) nikjer drugje.
-Poglejmo si primer kako uporabimo implikacijo, tako da dokažemo \((A \lor B) \implies (B \lor A)\). % \cite[stran 11]{pfenning2009lecture}
+Poglejmo si primer kako uporabimo disjunkcijo, tako da dokažemo \((A \lor B) \implies (B \lor A)\). Najprej si samo vizualizirajmo, kaj splo želimo dokazati.
+% TODO: subskripti L, D pri V I
 %
 \begin{prooftree}
     \AXC{}
-    \RL{\(u\)}
-    \UIC{\(A \lor B\) \tru}
+    \RL{hip}
+    \UIC{\(A \lor B \vdash A \lor B\)}
     \noLine
     \UIC{\(\vdots\)}
     \noLine
-    \UIC{\(B \lor A\) \tru}
-    \RL{\(\Rightarrow I^u\)}
-    \UIC{\((A  \lor B) \implies (B \lor A)\)}
+    \UIC{\(A \lor B \vdash B \lor A\)}
+    \RL{\(\Rightarrow I\)}
+    \UIC{\( \vdash (A  \lor B) \implies (B \lor A)\)}
 \end{prooftree}
 %
 Nadaljujemo na edini način,  ki nam je na voljo in sicer razdelitev \(A \lor B\) na primere.
+%
 \begin{prooftree}
     \AXC{}
-    \RL{\(u\)}
-    \UIC{\(A \lor B\) \tru}
+    \RL{hip}
+    \UIC{\(A \lor B \vdash A \lor B\)}
+    \AXC{?}
+    \UIC{\(A \lor B, A \vdash B \lor A\)}
+    \AXC{?}
+    \UIC{\(A \lor B, B \vdash B \lor A\)}
+    \RL{\(\lor E\)}
+    \TIC{\(A \lor B \vdash B \lor A\)}
+    \RL{\(\Rightarrow I\)}
+    \UIC{\( \vdash (A  \lor B) \implies (B \lor A)\)}
+\end{prooftree}
 
-    \AXC{}
-    \RL{\(w\)}
-    \UIC{\(A\) \tru}
-    \noLine
-    \UIC{\(\vdots\)}
-    \noLine
-    \UIC{\(B \lor A\) \tru}
-
-    \AXC{}
-    \RL{\(v\)}
-    \UIC{\(B\) \tru}
-    \noLine
-    \UIC{\(\vdots\)}
-    \noLine
-    \UIC{\(B \lor A\) \tru}
-
-    \RL{\(\lor E^{v, w}\)}
-    \TIC{\(B \lor A\) \tru}
-    \RL{\(\Rightarrow I^u\)}
-    \UIC{\((A \lor B) \implies (B \lor A)\)}
+Moramo samo še ugotoviti, kaj napisati namesto vprašajev.
+Lotimo se manjšega podprimera.
+\begin{prooftree}
+    \AXC{?}
+    \UIC{\(A \lor B, A \vdash B \lor A\)}
 \end{prooftree}
 %
-Od tu je nadaljevanje preprosto, saj uporabimo le pravila vpeljave za disjunkcijo.
+Glede na to, da v sklepu potrebujemo dijunkcijo, lahko poskusimo vpeljati to disjunkcijo. 
+\begin{prooftree}
+    \AXC{?}
+    \UIC{\(A \lor B, A \vdash A\)}
+    \RL{\(\lor I\)}
+    \UIC{\(A \lor B, A \vdash B \lor A\)}
+\end{prooftree}
+%
+Da iz konteksta \(A \lor B, A\) lahko vzamemo \(A\) pa nam pove pravilo hipoteze.
 %
 \begin{prooftree}
     \AXC{}
-    \RL{\(u\)}
-    \UIC{\(A \lor B\) \tru}
+    \RL{hip}
+    \UIC{\(A \lor B, A \vdash A\)}
+    \RL{\(\lor I\)}
+    \UIC{\(A \lor B, A \vdash B \lor A\)}
+\end{prooftree}
+%
+Simetrično dobimo dokaz 
+\begin{prooftree}
+    \AXC{}
+    \UIC{\(A \lor B, B \vdash B \lor A\)}
+\end{prooftree}
+%
+Vstavimo to v naš večji dokaz, da dobimo celotno izpeljavo z osnovnimi pravili.
+%
+\begin{prooftree}
+    \AXC{}
+    \RL{hip}
+    \UIC{\(A \lor B \vdash A \lor B\)}
 
     \AXC{}
-    \RL{\(w\)}
-    \UIC{\(A\) \tru}
-    \RL{\(\lor I_D\)}
-    \UIC{\(B \lor A\) \tru}
+    \RL{hip}
+    \UIC{\(A \lor B, A \vdash A\)}
+    \RL{\(\lor I\)}
+    \UIC{\(A \lor B, A \vdash B \lor A\)}
 
     \AXC{}
-    \RL{\(v\)}
-    \UIC{\(B\) \tru}
-    \RL{\(\lor I_L\)}
-    \UIC{\(B \lor A\) \tru}
+    \RL{hip}
+    \UIC{\(A \lor B, B \vdash B\)}
+    \RL{\(\lor I\)}
+    \UIC{\(A \lor B, B \vdash B \lor A\)}
 
-    \RL{\(\lor E^{v, w}\)}
-    \TIC{\(B \lor A\) \tru}
-    \RL{\(\Rightarrow I^u\)}
-    \UIC{\((A \lor B) \implies (B \lor A)\)}
+    \RL{\(\lor E\)}
+    \TIC{\(A \lor B \vdash B \lor A\)}
+    \RL{\(\Rightarrow I\)}
+    \UIC{\( \vdash (A  \lor B) \implies (B \lor A)\)}
 \end{prooftree}
 
 V kasnejših poglavjih bomo povedali še pravila za eksistenčni in univerzalni kvantifikator ter za negacijo. 

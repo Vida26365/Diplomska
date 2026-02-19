@@ -1,5 +1,5 @@
-Matematične dokaze iz logike lahko interpretiramo kot računalniške programe ali pa kot sklepe v teoriji tipov. 
-Notacija je zelo podobna, kot ta ki smo jo obravnavali v prejšnjem poglavju. Spodaj je primerjava pravil sklepanja.
+Matematične dokaze iz logike lahko interpretiramo kot računalniške programe,ali pa kot sklepe v teoriji tipov. 
+Notacija je zelo podobna kot ta, ki smo jo obravnavali v prejšnjem poglavju. Spodaj je primerjava pravil sklepanja.
 
 \pravilo{Produktni tip}
 \begin{align*}
@@ -49,39 +49,29 @@ Na tej točki je spet potrebno pojasniti nekaj notacije. Kot že rečeno, \(\G\)
 \(\G \vdash A\) se imenuje \emph{sekvent}~\cite[L2.8]{truthIsEphemeral} in pravi, da iz konteksta \(\G\) lahko vzamemo \(A\), da ga uporabimo naprej. % TODO: poenoti pojavitve razložitve \G
 Podobno interpretiramo sekvent tudi v teoriji tipov. Se pravi \(\G \vdash a:A\) V kontekstu \(G\) lahko uporabimo element \(a\) tipa \(A\), kjer je kontekst v tem primeru končen nabor tipov, katerih elemente lahko uporabljamo. 
 
-Izpostavimo dejstvo, da nismo povedali ``kaj'' je prosuktni tip, le kako ga konstruiramo in uporabljamo, namreč ni zares pomembno kako izgleda posamezen tip, vendar kako ga uporabljamo. Torej na nek način so tipi bolj abstraktna stvar kot izjave. Ampak kljub temu, nam povedo nekaj več, namreč kljub temu, da imamo večji poudarkih na tipih, operiramo z elementi. Pravila sklepanja nam v teoriji tipov pokažejo kako konstruiramo konkretne elemente iz elementov drugih tipov. Torej iz \(a\) tipa \(A\) in iz \(b\) tipa \(B\) vemo kako konstruirati element \((a, b)\) tipa \(A \times B\).
+Izpostavimo dejstvo, da nismo povedali ``kaj'' je pravzaprav tip, le kako ga konstruiramo in uporabljamo. Namreč ni zares pomembno kako ``izgleda'' posamezen tip, vendar kako ga uporabljamo. Torej na nek način so tipi bolj abstraktna stvar kot izjave. Ampak kljub temu, nam povedo nekaj bolj konkretnega, namreč operiramo z elementi. Pravila sklepanja nam v teoriji tipov pokažejo kako konstruiramo konkretne elemente iz elementov drugih tipov. Torej vemo kako iz \(a\) tipa \(A\) in iz \(b\) tipa \(B\) konstruirati element \((a, b)\) tipa \(A \times B\).
 To lahko naredimo, ker v teoriji tipov nimamo le pravil vpeljave in uporabe, temveč tudi pravila računanja. % TODO: \cite predavanja sipsona logika v računalništvu
-S temi pravili dobimo predpis, kako dobimo \(a:A\) in \(b:B\) iz \(A\times B\). % TODO: \cite{Jazbec}
+Z njimi lahko dobimo eksplicitne zapise elementov konstruiranih tipov. 
+
+Za produktni tip imamo naslednji pravili računanja. % TODO: \cite{Jazbec}
 %
 \begin{align*}
     &fst((a, b)) :\equiv a & snd((a, b)) :\equiv b&
 \end{align*}
 
 \pravilo{Funkcijski tip}
-% TODO: poenoti zapis z naravno dedukcijo
+% VPRAŠAJ: ni presledka za dvopičjem TODO
 % implikacija
 \begin{align*}
     \begin{bprooftree}
-        \AXC{\(\)}
-        \RL{\(u\)}
-        \UIC{\(\G \vdash A\) \tru}
-        \noLine
-        \UIC{\(\vdots\)}
-        \noLine
-        \UIC{\(\G \vdash B\) \tru}
-        \RL{\(\Rightarrow I^u\)}
-        \UIC{\(\G \vdash A \implies B\) \tru.}
+        \AXC{\(\G, A \vdash B\)}
+        \RL{\(\Rightarrow I\)}
+        \UIC{\(\G \vdash A \implies B\)}
     \end{bprooftree}
     \qquad&
     \begin{bprooftree}
-        \AXC{\(\)}
-        \RL{\(u\)}
-        \UIC{\(\G \vdash x: A\)}
-        \noLine
-        \UIC{\(\vdots\)}
-        \noLine
-        \UIC{\(\G \vdash b: B\)}
-        \RL{\(\rightarrow I^u\)}
+        \AXC{\(\G, x:A \vdash b: B\)}
+        \RL{\(\rightarrow I\)}
         \UIC{\(\G \vdash \la x:A. b : A \rightarrow B\)}
     \end{bprooftree}    
     \\\\
@@ -100,9 +90,9 @@ S temi pravili dobimo predpis, kako dobimo \(a:A\) in \(b:B\) iz \(A\times B\). 
 \end{bprooftree}
 \end{align*}
 %
-Pri vpeljavi funkcijskega tipa, je pomembna spremenlljivka \(x:A\). Pkazati moramo, da iz katerega koli elemenenta \(x:A\) lahko dobimo nek element \(b: B\), ki je lahko odsviden od \(x:A\). Potem lahko skonstruiramo funkcijo, ki vsakemu \(x\)-u predpiše pripadajoč \(b\). Predpis \(\la x:A. b : A \rightarrow B\) je v \(\la\)-notaciji. Pove da vežemo spremenljivko \(x\) tipa \(A\) in vrnemo izraz \(b\). To je funkcija tipa \(A \rightarrow B\).
+Pri vpeljavi funkcijskega tipa, je pomembna spremenlljivka \(x:A\). Pkazati moramo, da iz katerega koli elemenenta \(x:A\) lahko dobimo nek element \(b: B\), ki je lahko odsviden od \(x:A\). Potem lahko skonstruiramo funkcijo, ki vsakemu \(x\)-u predpiše pripadajoč \(b\). Predpis \(\la x:A. b : A \rightarrow B\) je v \(\la\)-notaciji. Pove, da vežemo spremenljivko \(x\) tipa \(A\) in vrnemo izraz \(b\). To je funkcija tipa \(A \rightarrow B\).
 
-Pri pravilu uporabe za funkijo je sklep zapisan z \(f~a : B\). To je ekvivalentno temu, da bi pisali \(f(a)\), vendar v teoriji tipov se navadno piše brez oklepajev. 
+Pri pravilu uporabe za funkijo je sklep zapisan z \(f~a : B\). To je ekvivalentno temu, da bi pisali \(f(a)\), vendar v teoriji tipov navadno pišemo funkcije brez oklepajev. 
 
 Pravilo računanja za funkcijski tip nam pove, kako se obnaša \(\la\)-račun.
 %
@@ -111,14 +101,15 @@ Pravilo računanja za funkcijski tip nam pove, kako se obnaša \(\la\)-račun.
 \end{equation*}
 %
 Operacijo \(b[x/u]\) imenujemo \emph{\(\beta\)-redukcija}, % Qcite predavanja od simpsona
-pomeni pa, da vse pojavitve \(x\) v \(b\) zamenjamo z \(u\), torej kot da bi evalvirali funkcijo \(b(x)\) v točki \(u\). Sicer \(b\) ni nujno funkcijskega tipa, vendar je vseeno lahko odvisna od \(x\).
+pomeni pa, da vse pojavitve \(x\) v \(b\) zamenjamo z \(u\), torej kot da bi evalvirali funkcijo \(b(x)\) v točki \(u\). Sicer \(b\) ni nujno funkcijskega tipa, vendar je vseeno lahko odvisen od \(x\).
+
 Pozorni moramo biti, da ponesreči ne spremenimo pomena elementa \(b:B\), namreč \((\la x: A. \la y: B. x)[y / x] \neq \la x: A. \la x: B. x\) \footnote{Izraz na desni strani neenakosti ni validen, saj dvakrat vežemo isto spremenljivko}. Najprej moramo vse vezane spremenljivke preimenovati.
 \begin{equation*}
     (\la x: A. \la y: B. x)[y / x] = 
     (\la z: A. \la y: B. z)[y / x] =
     \la z: A. \la x: B. z
 \end{equation*}
-Pri tem primeru bodio še pozorni na to, da tu ne evalviramo funkcije v neki točki, temveč preimenujemo vezane spremenljivke. Če bi želeli evalviratu ta labda račun v nekem elementu \(y: A\) bi napisali
+Pozor! Pri tem primer ne evalviramo funkcije v neki točki, temveč preimenujemo vezane spremenljivke. Če bi želeli evalviratu ta labda račun v nekem elementu \(y: A\) bi napisali
 \begin{equation*}
     (\la x: A. \la y: B. x) y =
     (\la y: B. x)[x / y] = 
@@ -163,51 +154,29 @@ Dobili bi torej \(\la\)-funkcijo, ki vse elemente iz \(B\) slika v \(y:A\).
 \begin{align*}
     &\begin{bprooftree}
     \AXC{\(\G \vdash A \lor B\)}
+%   
+    \AXC{\(\G, A \vdash C\)}
 %
-    \AXC{}
-    \RL{\(u\)}
-    \UIC{\(\G \vdash A\) \tru}
-    \noLine
-    \UIC{\(\vdots\)}
-    \noLine
-    \UIC{\(\G \vdash C\) \tru}
+    \AXC{\(\G \vdash C\)}
 %
-    \AXC{}
-    \RL{\(w\)}
-    \UIC{\(\G \vdash B\) \tru}
-    \noLine
-    \UIC{\(\vdots\)}
-    \noLine
-    \UIC{\(\G \vdash C\) \tru}
-    \RL{\(\lor E^{u, w}\) }
-    \TIC{\(\G \vdash C\) \tru}
+    \RL{\(\lor E\) }
+    \TIC{\(\G \vdash C\)}
 \end{bprooftree}
 \\\\
 &\begin{bprooftree}
     \AXC{\(\G \vdash c: A + B\)}
 %
-    \AXC{}
-    \RL{\(u\)}
-    \UIC{\(\G \vdash x:A\)}
-    \noLine
-    \UIC{\(\vdots\)}
-    \noLine
-    \UIC{\(\G \vdash a:C\)}
+    \AXC{\(\G, x:A \vdash a:C\)}
 %
-    \AXC{}
-    \RL{\(w\)}
-    \UIC{\(\G \vdash y:B\)}
-    \noLine
-    \UIC{\(\vdots\)}
-    \noLine
-    \UIC{\(\G \vdash b:C\)}
-    \RL{\(+ E^{u, w}\) }
+    \AXC{\(\G, y: B \vdash b:C\)}
+%
+    \RL{\(+ E\) }
     \TIC{\( \G \vdash (\cd{case } c \cd{ of } in_1(x) \mapsto a | in_2(y) \mapsto b\)) : C}
 \end{bprooftree}
 \end{align*}
 %
 Tako kot pri funkcijskem tipu, moramo najti način, da za vsak element \(x:A\) lahko dobimo \(a:C\) in za vsak element \(y:B\) najdemo \(b:C\). To nam zagotovi, da lahko za element \(c: A+B\) najdemo nek element tipa \(C\).
-% TODO: Kaj to sploh piše. Mogoče sem malce preveč zaspana
+% TODO: Popravi oznake
 
 Za vsotni tip imamo dva računska pravila.
 %
