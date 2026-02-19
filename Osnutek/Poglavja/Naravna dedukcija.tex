@@ -1,5 +1,9 @@
 V tem poglavju bomo najprej predstavili pravila sklepanja na katerih temelji naravna dedukcija oziroma ``standardna'' logika in s tem bomo tudi predstavili notacijo, ki bo uporabljena v tem diplomskem delu.
 
+
+% TODO: Pravilo hipoteze
+% TODO: odstrani \tru
+
 \pravilo{Konjunkcija} 
 Pravilo vpeljave za konjunkcijo pravi, če sta izjavi \(A\) in \(B\) res, potem je tudi izjava \(A\) in \(B\) res. To lahko zapišemo kot
 %
@@ -10,7 +14,7 @@ Pravilo vpeljave za konjunkcijo pravi, če sta izjavi \(A\) in \(B\) res, potem 
     \BIC{\(A \land B\) \tru}
 \end{prooftree}
 %
-Nad črto zapišemo končno število predpostavk in pod črto zapišemo sklep. Desno od črte zapišemo ime pravila, ki ga ponavadi okrajšamo. V našem primeru \(\land\)I predstavlja pravilo vpeljave za konjuncijo (ang.~conjunction introduction). 
+Nad črto zapišemo končno mnogo predpostavk in pod črto zapišemo \emph{sklep}. Desno od črte zapišemo ime pravila, ki ga ponavadi okrajšamo. V našem primeru \(\land\)I predstavlja pravilo vpeljave za konjuncijo (ang.~conjunction introduction). 
 Splošna oblika pravila sklepanja je torej oblike
 %
 \begin{prooftree}
@@ -18,13 +22,15 @@ Splošna oblika pravila sklepanja je torej oblike
     \AXC{\(\mathcal{H}_2\)}
     \AXC{\(\ldots\)}
     \AXC{\(\mathcal{H}_n\)}
-    \RL{ime}
+    \RL{ime.}
     \QuaternaryInfC{\(\mathcal{S}\)}
 \end{prooftree}
 %
-kjer so \(\mathcal{H}_1, \ldots \mathcal{H}_n\) \emph{premise} in \(\mathcal{S}\) sklep
+Izjavam \(S, \mathcal{H}_1, \ldots \mathcal{H}_n\) pravimo sodbe~\cite[Section 2]{pfenning2009lecture}.
+Sodbam \(\mathcal{H}_1, \ldots \mathcal{H}_n\) pravimo \emph{premise} in  \(\mathcal{S}\) je \emph{sklep}
 %~\cite[stran 7]{Jazbec_2022}. 
-Izjavam \(S, \mathcal{H}_1, \ldots \mathcal{H}_n\) pravimo sodbe~\cite[Section 2]{pfenning2009lecture}. Kasneje bomo videli kako lahko taka pravila sestavljamo skupaj, da dobimo izpeljana pravila. Takim zapisov dokazov pravimo \emph{sklepna drevesa}. Navadno pišemo zraven še kontekst, ki ga ponavadi označimo z \(\Gamma\). Sodba \(\G \vdash A\) pravi, da iz konteksta \(\G\) lahko vzamemo izjavo \(A\) in jo uporabimo. % \cite homotopy type theory, poglavje 1.1
+. Kasneje bomo videli kako lahko taka pravila sestavljamo skupaj, da dobimo izpeljana pravila. Takim zapisov dokazov pravimo \emph{sklepna drevesa}. % TODO: vir
+Navadno pišemo zraven še kontekst, ki ga ponavadi označimo z \(\Gamma\). Sodba \(\G \vdash A\) pravi, da iz konteksta \(\G\) lahko vzamemo izjavo \(A\) in jo uporabimo. % \cite homotopy type theory, poglavje 1.1
 %
 \begin{prooftree}
     \AXC{\(\G \vdash A\) \tru}
@@ -33,46 +39,56 @@ Izjavam \(S, \mathcal{H}_1, \ldots \mathcal{H}_n\) pravimo sodbe~\cite[Section 2
     \BIC{\(\G \vdash A \land B\) \tru}
 \end{prooftree}
 %
-Torej to preberemo, kot če imamo poljubni resnični izjavi \(A\) in \(B\), potem v tem kontekstu velja tudi \(A \land B\). V tem poglvju zaradi preglednosti ne bomo pisali zraven konteksta, vendar bo v kasnjejših poglavjih igral pomembno vlogo za razumevanje. % TODO: Slabo napisan stavek
+Torej to preberemo, kot če imamo poljubni resnični izjavi \(A\) in \(B\), potem v tem kontekstu velja tudi \(A \land B\).
+%  V tem poglvju zaradi preglednosti ne bomo pisali zraven konteksta, vendar bo v kasnjejših poglavjih igral pomembno vlogo za razumevanje. %  Slabo napisan stavek
 
 Za konjunkcijo imamo dva pravila uporabe (ang.~elimination rule).
 %
 \begin{equation*}
     \begin{bprooftree}
-        \AXC{\(A \land B\) \tru}
+        \AXC{\(\G \vdash A \land B\) \tru}
         \RL{\(\land E_L\)}
-        \UIC{\(A\) \tru}
+        \UIC{\(\G \vdash A\) \tru}
     \end{bprooftree}
     \qquad
      \begin{bprooftree}
-        \AXC{\(A \land B\) \tru}
+        \AXC{\(\G \vdash A \land B\) \tru}
         \RL{\(\land E_D\)}
-        \UIC{\(A\) \tru}
+        \UIC{\(\G \vdash A\) \tru}
     \end{bprooftree}
 \end{equation*}
 
 \pravilo{Implikacija}
 Malce bolj zahtevno pravilo vpeljave ima implikacija. Pravilo se glasi, če lahko iz \(A\) izpeljemo \(B\) potem velja \(A \implies B\). To zapišemo kot
 %
+% \begin{prooftree} % TODO: Ali se res tako označi. Izpeljava, poeenotenje
+%     \AXC{\(\cdot\)}
+%     \RL{\(u\)}
+%     \UIC{\(A\) \tru}
+%     \noLine
+%     \UIC{\(\vdots\)}
+%     \noLine
+%     \UIC{\(B\) \tru}
+%     \RL{\(\Rightarrow I^u\)}
+%     \UIC{\(A \implies B\) \tru.}
+% \end{prooftree}
+
 \begin{prooftree}
-    \AXC{\(\cdot\)}
-    \RL{\(u\)}
-    \UIC{\(A\) \tru}
-    \noLine
-    \UIC{\(\vdots\)}
-    \noLine
-    \UIC{\(B\) \tru}
-    \RL{\(\Rightarrow I^u\)}
-    \UIC{\(A \implies B\) \tru.}
+    \AXC{\(\G, A \vdash B\)}
+    \RL{\(\Rightarrow I\)}
+    \UIC{\(\G \vdash A \implies B\)}
 \end{prooftree}
 %
-% TODO: grozn, grozn, grozn odstavk. Odtsani besedo predpostavka, in odstrani piko, ker je kasneje nikoli ne uporabim
-Tri pike \(\vdots\) predstavljajo, da iz \(A\) pokažemo \(B\). Na vrhu \(\cdot\) predstavlja prazn nabor premis. Navadno se pike ne piše in se pusti prostor nad črto prazen. Tu je napisana, da poudarimo, da nimamo začetnih pogojev. Ne predpostavimo, da \(A\) velja in potem pokažemo \(B\), temveč brez dodatnih predpostavk pokažemo, da iz \(A\) sledi \(B\). Končno pravilo označimo z \(\Rightarrow I^u\), da poudarimo, da implikacija pride iz vrhnjega pravila označenega s črko \(u\).
+% TODO: spremenjena implikacija
+Tri pike \(\vdots\) predstavljajo, da iz \(A\) pokažemo \(B\). Na vrhu \(\cdot\) predstavlja prazn nabor premis. 
+Navadno se pike ne piše in se pusti prostor nad črto prazen. Tu je napisana, da poudarimo, da nimamo začetnih pogojev. 
+Ne predpostavimo, da \(A\) velja in potem pokažemo \(B\), temveč brez dodatnih predpostavk pokažemo, da iz \(A\) sledi \(B\). Končno pravilo označimo z \(\Rightarrow I^u\), da poudarimo, da implikacija pride iz vrhnjega pravila označenega s črko \(u\).
 Pomembno je, da \(A\), kasneje v dokazu ne moremo več uporabiti, namreč predpostavili smo \(A\) samo zato da lahko dokažemo \(A \implies B\), vendar \(A\) ne drži nujno na splošno. Zato takoj ko uporabimo pravilo \(I^u\), se veja drevesa od \(u\) do \(I^u\) zapre. Nikjer drugje ne moremo uporabiti več sodb, ki smo jih dobili pod pogojem da smo predpostavili \(A\)
 
 
 Za lažje razumevanje notacije pravila si poglejmo primer dokaza za \(A \Rightarrow (B \Rightarrow (A \land B))\)~\cite[stran 6]{pfenning2009lecture}.
 %
+% TODO: spremeni potek dokaza
 \begin{prooftree}
     \AXC{}
     \RL{\(u\)}
@@ -105,19 +121,20 @@ Disjunkcija ima dva pravila vpeljave.
 %
 \begin{equation*}
     \begin{bprooftree}
-        \AXC{\(A\) \tru}
+        \AXC{\(\G \vdash A\) \tru}
         \RL{\(\lor I_L\)}
-        \UIC{\(A \lor B\) \tru}
+        \UIC{\(\G \vdash A \lor B\) \tru}
     \end{bprooftree}
     \begin{bprooftree}
-        \AXC{\(B\) \tru}
+        \AXC{\(\G \vdash B\) \tru}
         \RL{\(\lor I_D\)}
-        \UIC{\(A \lor B\) \tru}
+        \UIC{\(\G \vdash A \lor B\) \tru}
     \end{bprooftree}
 \end{equation*}
 %
 Ko v dokazu želimo uporabiti disjunkcijo, ločimo na dva primera, če velja desna ali leva stan disjunkcije.
 %
+% TODO: boljši način disjunkcije
 \begin{prooftree}
     \AXC{\(A \lor B\)}
 
