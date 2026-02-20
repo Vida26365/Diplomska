@@ -1,4 +1,4 @@
-Sedaj lahko predstavimo linearno logiko. Glavna lastnost v linearni logiki je, da vsako premiso uporabiš natanko enkrat. Na prvi pogled se to zdi nenavadno, saj si resnico predstavljamo, kot neodvisno od tega ali smo jo že uporabili ali ne. Vendar videli bomo, da linearna logika v veliko primerih bolje opiše svet.
+Sedaj lahko predstavimo linearno logiko. Glavna lastnost v linearni logiki je, da vsako premiso uporabimo natanko enkrat. Na prvi pogled se to zdi nenavadno, saj si resnico predstavljamo, kot neodvisno od tega ali smo jo že uporabili ali ne. Vendar videli bomo, da linearna logika v veliko primerih bolje opiše svet.
 
 Recimo, da stojimo pred avtomatom. Avtomat sprejema samo kovance za 50c in 1€ in potrebno je vstaviti točen znesek. Na avtomatu si lahko kupimo čokoladico za 1€, bombončke za 50c ali pa sladko pijačo za 1€. To lahko predstavimo s pravili sklepanja.
 %
@@ -20,7 +20,7 @@ Recimo, da stojimo pred avtomatom. Avtomat sprejema samo kovance za 50c in 1€ 
 \end{align*}
 %
 Recimo, da imamo tri kovance za 1€ in štiri kovance za 50c.
-Skupina naslednjih sklepov je veljavna v linearni logiki.
+Skupina naslednjih sklepov je veljavna v linearni logiki, če jih naredimo skupaj.
 %
 \begin{align*}
     \begin{bprooftree}
@@ -51,10 +51,10 @@ Skupina naslednjih sklepov je veljavna v linearni logiki.
     \end{bprooftree}
 \end{align*}
 %
-Vidimo, da se vrednost ne izgubi. Začeli smo z 5€ in dobili ven 5€ vrednosti stvari. Ne moremo ničesar izgubiti in prav tako ne moremo ničesar pridobiti. Istega kovanca ne moremo uporabiti dvakrat, torej so sklepi, ki jih imamo na voljo odvisni od stanja virov in vsakič ko uporabimo sklep spremenimo stanje virov. 
+Vidimo, da se vrednost ne izgubi. Začeli smo z 5€ in dobili ven stvari v vrdnosti 5€. Ne moremo ničesar izgubiti in prav tako ne moremo ničesar pridobiti. Istega kovanca ne moremo uporabiti dvakrat, torej so sklepi, ki jih imamo na voljo odvisni od stanja virov in vsakič ko uporabimo sklep spremenimo stanje virov. 
 
 \pravilo{Hkratna konjunkcija}
-Recimo da lahko s pomočjo konteksta \(\G\) pokažemo izjavo \(A\) in s pomočjo konteksta \(\D\) pokažemo izjavo \(B\), Potem lahko s kontekstom \(\G, \D\) pokažemo da velja \(A\) in \(B\). Oznaka za tako konjunkcijo v linearni logiki je tenzor \(A \otimes B\). 
+Recimo, da lahko s pomočjo konteksta \(\G\) pokažemo izjavo \(A\) in s pomočjo konteksta \(\D\) pokažemo izjavo \(B\), Potem lahko s kontekstom \(\G, \D\) pokažemo da velja \(A\) in \(B\). Oznaka za tako konjunkcijo v linearni logiki je tenzor \(A \otimes B\). 
 %
 \begin{prooftree}
     \AXC{\(\G \vdash A\)}
@@ -63,41 +63,36 @@ Recimo da lahko s pomočjo konteksta \(\G\) pokažemo izjavo \(A\) in s pomočjo
     \BIC{\(\G, \D \vdash A \otimes B\)}
 \end{prooftree}
 %
-Konteksta \(\G\) in \(\D\) združimo, oziroma \emph{konkateriramo} glede na spodnja pravila. % \cite pfeninng
-\begin{align*}
-    \G, (\D, u:A) = (\G, \D), u:A =(\G, u:A), \D
-\end{align*}
-%
-Pri zgornji enakosti ``\(,\)'' predstavlja dve različni operaciji. Ena operacija združi kontekste, druga pa kontekstu pridruži izjavo imenovano \(u\). V našem primeru kovancev, bi \(A\) predstavljal ``imam kovanec za 1€'', specifični konvenac, ki dokazuje to trditev, pa je označen z \(u\).
 
-Glede na to, da \(\otimes\) predstavlja konjunkcijo, bi lahko zmotno mislili, da je pravilo uporabe za \(\otimes\), enako kot za \(\la\), vendar pravilo za uporabo \(land\) izgubi del informacije.
+Glede na to, da \(\otimes\) predstavlja konjunkcijo, bi lahko zmotno mislili, da je pravilo uporabe za \(\otimes\), enako kot za \(\la\), vendar pravilo za uporabo \(\land\) izgubi del informacije.
 %
 \begin{prooftree}
-        \AXC{\(A \land B\) \tru}
+        \AXC{\(A \land B\)}
         \RL{\(\land E_L\)}
-        \UIC{\(A\) \tru}
+        \UIC{\(A\)}
 \end{prooftree}
 %
 Na vrhu imamo \(A\) in tudi \(B\), vendar v sklepu uporabimo samo \(A\). Ne seldimo pravilom linearne logike, ki pravi, da je potrebno vsako premiso uporabiti natanko enkrat. % TODO: premisa = vir?
 % TODO: od zdaj pravim temu vir in cilj
-Pravilo vpeljave hkratne konjunkcije pravi, če lahko dosežemo cilj \(C\) S pomočjo virov \(u:A\) in \(w:B\) in če imamo \(A \otimes B\), lahko dosežemo cilj \(C\).
+Pravilo vpeljave hkratne konjunkcije pravi, če lahko dosežemo cilj \(C\) S pomočjo virov \(A\) in \(B\) in če imamo \(A \otimes B\), lahko dosežemo cilj \(C\).
 %
-% TODO: odstrani u, w
 \begin{prooftree}
     \AXC{\(\G \vdash A \otimes B\)}
-    \AXC{\(\D, u: A, w: B \vdash C\)}
-    \RL{\(\otimes E^{u, w}\)}
+    \AXC{\(\D, A, B \vdash C\)}
+    \RL{\(\otimes E\)}
     \BIC{\(\G, \D \vdash C\)}
 \end{prooftree}
 %
-Oznaka \(U^{u,w}\) predstavlja, da sta vira označena z \(u\) in \(w\) porabljena, torej ju kasneje ne moremo več uporabiti.
 % Ali je res to smiselno na tej točki
 Na tej točki je smiselno omeniti, kaj v linearni logiki pomeni kontekst. To je tenzorski produkt \emph{virov} \(A_1 \otimes \ldots \otimes A_n = \G\). Navadno tenzorjev ne pišemo in vire preprosto ločimo z vejico \(A_1, \ldots A_n\). % cite luna
 Torej to nam pove, da morajo viri v kontekstu biti resnični oziroma na voljo v istem stanju.
 
-% TODO: delo s konteksti
-% TODO: razni tipi
-
+% Še vedno imamo imamo pravilo aksioma
+% %
+% \begin{prooftree}
+%     \AXC{}
+%     \UIC{\(\G, A \vdash A\)}
+% \end{prooftree}
 
 \pravilo{Alternativna konjunkcija}
 Recimo da imamo 1€. Potem sli lahko kupimo ali čokoladico ali pijačo, vendar ne oboje na enkrat. 
@@ -188,19 +183,16 @@ Izpeljano pravilo je torej
     \BIC{\(\G, \D \vdash B\)}
 \end{prooftree}
 
-\pravilo{Disjunkcija (zunanja izbira)}
+% \pravilo{Disjunkcija (zunanja izbira)}
 % TODO: disjunkcija v draftu, 20-lin ma L R, sublogics23 ima drugačno oznako
 % TODO: omemba druge disjunkcije
 
-%TODO: končan osnutek
-
-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%55
-\begin{prooftree}
-    \AXC{\(\G \vdash B\)}
-    \RL{weak}
-    \UIC{\(\G, A \vdash B\)}
-\end{prooftree}
+% \begin{prooftree}
+%     \AXC{\(\G \vdash B\)}
+%     \RL{weak}
+%     \UIC{\(\G, A \vdash B\)}
+% \end{prooftree}
 
 

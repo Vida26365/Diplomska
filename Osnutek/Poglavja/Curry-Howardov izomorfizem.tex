@@ -1,5 +1,5 @@
-Matematične dokaze iz logike lahko interpretiramo kot računalniške programe,ali pa kot sklepe v teoriji tipov. 
-Notacija je zelo podobna kot ta, ki smo jo obravnavali v prejšnjem poglavju. Spodaj je primerjava pravil sklepanja.
+Matematične dokaze iz logike lahko interpretiramo kot računalniške programe, ali pa kot sklepe v teoriji tipov. 
+Notacija je zelo podobna kot ta, ki smo jo obravnavali v prejšnjem poglavju. Spodaj je primerjava pravil sklepanja iz logike in teorije tipov.
 
 \pravilo{Produktni tip}
 \begin{align*}
@@ -17,9 +17,6 @@ Notacija je zelo podobna kot ta, ki smo jo obravnavali v prejšnjem poglavju. Sp
         \BIC{\(\G \vdash (a,b): A \times B\)}
     \end{bprooftree}
     \\\\
-% \end{align*}
-% %
-% \begin{align*}
     \begin{bprooftree}
         \AXC{\(\G \vdash A \land B\) \tru}
         \RL{\(\land E_L\)}
@@ -90,7 +87,7 @@ Za produktni tip imamo naslednji pravili računanja. % TODO: \cite{Jazbec}
 \end{bprooftree}
 \end{align*}
 %
-Pri vpeljavi funkcijskega tipa, je pomembna spremenlljivka \(x:A\). Pkazati moramo, da iz katerega koli elemenenta \(x:A\) lahko dobimo nek element \(b: B\), ki je lahko odsviden od \(x:A\). Potem lahko skonstruiramo funkcijo, ki vsakemu \(x\)-u predpiše pripadajoč \(b\). Predpis \(\la x:A. b : A \rightarrow B\) je v \(\la\)-notaciji. Pove, da vežemo spremenljivko \(x\) tipa \(A\) in vrnemo izraz \(b\). To je funkcija tipa \(A \rightarrow B\).
+Pri vpeljavi funkcijskega tipa, je pomembna spremenlljivka \(x : A\). Pkazati moramo, da iz katerega koli elemenenta \(x:A\) lahko dobimo nek element \(b: B\), ki je lahko odsviden od \(x:A\). Potem lahko skonstruiramo funkcijo, ki vsakemu \(x\)-u predpiše pripadajoč \(b\). Predpis \(\la x:A. b : A \rightarrow B\) je v \(\la\)-notaciji. Pove, da vežemo spremenljivko \(x\) tipa \(A\) in vrnemo izraz \(b\). To je funkcija tipa \(A \rightarrow B\).
 
 Pri pravilu uporabe za funkijo je sklep zapisan z \(f~a : B\). To je ekvivalentno temu, da bi pisali \(f(a)\), vendar v teoriji tipov navadno pišemo funkcije brez oklepajev. 
 
@@ -119,10 +116,10 @@ Pozor! Pri tem primer ne evalviramo funkcije v neki točki, temveč preimenujemo
 %
 Dobili bi torej \(\la\)-funkcijo, ki vse elemente iz \(B\) slika v \(y:A\).
 % TODO: Poenoti izraz lambda račun / lambda funkcija / \la-neki VPRAŠAJ
+% TODO: To ni ista stvar
 
 
 \pravilo{Vsotni tip}
-% TODO: poenoti zapis z naravno dedukcijo
 % Disjunkcija
 \begin{align*}
     \begin{bprooftree}
