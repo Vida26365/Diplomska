@@ -11,7 +11,7 @@ Pravilo vpeljave za konjunkcijo pravi, če sta izjavi \(A\) in \(B\) resični, p
     \BIC{\(A \land B\) \tru}
 \end{prooftree}
 %
-Nad črto zapišemo končno mnogo predpostavk in pod črto zapišemo \emph{sklep}. Desno od črte zapišemo ime pravila, ki ga ponavadi okrajšamo. V našem primeru \(\land\)I predstavlja pravilo vpeljave za konjuncijo (ang.~conjunction introduction). 
+Nad črto zapišemo končno mnogo premis in pod črto zapišemo \emph{sklep}. Desno od črte zapišemo ime pravila, ki ga ponavadi okrajšamo. V našem primeru \(\land\)I predstavlja pravilo vpeljave za konjuncijo (ang.~conjunction introduction). 
 Splošna oblika pravila sklepanja je torej
 %
 \begin{prooftree}
@@ -220,13 +220,13 @@ Vstavimo to v naš večji dokaz, da dobimo celotno izpeljavo z osnovnimi pravili
     \AXC{}
     \RL{\emph{Ax}}
     \UIC{\(A \lor B, A \vdash A\)}
-    \RL{\(\lor I\)}
+    \RL{\(\lor I_D\)}
     \UIC{\(A \lor B, A \vdash B \lor A\)}
 
     \AXC{}
     \RL{\emph{Ax}}
     \UIC{\(A \lor B, B \vdash B\)}
-    \RL{\(\lor I\)}
+    \RL{\(\lor I_L\)}
     \UIC{\(A \lor B, B \vdash B \lor A\)}
 
     \RL{\(\lor E\)}
