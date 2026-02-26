@@ -14,20 +14,6 @@
 \usepackage{graphicx} 
 \usepackage{subcaption}
 
-\usepackage{nameref}
-
-
-% \newtheorem{theorem}{Izrek}
-% \newtheorem{lemma}{Lema}
-% \newtheorem*{remark}{Opomba}
-
-% \newcommand{\p}{\mathbb{P}}
-% \newcommand{\N}{\mathbb{N}}
-% \newcommand{\la}[2]{\lambda_{#1} (#2)}
-% \newcommand{\pnk}[2]{{#1}^{(#2)}}
-% \newcommand{\dnk}{{2}^{(k)}}
-% \newcommand{\lak}{\(\lambda_k\)}
-% \newcommand{\z}{\zeta}
 %
 
 % Okrajšave, ker je v dokumentaciji orajšano, in je lažje primerjati kodo z dokumentacijo
@@ -56,15 +42,41 @@
   {\leavevmode\hbox\bgroup}
   {\DisplayProof\egroup}
 
-\title{Linearni tipi}
-\author{Vida Mlinar}
-\date{}
 
 
 \begin{document}
-%Dokazovalno drevo je ta zapis
-% sekventni račun
-% v toriji tipov, teoriji dokazov
+
+\begin{titlepage}
+    {\centering
+    \includegraphics[width=9cm]{fmf-logo-home-sl.pdf} 
+    
+    \vspace{0.8cm}
+    
+    \vspace{5cm}
+    \vspace{0.5cm}
+    {\Huge\textbf{Linearni sistemi tipov}} \\
+    \vspace{0.5cm}
+    Skupina Strnadi\\
+    \vspace{0.5cm}
+    \large{Fakulteta za matematiko in fiziko, \\
+    Oddelek za matematiko}
+    
+    \vfill
+
+    \textbf{Vida Mlinar} \\
+    
+    \vspace{1cm}
+    
+    % \begin{center}
+    %     {Ljubljana, \\
+    %     datum}
+    % \end{center}
+    }
+    \vspace{3cm}
+\end{titlepage}
+
+\pagenumbering{arabic}
+
 
 %sekvent gama v delta
 
@@ -72,10 +84,6 @@
 V tem diplomskem delu, bomo raziskali, kaj je linearna logika in kako se jo uporablja v računalništvu.
 Linearna logiko je prvi predstavil Jean-Yves Girard~\cite{girard1987linear}. Zelo hitro se je izkazala za uporabno, saj zahteva, 
 da smo pozorni na kaj imamo na voljo v danem trenutku, kar bolj odseva realni svet. Zato linearni logiki pravimo tudi \emph{logika stanja}. %TODO citat
-
-% Preko Curry-Howardovega izomorfizma vemo, da lahko logične dokaze interpretiramo kot računalniške programe.
-%, kjer posamezna izjava v logiki predstavlja \emph{tip} v teoriji tipov
-
 
 
 % Teorija tipov
@@ -97,13 +105,13 @@ da smo pozorni na kaj imamo na voljo v danem trenutku, kar bolj odseva realni sv
 
 % Primerjava z intuistično logiko
 
-\section{Beseda avtorja}
-Rada bi se opravičila svojemu mentorju, Matiju Pretnarju, za osnutek, ki presega pet vsebinskih strani. Prv tako  bi se rada opravičila za vse pravopisne in slogovne napake, še posebej za vse narobe postavljene vejice.
-Hkrati pa bi ga prosila, če lahko komentira uporabo citatov v tem diplomskem delu. Ali je citiranje iz kje dobim eno besedo, ki jo prevedem iz angleščine preveč? Prav tako me zanima, ali v kakšnih odsekih citiram premalo. Par citatov manjka (2), saj \LaTeX\ ne najde stvari, ki jih mora v moji \cd{bib} datoteki.
+% \section{Beseda avtorja}
+% Rada bi se opravičila svojemu mentorju, Matiju Pretnarju, za osnutek, ki presega pet vsebinskih strani. Prv tako  bi se rada opravičila za vse pravopisne in slogovne napake, še posebej za vse narobe postavljene vejice.
+% Hkrati pa bi ga prosila, če lahko komentira uporabo citatov v tem diplomskem delu. Ali je citiranje iz kje dobim eno besedo, ki jo prevedem iz angleščine preveč? Prav tako me zanima, ali v kakšnih odsekih citiram premalo. Par citatov manjka (2), saj \LaTeX\ ne najde stvari, ki jih mora v moji \cd{bib} datoteki.
 
-Prav tako bi želela od svojega mentorja, da mi pove, če se mu zdijo kakšni necitirani podatki neznani ali celo nepravilni, da preverim, če resnično držijo, ker mi je nekaj podatkov povedala asistentka Luna Strah in jih nisem (še) preverila. Delovala sem pod sklepom, da ko preberem več o linearni logiki, bom naletela na primernejše razlage, ki bi jim morda lahko rekli ``citirable'', če ne bi bili profesionalni.
+% Prav tako bi želela od svojega mentorja, da mi pove, če se mu zdijo kakšni necitirani podatki neznani ali celo nepravilni, da preverim, če resnično držijo, ker mi je nekaj podatkov povedala asistentka Luna Strah in jih nisem (še) preverila. Delovala sem pod sklepom, da ko preberem več o linearni logiki, bom naletela na primernejše razlage, ki bi jim morda lahko rekli ``citirable'', če ne bi bili profesionalni.
 
-Cenila bi tudi komentar o mojih prevodih, predvsem o prevodu ``computation rule'' (iz poglavja \nameref{curr-how} v zadnjem in predzadnjem odstavku). Iz Simpsonovih predavanj iz Logike v računalništvu sem izvedela, kaj so computation rules, vendar se mi zdi pravilo računanja grd prevod. Asistenka Strah je omenila še eno ime za ta pravila, vendar sem si jih nisem uspela zapomniti.
+% Cenila bi tudi komentar o mojih prevodih, predvsem o prevodu ``computation rule'' (iz poglavja \nameref{curr-how} v zadnjem in predzadnjem odstavku). Iz Simpsonovih predavanj iz Logike v računalništvu sem izvedela, kaj so computation rules, vendar se mi zdi pravilo računanja grd prevod. Asistenka Strah je omenila še eno ime za ta pravila, vendar sem si jih nisem uspela zapomniti.
 
 \section{Kako nadaljevati diplomsko delo}
 
