@@ -1,0 +1,197 @@
+Matematične dokaze iz logike lahko interpretiramo kot računalniške programe, ali pa kot sklepe v teoriji tipov. 
+
+%TODO: Terorija tipov je
+
+Notacija je zelo podobna kot ta, ki smo jo obravnavali v prejšnjem poglavju. Izjave se zamenjajo s tipi, konjunkcija se zamenja s produktom in tako naprej. V nadaljevanju bomo bolj podrobno pogledali, kako sta terija tipov in naravna dedukcija povezani.
+
+Tako kot pri naravni dedukciji, tudi v teoriji tipov \(\G\) predstavlja kontekst, torej končen nabor tipov. 
+\(\G \vdash A\) se imenuje \emph{sekvent}~\cite[L2.8]{truthIsEphemeral} in pravi, da v kontekstu \(\G\) lahko uporabimo elemente tipa \(A\).
+
+Podobno interpretiramo sekvent tudi v teoriji tipov. V kontekstu \(G\) lahko uporabimo element \(a\) tipa \(A\), kjer je kontekst v tem primeru končen nabor tipov, katerih elemente lahko uporabljamo. 
+
+\pravilo{Produktni tip}
+\begin{align*}
+    \begin{bprooftree}
+        \AXC{\(\G \vdash A\)}
+        \AXC{\(\G \vdash B\)}
+        \RL{\(\land I\)} 
+        \BIC{\(\G \vdash A \land B\)}
+    \end{bprooftree}
+    \qquad&
+    \begin{bprooftree}
+        \AXC{\(\G \vdash a:A\)}
+        \AXC{\(\G \vdash b:B\)}
+        \RL{\(\times I\)}
+        \BIC{\(\G \vdash (a,b): A \times B\)}
+    \end{bprooftree}
+    \\\\
+    \begin{bprooftree}
+        \AXC{\(\G \vdash A \land B\) \tru}
+        \RL{\(\land E_L\)}
+        \UIC{\(\G \vdash A\) \tru}
+    \end{bprooftree}
+    \qquad&
+    \begin{bprooftree}
+        \AXC{\(\G \vdash x: A \times B\)}
+        \RL{\(\times E_1\)}
+        \UIC{\(\G \vdash fst(x):A\)}
+    \end{bprooftree}
+    \\\\
+     \begin{bprooftree}
+        \AXC{\(\G \vdash A \land B\) \tru}
+        \RL{\(\land E_D\)}
+        \UIC{\(\G \vdash A\) \tru}
+    \end{bprooftree}
+    \qquad&
+     \begin{bprooftree}
+        \AXC{\(\G \vdash x: A \times B\)}
+        \RL{\(\times E_2\)}
+        \UIC{\(\G \vdash snd(x) : A\)}
+    \end{bprooftree}
+\end{align*}
+%
+ % TODO: poenoti pojavitve razložitve \G
+
+
+Izpostavimo dejstvo, da nismo povedali ``kaj'' je pravzaprav tip, le kako ga konstruiramo in uporabljamo. Namreč ni zares pomembno kako ``izgleda'' posamezen tip, vendar kako ga uporabljamo. Torej na nek način so tipi bolj abstraktna stvar kot izjave. Ampak kljub temu, nam povedo nekaj bolj konkretnega, namreč operiramo z elementi. Pravila sklepanja nam v teoriji tipov pokažejo kako konstruiramo konkretne elemente iz elementov drugih tipov. Torej vemo kako iz \(a\) tipa \(A\) in iz \(b\) tipa \(B\) konstruirati element \((a, b)\) tipa \(A \times B\).
+To lahko naredimo, ker v teoriji tipov nimamo le pravil vpeljave in uporabe, temveč tudi pravila računanja. % TODO: \cite predavanja sipsona logika v računalništvu
+Z njimi lahko dobimo eksplicitne zapise elementov konstruiranih tipov. 
+
+Za produktni tip imamo naslednji pravili računanja. \cite{Jazbec2022Primerjava}
+%
+\begin{align*}
+    &fst((a, b)) :\equiv a & snd((a, b)) :\equiv b&
+\end{align*}
+
+\pravilo{Funkcijski tip}
+% VPRAŠAJ: ni presledka za dvopičjem TODO
+% implikacija
+\begin{align*}
+    \begin{bprooftree}
+        \AXC{\(\G, A \vdash B\)}
+        \RL{\(\Rightarrow I\)}
+        \UIC{\(\G \vdash A \implies B\)}
+    \end{bprooftree}
+    \qquad&
+    \begin{bprooftree}
+        \AXC{\(\G, x:A \vdash b: B\)}
+        \RL{\(\rightarrow I\)}
+        \UIC{\(\G \vdash \la x:A. b : A \rightarrow B\)}
+    \end{bprooftree}    
+    \\\\
+    \begin{bprooftree}
+        \AXC{\(\G \vdash A \implies B\) \tru}
+        \AXC{\(\G \vdash A\) \tru}
+        \RL{\(\Rightarrow E\)}
+        \BIC{\(\G \vdash B\) \tru}
+    \end{bprooftree}
+    \qquad&
+    \begin{bprooftree}
+        \AXC{\(\G \vdash f: A \rightarrow B\)}
+        \AXC{\(\G \vdash a: A\)}
+        \RL{\(\rightarrow E\)}
+        \BIC{\(\G \vdash f~a : B\)}
+\end{bprooftree}
+\end{align*}
+%
+Pri vpeljavi funkcijskega tipa, je pomembna spremenlljivka \(x : A\). Pkazati moramo, da iz katerega koli elemenenta \(x:A\) lahko dobimo nek element \(b: B\), ki je lahko odsviden od \(x:A\). Potem lahko skonstruiramo funkcijo, ki vsakemu \(x\)-u predpiše pripadajoč \(b\). Predpis \(\la x:A. b : A \rightarrow B\) je v \(\la\)-notaciji. Pove, da vežemo spremenljivko \(x\) tipa \(A\) in vrnemo izraz \(b\). To je funkcija tipa \(A \rightarrow B\).
+
+Pri pravilu uporabe za funkijo je sklep zapisan z \(f~a : B\). To je ekvivalentno temu, da bi pisali \(f(a)\), vendar v teoriji tipov navadno pišemo funkcije brez oklepajev. 
+
+Pravilo računanja za funkcijski tip nam pove, kako se obnaša \(\la\)-račun.
+%
+\begin{equation*}
+    (\la x: A. b) u :\equiv b[x / u]
+\end{equation*}
+%
+Operacijo \(b[x/u]\) imenujemo \emph{\(\beta\)-redukcija}, % Qcite predavanja od simpsona
+pomeni pa, da vse pojavitve \(x\) v \(b\) zamenjamo z \(u\), torej kot da bi evalvirali funkcijo \(b(x)\) v točki \(u\). Sicer \(b\) ni nujno funkcijskega tipa, vendar je vseeno lahko odvisen od \(x\).
+
+Pozorni moramo biti, da ponesreči ne spremenimo pomena elementa \(b:B\), namreč \((\la x: A. \la y: B. x)[y / x] \neq \la x: A. \la x: B. x\) \footnote{Izraz na desni strani neenakosti ni validen, saj dvakrat vežemo isto spremenljivko}. Najprej moramo vse vezane spremenljivke preimenovati.
+\begin{equation*}
+    (\la x: A. \la y: B. x)[y / x] = 
+    (\la z: A. \la y: B. z)[y / x] =
+    \la z: A. \la x: B. z
+\end{equation*}
+Pozor! Pri tem primer ne evalviramo funkcije v neki točki, temveč preimenujemo vezane spremenljivke. Če bi želeli evalviratu ta labda račun v nekem elementu \(y: A\) bi napisali
+\begin{equation*}
+    (\la x: A. \la y: B. x) y =
+    (\la y: B. x)[x / y] = 
+    (\la z: B. x)[x / y] = 
+    (\la z: B. y).
+\end{equation*}
+%
+Dobili bi torej \(\la\)-funkcijo, ki vse elemente iz \(B\) slika v \(y:A\).
+% TODO: Poenoti izraz lambda račun / lambda funkcija / \la-neki VPRAŠAJ
+% TODO: To ni ista stvar
+
+
+\pravilo{Vsotni tip}
+% Disjunkcija
+\begin{align*}
+    \begin{bprooftree}
+        \AXC{\(\G \vdash A\) \tru}
+        \RL{\(\lor I_L\)}
+        \UIC{\(\G \vdash A \lor B\) \tru}
+    \end{bprooftree}
+    \qquad&
+    %
+    \begin{bprooftree}
+        \AXC{\(\G \vdash a: A\)}
+        \RL{\(+ I_L\)}
+        \UIC{\(\G \vdash in_1(a) : A + B\)}
+    \end{bprooftree}
+    \\\\
+    \begin{bprooftree}
+        \AXC{\(\G \vdash B\) \tru}
+        \RL{\(\lor I_D\)}
+        \UIC{\(\G \vdash A \lor B\) \tru}
+    \end{bprooftree}
+    \qquad&
+    \begin{bprooftree}
+        \AXC{\(\G \vdash b: B\)}
+        \RL{\(+ I_D\)}
+        \UIC{\(\G \vdash in_2(b): A + B\)}
+    \end{bprooftree}
+\end{align*}
+
+\begin{align*}
+    &\begin{bprooftree}
+    \AXC{\(\G \vdash A \lor B\)}
+%   
+    \AXC{\(\G, A \vdash C\)}
+%
+    \AXC{\(\G \vdash C\)}
+%
+    \RL{\(\lor E\) }
+    \TIC{\(\G \vdash C\)}
+\end{bprooftree}
+\\\\
+&\begin{bprooftree}
+    \AXC{\(\G \vdash c: A + B\)}
+%
+    \AXC{\(\G, x:A \vdash a:C\)}
+%
+    \AXC{\(\G, y: B \vdash b:C\)}
+%
+    \RL{\(+ E\) }
+    \TIC{\( \G \vdash (\cd{case } c \cd{ of } in_1(x) \mapsto a | in_2(y) \mapsto b\)) : C}
+\end{bprooftree}
+\end{align*}
+%
+Tako kot pri funkcijskem tipu, moramo najti način, da za vsak element \(x:A\) lahko dobimo \(a:C\) in za vsak element \(y:B\) najdemo \(b:C\). To nam zagotovi, da lahko za element \(c: A+B\) najdemo nek element tipa \(C\).
+% TODO: Popravi oznake
+
+Za vsotni tip imamo dva računska pravila.
+%
+\begin{align*}
+    \cd{case } in_1(s) \cd{ of } in_1(x) \mapsto t | in_2(y) \mapsto r :\equiv t[x / s] \\
+    \cd{case } in_2(s) \cd{ of } in_1(x) \mapsto t | in_2(y) \mapsto r :\equiv r[y / s]
+\end{align*}
+%
+
+
+
+
+% TODO: povsod \G
+% TODO: Vsotni tipi dobro razloženi

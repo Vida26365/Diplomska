@@ -1,0 +1,337 @@
+Linearna logika se ne ukvarja več z izjavami, kot so \(A\) je res in \(A \implies B\) je res, potem je \(B\) res, temveč spremlja vire in pokaže cilje. Želimo modelirati svet, tako da se vrednost ohranja, se pravi, da nek vir ne more kar izpuhteti, lahko se pa spremeni. Za primer si poglejmo preprosto kemijsko reakcijo.
+%
+\begin{equation*}
+    2 \mathsf{H_2} + \mathsf{O_2} \rightarrow 2 \mathsf{H_2 O}
+\end{equation*}
+%
+Da dobimo vodo, se morajo vse molekule (obe molekuli vodika in molekula kisika) porabiti in ven lahko dobimo natanko dve molekuli vode. Nič več, nič manj.
+V linearni naravni dedukciji bi to zapisali kot
+%
+\begin{prooftree}
+    \AXC{\(2 \mathsf{H_2}\)}
+    \AXC{\(\mathsf{O_2}\)}
+    \RL{.}
+    \BIC{\(2 \mathsf{H_2 O}\)}
+\end{prooftree}
+%
+V tem primeru molekule \(\mathsf{H_2}\) in \(\mathsf{O_2}\) imenujemo \emph{viri}, dobljene molekule vode \(\mathsf{H_2 O}\) pa \emph{cilj}. Lahko izpeljemo še malce močnejše pravilo.
+%
+\begin{prooftree}
+    \AXC{\(\G \vdash 2 \mathsf{H_2}\)}
+    \AXC{\(\D \vdash \mathsf{O_2}\)}
+    \BIC{\(\G, \D \vdash 2 \mathsf{H_2 O}\)}
+\end{prooftree}
+%
+To bi prebrali kot: ``Če imamo skupino elementov (\(\G\)) iz katerih lahko dobimo dve molekuli vodika, in če imamo skupino elementov (\(\D\)) iz katere lahko dobimo molekulo kisika, potem lahko iz teh dveh skupin skupaj dobimo dve molekuli vode.''
+
+Podobno bi lahko modelirali elektriko. Vsaka enota električne energije se mora nekje porabiti in v zameno opravi neko delo, ekvivalentno energiji porabljene elektrike. Vsa vrednost se ohranja.
+
+Ker linearna logika deluje na drugačen način, kot navadna logika, potrebujemo nova pravila za delo z viri.
+ 
+\pravilo{Hipoteza} Pravilo hipoteze, v naravni logiki pravi, da če imamo \(A\) v nekem kontekstu, potem lahko uporabimo \(A\). Problem pri linearni logiki je, da je potrebno uporabiti ves kontekst.
+%
+\begin{prooftree}
+    \AXC{}
+    \RL{Ax}
+    \UIC{\(A \vdash A\)}
+\end{prooftree}
+%
+
+
+\pravilo{Hkratna konjunkcija}
+Recimo, da lahko s pomočjo konteksta \(\G\) pokažemo izjavo \(A\) in s pomočjo konteksta \(\D\) pokažemo izjavo \(B\), Potem lahko s kontekstom \(\G, \D\) pokažemo da velja \(A\) in \(B\). Oznaka za tako konjunkcijo v linearni logiki je tenzor \(A \otimes B\). 
+%
+\begin{prooftree}
+    \AXC{\(\G \vdash A\)}
+    \AXC{\(\D \vdash B\)}
+    \RL{\(\otimes\)I}
+    \BIC{\(\G, \D \vdash A \otimes B\)}
+\end{prooftree}
+%
+
+Glede na to, da \(\otimes\) predstavlja konjunkcijo, bi lahko zmotno mislili, da je pravilo uporabe za \(\otimes\), enako kot za \(\land\), vendar pravilo za uporabo \(\land\) izgubi del informacije.
+%
+\begin{prooftree}
+        \AXC{\(A \land B\)}
+        \RL{\(\land E_L\)}
+        \UIC{\(A\)}
+\end{prooftree}
+%
+Na vrhu imamo \(A\) in tudi \(B\), vendar v sklepu uporabimo samo \(A\). Ne seldimo pravilom linearne logike, ki pravi, da je potrebno vsak vir uporabiti natanko enkrat.
+Pravilo uporabe hkratne konjunkcije pravi, če lahko dosežemo cilj \(C\) S pomočjo virov \(A\) in \(B\) in če imamo \(A \otimes B\), lahko dosežemo cilj \(C\).
+%
+\begin{prooftree}
+    \AXC{\(\G \vdash A \otimes B\)}
+    \AXC{\(\D, A, B \vdash C\)}
+    \RL{\(\otimes E\)}
+    \BIC{\(\G, \D \vdash C\)}
+\end{prooftree}
+%
+% Ali je res to smiselno na tej točki
+Na tej točki je smiselno omeniti, kaj v linearni logiki pomeni kontekst. To je tenzorski produkt virov \(A_1 \otimes \ldots \otimes A_n = \G\). Navadno tenzorjev ne pišemo in vire preprosto ločimo z vejico \(A_1, \ldots A_n\). % cite luna
+Torej to nam pove, da morajo viri v kontekstu biti hkrati na voljo.
+
+% Še vedno imamo imamo pravilo aksioma
+% %
+% \begin{prooftree}
+%     \AXC{}
+%     \UIC{\(\G, A \vdash A\)}
+% \end{prooftree}
+
+\pravilo{Alternativna konjunkcija}
+Alernativno konjunkcijo \(A \& B\) preberemo kot \(A\) z \(B\). Včasih se imenuje \emph{notranja izira}, da če imamo \(A\) z \(B\), imamo lahko \(A\) ali pa \(B\), vendar ne oboje na enkrat. Če imamo 1€, lahko kupimo bombone in lahko kupimo čokolado, vendar ne moremo kupiti obojega na enkrat.
+
+Pravilo vpeljave pove, da če lahko z viri \(\G\) dobimo \(A\) in če lahko z viri \(\G\) dobimo \(B\), potem lahko z viri \(\G\) dobimo \(A \& B\).
+%
+\begin{prooftree}
+    \AXC{\(\G \vdash A\)}
+    \AXC{\(\G \vdash B\)}
+    \RL{\(\& I\)}
+    \BIC{\(\G \vdash A \& B\)}
+\end{prooftree}
+%
+Lahko si predstavljamo \(A \& B\) kot nekakšno ``superpozicijo''. Ko uporabimo pravilo uporabe, se ta ``suprpozicija'' kolapsira \(A\) ali pa v \(B\), vendar mi lahko izberemo kam. Glede na to, kam želimo, da se ta pozicija kolapsira, izberemo levo ali pa desno pravilo uporabe.
+%
+\begin{align*}
+    &
+    \begin{bprooftree}
+        \AXC{\(\G \vdash A \& B\)}
+        \RL{\(\& E_L\)}
+        \UIC{\(\G \vdash A\)}
+    \end{bprooftree}
+    &
+    \begin{bprooftree}
+        \AXC{\(\G \vdash A \& B\)}
+        \RL{\(\& E_D\)}
+        \UIC{\(\G \vdash B\)}
+    \end{bprooftree}
+    &
+\end{align*}
+%
+
+\pravilo{Linearna implikacija}\cite[poglavje 1.2]{barber1997linear}
+Če lahko z viri \(A\) dosežemo cilj \(B\) uporabimo linearno implikacijo \(A \multimap B\). Znak \(\multimap\) se imenuje \emph{lizika}~\cite[L20.3]{truthIsEphemeral}.
+%
+\begin{prooftree}
+    \AXC{\(\G, A \vdash B\)}
+    \RL{\(\multimap I.\)}
+    \UIC{\(\G \vdash A \multimap B\)}
+\end{prooftree}
+%
+Tu se moramo vprašati, kaj pomeni linearnost v tej linearni implikaciji. Glede na to, da je potrebno csak vir uporabiti natanko enkrat, bi si lahko mislili, da tako implikacijo lahko uporabimo natanko enkrat. Vendar v tem primeru \(\multimap\) pomeni le, da se vir \(A\) uporabi, da dobimo \(B\). Implikacija kot taka pa ustane, torej če imamo še en \(A\), potem lahko z isto implikacijo dobimo še en \(B\).
+V kasnejšem poglavju TODO, pa bomo tudi pokazali, kako izgleda implikacija, ki jo lahko uporabiš natanko enkrat, da dobiš svoj cilj.
+%
+\begin{prooftree}
+    \AXC{\(\G \vdash A\)}
+    \AXC{\(\D \vdash A \multimap B\)}
+    \BIC{\(\G, \D \vdash B\)}
+\end{prooftree}
+%
+Pravilo uporabe za linearno implikacijo upošteva, da se viri, ki jih uporabimo, da dobimo \(A\) in viri, da dobimo \(A \multimap B\) lahko prekrivajo.
+
+Sedaj lahko pokažemo eno pomembno pravilo imenovano \emph{rez}. Intuitivno se nam zdi, da če z viri \(\G, A\) lahko dosežemo \(B\)  in z viri \(\G\) lahko dosežemo \(A\), potem bi viri \(\G\) zadostovali, da dosežemo \(B\).
+%
+\begin{prooftree}
+    \AXC{\(\G \vdash A\)}
+    \AXC{\(\G, A \vdash B\)}
+    \RL{cut}
+    \BIC{\(\G \vdash B\)}
+\end{prooftree}
+%
+In res s pravili iz poglavja~\nameref{natded} lahko izpeljemo rez.
+%
+\begin{prooftree}
+    \AXC{\(\G \vdash A\)}
+    \AXC{\(\G, A \vdash B\)}
+    \RL{\(\Rightarrow I\)}
+    \UIC{\(\G \vdash A \implies B\)}
+    \RL{\(\Rightarrow E\)}
+    \BIC{\(\G \vdash B\)}
+\end{prooftree}
+%
+V linearni logiki je to pravilo rahlo drugačno, saj pri \(\Rightarrow I\) uporabimo dvakrat isti kontekst, medtem ko pri \(\multimap I\) tega ne smemo narediti.
+%
+\begin{prooftree}
+    \AXC{\(\G \vdash A\)}
+    \AXC{\(\D, A\vdash B\)}
+    \RL{\(\multimap I\)}
+    \UIC{\(\D \vdash A \multimap B\)}
+    \BIC{\(\G, \D \vdash B\)}
+\end{prooftree}
+%
+Izpeljano pravilo je torej
+%
+\begin{prooftree}
+    \AXC{\(\G \vdash A\)}
+    \AXC{\(\D, A \vdash B\)}
+    \RL{cut.}
+    \BIC{\(\G, \D \vdash B\)}
+\end{prooftree}
+
+\pravilo{Enota}
+Podobno kot resnica v nelinearni logiki, je enota \(\unit\) ``vedno res''. Je cilj za katerega ne potrebujemo virov.
+%
+\begin{prooftree}
+    \AXC{}
+    \RL{\(\unit I\)}
+    \UIC{\(\cdot \vdash 1\)}
+\end{prooftree}
+%
+Znak \(\cdot\) predstavlja prazen kontekst. Tu je pomembno imeti  prazen kontekst, saj na vrhu nismo imeli konteksta, v linearni logiki pa ne moremo kar ustvariti nečesa, če nismo imeli virov za to.
+
+Pravilo eliminacije za enoto je podan kot
+%
+\begin{prooftree}
+    \AXC{\(\G \vdash \unit\)}
+    \AXC{\( \D \vdash C\)}
+    \RL{\(\unit E\).}
+    \BIC{\(\G, \D \vdash C\)}
+\end{prooftree}
+%
+To pomeni, da če lahko vire iz \(\G\) ``izničiš'', lahko \(\G\) dodaš virom, za doseganje drugih ciljev.
+
+%TODO: vprašaj pretnarja
+\pravilo{Vrh}
+Vrh je cilj, ki porabi vse vire.
+%
+\begin{prooftree}
+    \AXC{}
+    \RL{\(\top I\)}
+    \UIC{\(\G \vdash \top\)}
+\end{prooftree}
+%
+Nima pravila eliminacije. %TODO: zakaj ne :(
+
+\pravilo{Disjunkcija (zunanja izbira)} Disjunkcija \(A \oplus B\) (beremo \(A\) plus \(B\)) ima tako, kot navadna disjunkcija, dve prvili vpeljave.
+%
+\begin{align*}
+    \begin{bprooftree}
+        \AXC{\(\G \vdash A\)}
+        \RL{\(\oplus I_L\)}
+        \UIC{\(\G \vdash A \oplus B\)}
+    \end{bprooftree}
+    \qquad
+    \begin{bprooftree}
+        \AXC{\(\G \vdash B\)}
+        \RL{\(\oplus I_D\)}
+        \UIC{\(\G \vdash A \oplus B\)}
+    \end{bprooftree}
+\end{align*}
+%
+Pravilo vpeljave:
+%
+\begin{prooftree}
+    \AXC{\(\G \vdash A \oplus B\)}
+    \AXC{\(\D, A \vdash C\)}
+    \AXC{\(\D, B \vdash C\)}
+    \RL{\(\oplus E\)}
+    \TIC{\(\G, \D \vdash C\)}
+\end{prooftree}
+% TODO: omemba druge disjunkcije
+
+\pravilo{Multiplikatvna disjunkcija} \(A\) par \(B\) pišemo kot \(A \parr B\)
+%
+\begin{prooftree}
+    \AXC{\(\G \vdash A, B\)}
+    \RL{\(\parr I\)}
+    \UIC{\(\G \vdash A \parr B\)}
+\end{prooftree}
+
+
+
+\pravilo{Nemogočost} 
+Ne mogočost nima pravila za vpeljavo, pravilo za uporabo, pa izgleda podobno kot za neresnico. Če iz konteksta \(\G\) lahko dobimo nemogočost, potem lahko iz katerega koli konteksta, ki v vsebuje \(\G\), dobimo karkoli.
+% Označena z \(\imp\), nemogočost je enota za \(\oplus\)
+\begin{prooftree}
+    \AXC{\(\G \vdash \imp\)}
+    \RL{\(\imp E\)}
+    \UIC{\(\G, \D \vdash C \)}
+\end{prooftree}
+
+% TODO: negacija
+
+
+Poglejmo katere logične operatorje smo predstavili
+
+\begin{table}
+    \centering
+    \begin{tabular}{l|c|c|l}
+        Linearna implikacija & \(A \multimap B\) & \(A\) lizika \(B\) & Iz \(A\) dobimo \(B\) \\
+        Hkratna konjunkcija & \(A \otimes B\)   & \(A\) tenzor \(B\) & Imamo \(A\) in \(B\) \\
+        Alternativna konjunkcija & \(A \& B\)        & \(A\) z \(B\)      & Lahko izberemo enega izmed \(A\) in \(B\) \\
+        Disjunkcija & \(A \oplus B\)    & \(A\) plus \(B\)   &  Imamo enega izmed \(A\) in \(B\) (ne vemo katerega)\\
+        par TODO & \(A \parr B\)     & \(A\) par \(B\)    &  Imamo \(A\) in \(B\)
+    \end{tabular}
+    \caption{TODO}
+\end{table}
+
+
+\subsection{Zakaj ne? Seveda!}
+Torej s temi operatorji smo dosegli zelo uporabno logiko, ki dela z viri, namesto z izjavami. Ampak včasih pa je linearnost res promočna zahteva. Včasih želimo dopustiti možnost, da se vir ne uporabi ko ga uporabimo. Na primer če imamo dve spremenljivki \(x\) in \(y\) in ju uporabimo da dobimo \(z = x + y\), želimo še vedno imeti \(x\) in \(y\) na voljo. Na srečo ima linearna logika odgvor tudi na to in sicer v obliki operatorja \emph{seveda} (\(!\)).
+
+Operator \(!\) spremeni linearen vir \(A\) v vir, ki ga uporabimo poljubnomnogokrat \(!A\). Na primer pri linearni implikaciji \(A \multimap B\) se vir \(A\) uporabi, ko želimo dobiti \(B\). Če pa imamo implikacijo \(!A \multimap B\) je to ekvivalentno navadni implikaciji \(A \implies B\), kjer lahko \(A\) uporabljamo še naprej. 
+
+%TODO: 
+% ? je dual
+% pravila vpeljave in uporabe
+% Več primerov
+% Primer restavracije
+% Leva in desna stran okretnice
+
+
+
+\subsection{Povezave med operatorji}
+V linearni logiki, s zelo pomembne povezave med operatorji. Najprej poglejmo, kako so logične konstante (\(\top\), \(\bot\), \(\unit\), \(\imp\)) povezane z operatoji.
+
+Operatoji in konstante se delijo na aditivne in na multiplikativne. V tabeli~\ref{tab:muladd} je podano, kam spadajo kakšni operatorji in konstante.
+%
+\begin{table}[htb]
+    \centering
+    \begin{tabular}{| l | l | l |} \hline
+                        & Konstante               & Operatoji \\\hline
+        Multiplikativni &  \(\unit\), \(\bot\)    &  \(\otimes\), \(\parr\)   \\
+        Aditivni        &  \(\imp\), \(\top\)     &  \(\oplus\), \(\&\)   \\\hline
+    \end{tabular}
+    \caption{Delitev na multiplikativna in aditivne konstane in operatorje}
+    \label{tab:muladd}
+\end{table}
+
+Multiplikativna konjunkcija je hkratna konjunkcija \(A \otimes B\) in njena enota je \(\unit\). To pomeni, da velja %TODO: A res?
+%
+\begin{prooftree}
+    \AXC{\(\G \vdash A\)}
+    \AXC{}
+    \UIC{\(\vdash \unit\)}
+    \BIC{\(\vdash A \oplus \unit\)}
+\end{prooftree}
+
+Pravokotnost operacij:
+%
+\begin{table}[htb]
+    \centering
+    \begin{tabular}{c|c}
+        \({(A \otimes B)}^{\bot}\)  & \(A^\bot \parr    B^\bot\)     \\ 
+        \({(A \parr B)}^{\bot}\)    & \(A^\bot \otimes  B^\bot\)     \\
+        \({(A \& B)}^{\bot}\)       & \(A^\bot \oplus   B^\bot\)     \\ 
+        \({(A \oplus B)}^{\bot}\)   & \(A^\bot \&       B^\bot\)     \\
+        \({\unit}^{\bot}\)          & \(\bot\)                       \\
+        \({\bot}^{\bot}\)           & \(\unit\)                      \\
+        \({\top}^{\bot}\)           & \(\imp\)                       \\
+        \({\imp}^{\bot}\)           & \(\top\)                       \\
+        \({(!A)}^{\bot}\)           & \(?{(A)}^\bot\)                \\
+        \({(?A)}^{\bot}\)           & \(!{(A)}^\bot\)                \\
+    \end{tabular}
+\end{table}
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%55
+% \begin{prooftree}
+%     \AXC{\(\G \vdash B\)}
+%     \RL{weak}
+%     \UIC{\(\G, A \vdash B\)}
+% \end{prooftree}
+
+

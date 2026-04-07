@@ -1,0 +1,155 @@
+\documentclass[mat1, tisk]{fmfdelo}
+% \documentclass[fin1, tisk]{fmfdelo}
+% Če pobrišete možnost tisk, bodo povezave obarvane,
+% na začetku pa ne bo praznih strani po naslovu, …
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% METAPODATKI
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% - vaše ime
+\avtor{Vida Mlinar}
+
+% - naslov dela v slovenščini
+\naslov{Linearni sistemi tipov}
+
+% - naslov dela v angleščini
+\title{...}
+
+% - ime mentorja/mentorice s polnim nazivom:
+%   - doc.~dr.~Ime Priimek
+%   - izr.~prof.~dr.~Ime Priimek
+%   - prof.~dr.~Ime Priimek
+%   za druge variante uporabite ustrezne ukaze
+\mentor{Matija Pretnar}
+% \somentor{...}
+% \mentorica{...}
+% \somentorica{...}
+% \mentorja{...}{...}
+% \somentorja{...}{...}
+% \mentorici{...}{...}
+% \somentorici{...}{...}
+
+% - leto diplome
+\letnica{2026} 
+
+% - povzetek v slovenščini
+%   V povzetku na kratko opišite vsebinske rezultate dela. Sem ne sodi razlaga
+%   organizacije dela, torej v katerem razdelku je kaj, pač pa le opis vsebine.
+\povzetek{...}
+
+% - povzetek v angleščini
+\abstract{...}
+
+% - klasifikacijske oznake, ločene z vejicami
+%   Oznake, ki opisujejo področje dela, so dostopne na strani https://www.ams.org/msc/
+\klasifikacija{..., ...}
+
+% - ključne besede, ki nastopajo v delu, ločene s \sep
+\kljucnebesede{Linearni tipi\sep ...}
+
+% - angleški prevod ključnih besed
+\keywords{Linear types\sep ...} % angleški prevod ključnih besed
+
+% - angleško-slovenski slovar strokovnih izrazov
+\slovar{
+% \geslo{angleški izraz}{slovenski izraz}
+% ...
+\geslo{judgment}{sodba}
+\geslo{premise}{premisa}
+\geslo{conclusion}{sklep}
+\geslo{inference rule}{pravilo sklepanja}
+\geslo{computation rule}{pravilo računanja}
+\geslo{\(\beta\)-reduction}{\(\beta\)-redukcija}
+\geslo{resource}{vir}
+\geslo{simultaneous conjunction}{hkratna konjunkcija}
+\geslo{alternative conjunction}{alternativna konjunkcija}
+\geslo{internal choice}{notranja izbira}
+\geslo{cut}{rez}
+% \geslo{weakening rule}{pravilo šibitve}
+\geslo{lolli}{lizika}
+\geslo{unit}{enota}
+\geslo{top}{vrh}
+\geslo{external choice}{zunanja izbira}
+\geslo{impossibility}{nemogočost}
+
+}
+
+% - ime datoteke z viri (vključno s končnico .bib), če uporabljate BibTeX
+\literatura{../citati.bib}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% DODATNE DEFINICIJE
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% naložite dodatne pakete, ki jih potrebujete
+% \usepackage{...}
+\usepackage{bussproofs}
+\usepackage{subcaption}
+\usepackage{nameref}
+\usepackage{hyperref}
+\usepackage{graphicx}
+
+
+
+% deklarirajte vse matematične operatorje, da jih bo LaTeX pravilno stavil
+% \DeclareMathOperator{\...}{...}
+
+% vstavite svoje definicije ...
+% \newcommand{\...}{...}
+\newcommand{\AXC}[1]{\AxiomC{#1}}
+\newcommand{\UIC}[1]{\UnaryInfC{#1}}
+\newcommand{\BIC}[1]{\BinaryInfC{#1}}
+\newcommand{\TIC}[1]{\TrinaryInfC{#1}}
+\newcommand{\RL}[1]{\RightLabel{#1}}
+\newcommand{\DP}{\DisplayProof}
+
+\newcommand{\pravilo}[1]{\textbf{#1.}}
+\newcommand{\tru}{}%\emph{res}}
+
+\newcommand{\G}{\Gamma}
+\newcommand{\D}{\Delta}
+\newcommand{\la}{\lambda}
+\newcommand{\cd}[1]{\texttt{#1}}
+\newcommand{\type}{\text{ type}}
+
+\newcommand{\unit}{\mathsf{1}}
+\newcommand{\imp}{\mathsf{0}}
+
+\newcommand{\parr}{\rotatebox[origin=c]{180}{\&}}
+
+
+\newenvironment{bprooftree}
+  {\leavevmode\hbox\bgroup}
+  {\DisplayProof\egroup}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% ZAČETEK VSEBINE
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+\section{Uvod}
+\input{../Poglavja/Uvod.tex}
+
+\section{Naravna dedukcija}
+\input{../Poglavja/Naravna dedukcija.tex}
+
+\section{Curry-Howardov izomorfizem}
+\input{../Poglavja/Curry-Howardov izomorfizem.tex}
+
+\section{Linearna naravna dedukcija\label{natded}}
+\input{../Poglavja/Linearna logika.tex}
+
+\section{Zakaj ne? Seveda!}
+\input{../Poglavja/Seveda!.tex}
+
+% \section{Linearna logika}
+% \input{../Poglavja/Leva_in_desna_pravila.tex}
+
+% \section{Zaključek}
+% ...
+
+\end{document}

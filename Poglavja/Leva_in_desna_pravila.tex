@@ -1,0 +1,30 @@
+
+
+
+\begin{prooftree}
+    \AXC{}
+    \RL{1R}
+    \UIC{\(\vdash 1\)}
+\end{prooftree}
+
+TODO: ALi je to res?
+\begin{prooftree}
+    \AXC{\(\G \vdash A\)}
+    \RL{1L}
+    \UIC{\(\G, 1\vdash A\)}
+\end{prooftree}
+
+
+\begin{prooftree}
+    \AXC{\(\G, A \vdash B\)}
+    \RL{\(\multimap\)R}
+    \UIC{\(\G \vdash A \multimap B\)}
+\end{prooftree}
+
+
+\begin{prooftree}
+    \AXC{\(\G \vdash A\)}
+    \AXC{\(\D, B\vdash C\)}
+    \RL{\(\multimap\)L}
+    \BIC{\(\G, \D A \multimap B \vdash C\)}
+\end{prooftree}
