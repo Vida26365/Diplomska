@@ -5,10 +5,10 @@ V tem poglavju bomo najprej predstavili pravila sklepanja, na katerih temelji na
 Pravilo vpeljave za konjunkcijo pravi, če sta izjavi \(A\) in \(B\) resnični, potem je tudi izjava \(A\) in \(B\) resnična. To lahko zapišemo kot
 %
 \begin{prooftree}
-    \AXC{\(A\) \tru}
-    \AXC{\(B\) \tru}
-    \RL{\(\land I\).} %\mathcal{I}
-    \BIC{\(A \land B\) \tru}
+    \AXC{\(A\)}
+    \AXC{\(B\)}
+    \RL{\(\land I\).}
+    \BIC{\(A \land B\)}
 \end{prooftree}
 %
 Nad črto zapišemo končno mnogo premis in pod črto zapišemo \emph{sklep}. Desno od črte zapišemo ime pravila, ki ga ponavadi okrajšamo. V našem primeru \(\land\)I predstavlja pravilo vpeljave za konjuncijo (ang.~conjunction introduction). 
@@ -32,7 +32,7 @@ Navadno pišemo zraven še kontekst, ki ga ponavadi označimo z \(\Gamma\). Sodb
 \begin{prooftree}
     \AXC{\(\G \vdash A\)}
     \AXC{\(\G \vdash B\)}
-    \RL{\(\land I\)} %\mathcal{I}
+    \RL{\(\land I\)}
     \BIC{\(\G \vdash A \land B\)}
 \end{prooftree}
 %
@@ -44,15 +44,15 @@ Za konjunkcijo imamo dve pravili uporabe (ang.~elimination rule) --- levo in des
 %
 \begin{equation*}
     \begin{bprooftree}
-        \AXC{\(\G \vdash A \land B\) \tru}
+        \AXC{\(\G \vdash A \land B\)}
         \RL{\(\land E_L\)}
-        \UIC{\(\G \vdash A\) \tru}
+        \UIC{\(\G \vdash A\)}
     \end{bprooftree}
     \qquad
      \begin{bprooftree}
-        \AXC{\(\G \vdash A \land B\) \tru}
+        \AXC{\(\G \vdash A \land B\)}
         \RL{\(\land E_D\)}
-        \UIC{\(\G \vdash A\) \tru}
+        \UIC{\(\G \vdash A\)}
     \end{bprooftree}
 \end{equation*}
 

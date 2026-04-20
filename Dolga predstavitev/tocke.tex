@@ -1,0 +1,364 @@
+\documentclass[12pt, titlepage, a4paper]{article}
+\usepackage[a4paper, inner=2.5cm, outer=2.5cm, top=2.25cm, bottom=2.25cm]{geometry} %Lepša postavitev strani
+%matematika
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{empheq}
+%
+\usepackage[slovene]{babel}
+\usepackage{hyperref}
+\usepackage{nameref}
+
+\usepackage{bussproofs}
+\usepackage{graphicx} 
+\usepackage{subcaption}
+
+%
+
+% Okrajšave, ker je v dokumentaciji orajšano, in je lažje primerjati kodo z dokumentacijo
+\newcommand{\AXC}[1]{\AxiomC{#1}}
+\newcommand{\UIC}[1]{\UnaryInfC{#1}}
+\newcommand{\BIC}[1]{\BinaryInfC{#1}}
+\newcommand{\TIC}[1]{\TrinaryInfC{#1}}
+\newcommand{\RL}[1]{\RightLabel{#1}}
+\newcommand{\DP}{\DisplayProof}
+
+
+\newcommand{\pravilo}[1]{\textbf{#1.}}
+
+\newcommand{\G}{\Gamma}
+\newcommand{\D}{\Delta}
+\newcommand{\la}{\lambda}
+\newcommand{\cd}[1]{\texttt{#1}}
+\newcommand{\type}{\text{ type}}
+\newcommand{\rampa}{\(\vdash\) }
+
+% \newcommand{\darule}{\noindent\hdashrule{\textwidth}{0.4pt}}
+\newcommand{\darule}{\hdashrule[0.5ex][x]{\linewidth}{0.5pt}{1.5mm}}
+
+\newenvironment{bprooftree}
+  {\leavevmode\hbox\bgroup}
+  {\DisplayProof\egroup}
+
+
+
+\begin{document}
+
+\section{Linearni sistemi tipov}
+
+\begin{itemize}
+    \item Najprej logika
+    \item Logika in množice
+    \item pravila sklepanja
+    \item Modeliranje sveta z logiko
+\end{itemize}
+
+
+\section{Naravna dedukcija}
+
+\begin{itemize}
+    \item Tej notaiji se reče naravna dedukcija
+    \item Razlaga notacije (premisa, skelp, kontekst, rampa, sodba)
+\\
+\begin{prooftree}
+    \AXC{\(\G \vdash A\)}
+    \AXC{\(\G \vdash B\)}
+    \RL{ime}
+    \BIC{\(\G \vdash A \land B\)}
+\end{prooftree}
+\item Naravna dedukcija(pravila za konjunkcijo, disjunkcijo, implikacijo)
+\\
+\\
+% \item Aksiom
+% \begin{prooftree}
+%     \AXC{}
+%     \RL{\emph{Ax}}
+%     \UIC{\(\G, A \vdash A\)}
+% \end{prooftree}
+\item   konjunkcija
+\begin{prooftree}
+    \AXC{\(\G \vdash A\)}
+    \AXC{\(\G \vdash B\)}
+    \RL{\(\land I\)}
+    \BIC{\(\G \vdash A \land B\)}
+\end{prooftree}
+\begin{equation*}
+    \begin{bprooftree}
+        \AXC{\(\G \vdash A \land B\)}
+        \RL{\(\land E_L\)}
+        \UIC{\(\G \vdash A\)}
+    \end{bprooftree}
+    \qquad
+     \begin{bprooftree}
+        \AXC{\(\G \vdash A \land B\)}
+        \RL{\(\land E_D\)}
+        \UIC{\(\G \vdash A\)}
+    \end{bprooftree}
+\end{equation*}
+
+\item Implikacija
+\begin{prooftree}
+    \AXC{\(\G, A \vdash B\)}
+    \RL{\(\Rightarrow I\)}
+    \UIC{\(\G \vdash A \implies B\)}
+\end{prooftree}
+
+\begin{prooftree}
+    \AXC{\(\G \vdash A \implies B\)}
+    \AXC{\(\G \vdash A\)}
+    \RL{\(\Rightarrow E\)}
+    \BIC{\(\G \vdash B\)}
+\end{prooftree}
+
+\item \(A \land B \Rightarrow B \land A\)
+
+
+\begin{prooftree}
+    \AXC{}
+    \RL{\(Ax\)}
+    \UIC{\(A \land B \vdash A \land B\)}
+    \RL{\(\land E_2\)}
+    \UIC{\(A \land B \vdash B\)}
+    \AXC{}
+    \RL{\(Ax\)}
+    \UIC{\(A \land B \vdash A \land B\)}
+    \RL{\(\land E_1\)}
+    \UIC{\(A \land B \vdash A\)}
+    \RL{\(\land I\)}
+    \BIC{\(A \land B \vdash B \land A\)}
+    \RL{\(\Rightarrow I\)}
+    \UIC{\(\vdash A \land B \Rightarrow B \land A\)}
+\end{prooftree}
+
+
+% \item disjunkcija
+% \begin{equation*}
+%     \begin{bprooftree}
+%         \AXC{\(\G \vdash A\)}
+%         \RL{\(\lor I_L\)}
+%         \UIC{\(\G \vdash A \lor B\)}
+%     \end{bprooftree}
+%     \begin{bprooftree}
+%         \AXC{\(\G \vdash B\)}
+%         \RL{\(\lor I_D\)}
+%         \UIC{\(\G \vdash A \lor B\)}
+%     \end{bprooftree}
+% \end{equation*}
+% %
+% %
+% \begin{prooftree}
+%     \AXC{\(\G \vdash A \lor B\)}
+% %
+%     \AXC{\(\G, A \vdash C\)}
+% %
+%     \AXC{\(\G, B \vdash C\)}
+%     \RL{\(\lor E\) }
+%     \TIC{\(\G \vdash C\)}
+% \end{prooftree}
+
+
+\end{itemize}
+\section{Linearna logika}
+    \begin{itemize}
+        \item kako bi modelirali kemijski primer
+        \begin{equation*}
+            2 \mathsf{H_2} + \mathsf{O_2} \rightarrow 2 \mathsf{H_2 O}
+        \end{equation*}
+        
+        \begin{itemize}
+            \item Očitno moklekule niso izjave
+            \item Viri in cilj
+        \end{itemize}
+    \end{itemize}
+
+
+
+\subsection{Nekaj operatorjev}
+        \begin{itemize}
+
+            \item hkratna konjunkcija
+            
+            \begin{itemize}
+                \item Različni konteksti
+            \end{itemize}
+\begin{prooftree}
+    \AXC{\(\G \vdash A\)}
+    \AXC{\(\D \vdash B\)}
+    \RL{\(\otimes\)I}
+    \BIC{\(\G, \D \vdash A \otimes B\)}
+\end{prooftree}
+
+\begin{prooftree}
+    \AXC{\(\G \vdash A \otimes B\)}
+    \AXC{\(\D, A, B \vdash C\)}
+    \RL{\(\otimes E\)}
+    \BIC{\(\G, \D \vdash C\)}
+\end{prooftree}
+
+
+\begin{prooftree}
+    \AXC{2€ \rampa bela kava}
+    \AXC{1,40€ \rampa piškot}
+    \BIC{3,40€ \rampa bela kava \(\otimes\) piškot}
+\end{prooftree}
+
+\item Seveda!
+\begin{prooftree}
+    \AXC{!Mafija, 2€ \rampa bela kava}
+    \AXC{!Mafija, 1,40€ \rampa piškot}
+    \BIC{!Mafija, 3,40€ \rampa bela kava \(\otimes\) piškot}
+\end{prooftree}
+
+    \begin{itemize}
+        \item Delinearizira
+        \item ! --- Imamo dovolj stavri
+        \item ? --- lahko sprejmemo dovolj stvari
+    \end{itemize}
+
+
+
+            \item linearna implikacija
+\begin{prooftree}
+    \AXC{\(\G, A \vdash B\)}
+    \RL{\(\multimap I\)}
+    \UIC{\(\G \vdash A \multimap B\)}
+\end{prooftree}
+
+\begin{prooftree}
+    \AXC{\(\G \vdash A\)}
+    \AXC{\(\D \vdash A \multimap B\)}
+    \BIC{\(\G, \D \vdash B\)}
+\end{prooftree}
+%
+
+\begin{prooftree}
+    \AXC{bon \rampa sendvič}
+    \UIC{\rampa bon \(\multimap\) sendvič}
+\end{prooftree}
+
+
+
+
+% \begin{prooftree}
+%     \AXC{}
+%     \AXC{2€, kartica \rampa bela kava}
+%     \AXC{2€, gotovina \rampa bela kava}
+
+% \end{prooftree}
+
+            \item alternativna konjunkcija (notranja izbira)
+\begin{prooftree}
+    \AXC{\(\G \vdash A\)}
+    \AXC{\(\G \vdash B\)}
+    \RL{\(\& I\)}
+    \BIC{\(\G \vdash A \& B\)}
+\end{prooftree}
+\begin{align*}
+    &
+    \begin{bprooftree}
+        \AXC{\(\G \vdash A \& B\)}
+        \RL{\(\& E_L\)}
+        \UIC{\(\G \vdash A\)}
+    \end{bprooftree}
+    &
+    \begin{bprooftree}
+        \AXC{\(\G \vdash A \& B\)}
+        \RL{\(\& E_D\)}
+        \UIC{\(\G \vdash B\)}
+    \end{bprooftree}
+    &
+\end{align*}
+
+
+\begin{prooftree}
+    \AXC{bon \rampa sendvič}
+    \AXC{bon \rampa tortilija}
+    \BIC{bon \rampa sendvič \& tortilija}
+\end{prooftree}
+
+
+
+           \item disjunkcija (zunanja izbira)
+\begin{align*}
+    \begin{bprooftree}
+        \AXC{\(\G \vdash A\)}
+        \RL{\(\oplus I_L\)}
+        \UIC{\(\G \vdash A \oplus B\)}
+    \end{bprooftree}
+    \qquad
+    \begin{bprooftree}
+        \AXC{\(\G \vdash B\)}
+        \RL{\(\oplus I_D\)}
+        \UIC{\(\G \vdash A \oplus B\)}
+    \end{bprooftree}
+\end{align*}
+
+
+\begin{prooftree}
+    \AXC{\(\G \vdash A \oplus B\)}
+    \AXC{\(\D, A \vdash C\)}
+    \AXC{\(\D, B \vdash C\)}
+    \RL{\(\oplus E\)}
+    \TIC{\(\G, \D \vdash C\)}
+\end{prooftree}
+
+
+            \item multiplikativna disjunkcija
+            
+            \begin{itemize}
+                \item Dual disjunkcije (negacija, multiplikativnost, aditivnost, ...)
+                \item Dual ! --- ?
+                \item Sekvenčni račun
+            \end{itemize}
+
+    % \subsection{Kosilo}
+    %     \begin{enumerate}
+    %         \item zelena solata ali rukola (\(S \& R\))
+    %         \item ričet ali dunajski zrezek (\(E \& D\))
+    %         \item tortica ali presenečenje šefa (palačinke ali jabolčni zavitek) (\(T \& (P \oplus J)\))
+    %     \end{enumerate}
+    %     \((S \& R) \otimes (E \& D) \otimes (T \& (P \oplus J))\)
+    %     %
+    
+\end{itemize}
+\pagebreak
+
+
+\section{Linearni tipi}
+
+\begin{itemize}
+    \item  Curray-Howardova korespondenca (primer zapisa)
+    \begin{itemize}
+        \item vsi smo imeli prograiranje 1, razen profesor Strle. Sočustvujem z vami, da ste zamudili tako dobr predmet.
+    \end{itemize}
+    
+    \begin{itemize}
+        \item leva in desna stran --- Kaj pomeni zapis na eni in kaj na drugi strani
+        
+    \end{itemize}
+
+
+
+    \item Primer kako dokažemo stvari hitrje v linearni logiki
+\\
+\\
+\\
+\\
+\\
+    \item primer z arreji (tabelami)
+\\
+\\
+\\
+\\
+\\
+    \item primeri programskih jezikov, ki delujejo linearno
+\\
+\\
+\\
+\\
+\\
+    \item rust in linearni tipi
+\end{itemize}
+
+\end{document}

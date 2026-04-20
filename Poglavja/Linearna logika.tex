@@ -271,9 +271,26 @@ Torej s temi operatorji smo dosegli zelo uporabno logiko, ki dela z viri, namest
 
 Operator \(!\) spremeni linearen vir \(A\) v vir, ki ga uporabimo poljubnomnogokrat \(!A\). Na primer pri linearni implikaciji \(A \multimap B\) se vir \(A\) uporabi, ko želimo dobiti \(B\). Če pa imamo implikacijo \(!A \multimap B\) je to ekvivalentno navadni implikaciji \(A \implies B\), kjer lahko \(A\) uporabljamo še naprej. 
 
+Njegov dual je \emph{zakaj ne} (\(?\)). To pomeni, da velja \({(!A)}^\bot = ?{(A)}^\bot\). Pravilo vpeljave za seveda.
+%
+\begin{prooftree}
+    \AXC{\(\G \vdash A\)}
+    \RL{\(!I\)}
+    \UIC{\(\G \vdash !A\)}
+\end{prooftree}
+%
+Pravilo uporabe:
+%
+\begin{prooftree}
+    \AXC{\(\G \vdash !A\)}
+    \AXC{\(\D, A \vdash C\)}
+    \RL{\(!E\)}
+    \BIC{\(\G, \D \vdash C\)}
+\end{prooftree}
+
+
+
 %TODO: 
-% ? je dual
-% pravila vpeljave in uporabe
 % Več primerov
 % Primer restavracije
 % Leva in desna stran okretnice
@@ -285,6 +302,8 @@ V linearni logiki, s zelo pomembne povezave med operatorji. Najprej poglejmo, ka
 
 Operatoji in konstante se delijo na aditivne in na multiplikativne. V tabeli~\ref{tab:muladd} je podano, kam spadajo kakšni operatorji in konstante.
 %
+
+\cite{curien2005introduction}
 \begin{table}[htb]
     \centering
     \begin{tabular}{| l | l | l |} \hline
@@ -324,6 +343,21 @@ Pravokotnost operacij:
 \end{table}
 
 
+Lahko omenimo še en način podajanja pravil v linearni logiki. Poglejmo si primer.
+%
+\begin{prooftree}
+    \AXC{}
+    \UIC{\(A \vdash B\)}
+\end{prooftree}
+%
+To pravilo pomeni ``uporabimo \(A\), da dobimo \(B\)''. Ekvivalentno bi lahko rekli ``nimamo več \(A\), imamo \(B\)''.
+%
+\begin{prooftree}
+    \AXC{}
+    \UIC{\(\vdash A^\bot, B\)}
+\end{prooftree}
+%
+Torej linearna logika ne ratlikuje zares med vhodom in izhodom.
 
 
 
