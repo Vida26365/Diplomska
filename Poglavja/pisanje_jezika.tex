@@ -1,0 +1,76 @@
+
+\subsection{tipi}
+
+V programski jezik sem vključila naslednje tipe
+\begin{itemize}
+    \item{\cd{LInt}} Linearno celo število. Za razliko od običajnega tipa \cd{Int}, se \cd{LInt} obnaša linearno. Torej po izvedbi kode
+    \begin{lstlisting}[language=Java]
+let a = 0
+let b = a
+    \end{lstlisting}
+    je vir \cd{a : LInt} porabljen. Kaj pa neimenovane spremenljivke? Če je \cd{1 : LInt}, kako lahko računamo \cd{1 + 1}? Tu \cd{1} in \cd{1} nista dve pojavitvi istega elementa, temveč stva dva različna elementa tipa \cd{LInt}. Postavimo naslednje dva pravila
+    \begin{center}
+        \begin{bprooftree}
+            \AXC{}
+            \UIC{\cd{LInt} Type}
+        \end{bprooftree}
+        \qquad
+        \begin{bprooftree}
+            \AXC{}
+            \UIC{\(n : \cd{LInt}\)}
+        \end{bprooftree}
+    \end{center}
+    Torej tako kot lahko enoto \(\unit\) s pravilom vpeljave za enoto ``ustvarimo'' iz ničesar, lahko ``ustvarimo'' elemente tipa \cd{LInt}.
+
+    \item{\cd{A -> B}} Linearni funkcijski tip. Ta tip predstavlja \(A \multimap B\). Ko apliciramo nek element \cd{a : A} na funkcijo \cd{f : A -> B} se vir \cd{a} uporabi. Poglejmo si primer v kodi
+    \begin{lstlisting}
+        let f x = x + 1
+        let a = 3
+        let b = f x
+    \end{lstlisting}
+\end{itemize}
+
+
+\subsection{pravila v Line-u}
+
+
+Pravila vpeljave tipov:
+%
+\begin{center}
+    \begin{bprooftree}
+        \AXC{}
+        \UIC{\cd{LInt} : Type}
+    \end{bprooftree} 
+    \qquad
+    \begin{bprooftree}
+        \AXC{}
+        \UIC{\cd{A -> B} : Type}
+    \end{bprooftree}   
+\end{center}
+
+Za vsak \(n \in \mathbb{Z}\) imamo pravilo:
+%
+\begin{center}
+        \begin{bprooftree}
+            \AXC{}
+            \UIC{\(\vdash n\) : \cd{LInt}}
+        \end{bprooftree}
+\end{center}
+
+
+
+
+\begin{center}
+    \qquad
+    \begin{bprooftree}
+        \AXC{\cd{let f x = b}???????????}
+        \UIC{}
+    \end{bprooftree}
+    \qquad
+    \begin{bprooftree}
+        \AXC{\cd{f:A\(\multimap\)B}}
+        \AXC{\cd{a:A}}
+        \BIC{\cd{let f a = b???????????
+f:A⊸B f a :B}}
+    \end{bprooftree}
+\end{center}

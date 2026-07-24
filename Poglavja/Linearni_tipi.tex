@@ -1,0 +1,90 @@
+
+Podobno kot smo v poglavju o curry howardovem izomorfizmupofjleleswfewkljdkljskljdfskljdfsklj
+TODO: Uvod
+
+
+
+\begin{itemize}
+    \item{Pravilo aksioma} 
+    \begin{prooftree}
+        \AXC{}
+        \RL{Ax}
+        \UIC{\(x : A \vdash x : A\)}
+    \end{prooftree}
+
+    \item{Hkratni produktni tip}
+    \begin{prooftree}
+        \AXC{\(\G \vdash N : A\)}
+        \AXC{\(\D \vdash M : B\)}
+        \RL{\(\otimes I\)}
+        \BIC{\(\G, \D \vdash \langle N, M \rangle : A \otimes B \)}
+    \end{prooftree}
+    %
+    \begin{prooftree}
+        \AXC{\(\G \vdash M : A \otimes B\)}
+        \AXC{\(\D, x : A, y : B \vdash N : C\)}
+        \RL{\(\otimes E\)}
+        \BIC{\(\G, \D \vdash N : C\)}
+    \end{prooftree}
+
+    \item{Linearno funkcijski tip}
+    \begin{prooftree}
+        \AXC{\(\G x : A \vdash N : B \)}
+        \RL{\(\multimap I\)}
+        \UIC{\(\G \vdash \lambda x. N : A \multimap B\)}
+    \end{prooftree}
+    %
+    \begin{prooftree}
+        \AXC{\(\G \vdash M : A \multimap B\)}
+        \AXC{\(\D \vdash N : A\)}
+        \RL{\(\multimap E\)}
+        \BIC{\(\G, \D \vdash M\ N\)}
+    \end{prooftree}
+
+
+    \item{Vsotni tip}
+    \begin{center}
+        \begin{bprooftree}
+            \AXC{\(\G \vdash N : A\)}
+            \RL{\(\oplus I_L\)}
+            \UIC{\(\G \vdash \inl N :  A \oplus B\)}
+        \end{bprooftree}
+        \begin{bprooftree}
+            \AXC{\(\G \vdash N : B\)}
+            \RL{\(\oplus I_D\)}
+            \UIC{\(\G \vdash \inr N :  A \oplus B\)}
+        \end{bprooftree}
+    \end{center}
+    %
+    \begin{prooftree}
+        \AXC{\(\G \vdash M : A \oplus B\)}
+        \AXC{\(\D_1, x: A \vdash N_1\)}
+        \AXC{\(\D_2, y : B \vdash N_2\)}
+        \RL{\(\oplus E\)}
+        \TIC{\(\G, \D \vdash \cd{match } M \cd{ with } \inl x \mapsto N_1 | \inr y \mapsto N_2\)}
+    \end{prooftree}
+
+    \item{Alternativni produktni tip}
+    \begin{prooftree}
+        \AXC{\(\G \vdash N : A\)}
+        \AXC{\(\G \vdash M : B\)}
+        \RL{\(\& I\)}
+        \BIC{\(\G \vdash N \with M : A \with B\)}
+    \end{prooftree}
+    %
+    \begin{center}
+        \begin{bprooftree}
+            \AXC{\(N : A \with B\)}
+            \RL{\(\& E_1\)}
+            \UIC{\(\fst N : A\)}
+        \end{bprooftree}
+        \begin{bprooftree}
+            \AXC{\(N : A \with B\)}
+            \RL{\(\& E_2\)}
+            \UIC{\(\snd N : B\)}
+        \end{bprooftree}
+    \end{center}
+
+\end{itemize}
+
+

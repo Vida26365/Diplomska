@@ -90,6 +90,8 @@
 \usepackage{nameref}
 \usepackage{hyperref}
 \usepackage{graphicx}
+\usepackage{listings}
+\usepackage[OT1]{fontenc}
 
 
 
@@ -119,6 +121,11 @@
 
 \newcommand{\parr}{\rotatebox[origin=c]{180}{\&}}
 
+\newcommand{\inl}{\cd{inl}}
+\newcommand{\inr}{\cd{inr}}
+\newcommand{\with}{\mathbin{\&}}
+\newcommand{\fst}{\cd{fst}}
+\newcommand{\snd}{\cd{snd}}
 
 \newenvironment{bprooftree}
   {\leavevmode\hbox\bgroup}
@@ -144,8 +151,15 @@
 \section{Linearna naravna dedukcija\label{natded}}
 \input{../Poglavja/Linearna logika.tex}
 
-\section{Zakaj ne? Seveda!}
-\input{../Poglavja/Seveda!.tex}
+\section{Linearni tipi}
+\input{../Poglavja/Linearni_tipi.tex}
+
+
+% \section{Zakaj ne? Seveda!}
+% \input{../Poglavja/Seveda!.tex}
+
+% \section{Pisanje miinimalnega primera linearnega programskega jezika}
+% \input{../Poglavja/pisanje_jezika.tex}
 
 % \section{Linearna logika}
 % \input{../Poglavja/Leva_in_desna_pravila.tex}
