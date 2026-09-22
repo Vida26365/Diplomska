@@ -44,3 +44,7 @@
 .bak 
 .mtc
 build/
+
+*.cpyth
+*.pyc
+*.xmpi
