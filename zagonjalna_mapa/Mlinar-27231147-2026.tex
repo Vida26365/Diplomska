@@ -53,20 +53,24 @@
 
 % - angleško-slovenski slovar strokovnih izrazov
 \slovar{
+\geslo{turnstile}{rampa}
+\geslo{computation rule}{pravilo računanja}
+\geslo{weakening rule}{pravilo ošibitve}
+\geslo{resource}{vir}
+\geslo{goal}{cilj}
+\geslo{inference rule}{pravilo sklepanja}
+
+
 % \geslo{angleški izraz}{slovenski izraz}
 % ...
 % \geslo{judgment}{sodba}
 % \geslo{premise}{premisa}
 % \geslo{conclusion}{sklep}
-% \geslo{inference rule}{pravilo sklepanja}
-% \geslo{computation rule}{pravilo računanja}
 % \geslo{\(\beta\)-reduction}{\(\beta\)-redukcija}
-% \geslo{resource}{vir}
 % \geslo{simultaneous conjunction}{hkratna konjunkcija}
 % \geslo{alternative conjunction}{alternativna konjunkcija}
 % \geslo{internal choice}{notranja izbira}
 % \geslo{cut}{rez}
-% % \geslo{weakening rule}{pravilo šibitve}
 % \geslo{lolli}{lizika}
 % \geslo{unit}{enota}
 % \geslo{top}{vrh}
@@ -126,6 +130,7 @@
 \newcommand{\with}{\mathbin{\&}}
 \newcommand{\fst}{\cd{fst}}
 \newcommand{\snd}{\cd{snd}}
+\newcommand{\case}{\cd{case}}
 
 \newenvironment{bprooftree}
   {\leavevmode\hbox\bgroup}
@@ -139,14 +144,9 @@
 
 \begin{document}
 
-% \section{Uvod}
 \input{../poglavja/uvod.tex}
-
-% \section{Naravna dedukcija}
 \input{../poglavja/Naravna dedukcija.tex}
-
-% \section{Curry-Howardov izomorfizem}
-% \input{../Poglavja/Curry-Howardov izomorfizem.tex}
+\input{../poglavja/Linearna naravna dedukcija.tex}
 
 % \section{Linearna naravna dedukcija\label{natded}}
 % \input{../Poglavja/Linearna logika.tex}

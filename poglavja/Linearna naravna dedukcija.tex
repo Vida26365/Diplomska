@@ -1,0 +1,54 @@
+\section{Linearni tipi}
+
+V poglavju~\ref{natded} smo obravavali elemente tipov kot da jih lahko uporabimo poljubno mnogokrat. Linearni tipi, pa so taki, da lahko njihoove elemente uporabimo natanko enkrat. Tako rekoč se ``porabijo''. To bolje odraža resnično živčjenje. Poglejmo si to na primeru.
+
+\begin{primer}
+    Oglejmo si preprosto kemijsko reakcijo.
+    %
+    \begin{equation*}
+        2 \mathsf{H_2} + \mathsf{O_2} \rightarrow 2 \mathsf{H_2 O}
+    \end{equation*}
+    %
+    Da dobimo vodo, se morajo vse molekule (obe molekuli vodika in molekula kisika) porabiti in ven lahko dobimo natanko dve molekuli vode. Nič več, nič manj.
+    To bi lahko zapiali kot
+    %
+    \begin{prooftree}
+        \AXC{\(2 \mathsf{H_2}\)}
+        \AXC{\(\mathsf{O_2}\)}
+        \RL{.}
+        \BIC{\(2 \mathsf{H_2 O}\)}
+    \end{prooftree}
+    %
+    V tem primeru molekule \(\mathsf{H_2}\) in \(\mathsf{O_2}\) imenujemo \emph{viri}, dobljene molekule vode \(\mathsf{H_2 O}\) pa \emph{cilj}. Lahko izpeljemo še malce močnejše pravilo.
+    %
+    \begin{prooftree}
+        \AXC{\(\G \vdash 2 \mathsf{H_2}\)}
+        \AXC{\(\D \vdash \mathsf{O_2}\)}
+        \BIC{\(\G, \D \vdash 2 \mathsf{H_2 O}\)}
+    \end{prooftree}
+    %
+    To bi prebrali kot: ``Če imamo skupino elementov (\(\G\)) iz katerih lahko dobimo dve molekuli vodika, in če imamo skupino elementov (\(\D\)) iz katere lahko dobimo molekulo kisika, potem lahko iz teh dveh skupin skupaj dobimo dve molekuli vode''.
+    %
+\end{primer}
+
+Za linearne tipe imamo tako malce drugačna pravila sklepanja. Začnimo s pravilom aksioma. Naše nelinearno pravilo je
+\begin{prooftree}
+    \AXC{}
+    \RL{\(Ax_{\text{nelinearno}}\).}
+    \UIC{\(\G, x: A \vdash x: A\)}
+\end{prooftree}
+%
+Ker pa se more vsak element porabiti natanko enkrat, se morajo vsi elementi v kontekstu pojaviti na desni strani rampe. Torej mora biti kontekst prazen.
+%
+\begin{prooftree}
+    \AXC{}
+    \RL{\(Ax\)}
+    \UIC{\(x: A \vdash x: A\)}
+\end{prooftree}
+
+
+
+
+
+
+

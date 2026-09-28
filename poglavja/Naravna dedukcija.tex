@@ -1,9 +1,14 @@
-\section{Naravna dedukcija in Curry Howardova korespondenca}
+\section{Naravna dedukcija in Curry Howardova korespondenca}\label{natded}
 
-V tem poglavju bomo najprej predstavili pravila sklepanja, na katerih temelji naravna dedukcija oziroma ``standardna'' logika in s tem bomo tudi predstavili notacijo, ki bo uporabljena v tem diplomskem delu.
+% V tem poglavju bomo najprej predstavili pravila sklepanja, na katerih temelji naravna dedukcija oziroma ``standardna'' logika in s tem bomo tudi predstavili notacijo, ki bo uporabljena v tem diplomskem delu.
+
+V tem poglavju bomo predstavili pravila izvajanja programov, ki so v korespondenci z pravili sklepanja pri naravni dedukcji. S tem bomo tudi predstavili notacijo, ki jo bomo uporabljali v tem diplomskem delu.
 
 
-\pravilo{Konjunkcija} 
+
+
+
+\pravilo{Produktni tip} 
 Pravilo vpeljave za konjunkcijo pravi, če sta izjavi \(A\) in \(B\) resnični, potem je tudi izjava \(A\) in \(B\) resnična. To lahko zapišemo kot
 %
 \begin{prooftree}
@@ -12,242 +17,283 @@ Pravilo vpeljave za konjunkcijo pravi, če sta izjavi \(A\) in \(B\) resnični, 
     \RL{\(\land I\).}
     \BIC{\(A \land B\)}
 \end{prooftree}
+
+To pravilo je v korespondenci z pravilom vpeljave za produktni tip:
 %
-Nad črto zapišemo končno mnogo premis in pod črto zapišemo \emph{sklep}. Desno od črte zapišemo ime pravila, ki ga ponavadi okrajšamo. V našem primeru \(\land\)I predstavlja pravilo vpeljave za konjuncijo (ang.~conjunction introduction). 
-Splošna oblika pravila sklepanja je torej
+\begin{prooftree}
+    \AXC{\(N: A\)}
+    \AXC{\(M: B\)}
+    \RL{\(\times I\).}
+    \BIC{\((N, M) : A \times B\)}
+\end{prooftree}
+
+Pravila sklepanja imajo obliko 
 %
 \begin{prooftree}
     \AXC{\(\mathcal{H}_1\)}
     \AXC{\(\mathcal{H}_2\)}
     \AXC{\(\ldots\)}
     \AXC{\(\mathcal{H}_n\)}
-    \RL{ime.}
+    \RL{ime,}
     \QuaternaryInfC{\(\mathcal{S}\)}
 \end{prooftree}
 %
-Izjavam \(S, \mathcal{H}_1, \ldots \mathcal{H}_n\) pravimo sodbe~\cite[Section 2]{pfenning2009lecture}.
-Sodbam \(\mathcal{H}_1, \ldots \mathcal{H}_n\) pravimo \emph{premise} in  \(\mathcal{S}\) je \emph{sklep}
-~\cite{Jazbec2022Primerjava}. 
-Kasneje bomo videli, kako lahko taka pravila sestavljamo skupaj, da dobimo izpeljana pravila. Takim zapisom dokazov pravimo \emph{sklepna drevesa}. % TODO: vir
-Navadno pišemo zraven še kontekst, ki ga ponavadi označimo z \(\Gamma\). Sodba \(\G \vdash A\) pravi, da iz konteksta \(\G\) lahko vzamemo izjavo \(A\) in jo uporabimo. % \cite homotopy type theory, poglavje 1.1
+kjer sodbam \(\mathcal{H}_1, \ldots \mathcal{H}_n\) pravimo premise, pod črto pa sobi \(\mathcal{S}\) pravimo \(sklep\)~\cite[Poglavje 3.1]{Jazbec2022Primerjava}. Desno od črte zapiešmo ime pravila, ki je navadno okrajšano.
+
+Del sodbe je tudi kontekst, ki ga navadno označujemo z \(\G\) ali \(\D\). Kontekst je nabor elementov z njihovimi tipi \(x_1 : A_1, \ldots x_n : A_n\)~\cite[Section 1.1]{rijke2022introduction}.
+Sodba je torej oblike \(\G \vdash N: A\), kjer znaku \(vdash\) pravimo \emph{rampa} (ang.~turnstile). 
+Pravilo vpeljave za produktni tip je tako oblike
 %
 \begin{prooftree}
-    \AXC{\(\G \vdash A\)}
-    \AXC{\(\G \vdash B\)}
-    \RL{\(\land I\)}
-    \BIC{\(\G \vdash A \land B\)}
+    \AXC{\(\G \vdash N: A\)}
+    \AXC{\(\G \vdash M: B\)}
+    \RL{\(\times I\).}
+    \BIC{\(\G \vdash (N, M) : A \times B\)}
 \end{prooftree}
 %
-Zgornje pravilo preberemo kot, da če imamo poljubni resnični izjavi \(A\) in \(B\) v konekstu \(\G\), potem v tem kontekstu velja tudi \(A \land B\).
-Kontekst je pravzaprav nabor izjav \(A_1 , \ldots, A_n\), ki jih imamo za resnične.
-Kljub temu, da nabor ponavadi v matematiki pomeni urejeno zaporedje, se tukaj zavedajmo, da zaporedje izjav v kontekstu ni pomembno.
+To preberemo kot: Če iz konteksta \(\G\) lahko dobimo element \(N\) tipa \(A\) in če iz konteksta \(\G\) lahko dobimo \(M\) tipa \(B\), potem lahko iz konteksta \(\G\) dobimo par \((N, M)\) tipa \(A \times B\).
 
-Za konjunkcijo imamo dve pravili uporabe (ang.~elimination rule) --- levo in desno. Levo pravilo iz iz konjunkcije vzame levo stran, torek če imamo \(A \land B\) potem imamo \(A\). Desno pravilo pa vzame desno stran konjunkcije.
-%
+Pomembno pravilo pri delu s kontekstom je pravilo ošibitve (ang.~weakening rule), ki pravi, da če iz konteksta \(\G\) lahko dobimo \(x: A\), potem lahko to dobimo tudi v razširjenem kontekstu \(\G, y: B\), se pravi v kontekstu, ki mu dodamo nek element.
+\begin{prooftree}
+    \AXC{\(\G \vdash x: A\)}
+    \RL{\(W\)}
+    \UIC{\(\G, y: B \vdash x: A\)}
+\end{prooftree}
+
+Imamo dve pravili uporabe za produktni tip --- levo in desno.
 \begin{equation*}
     \begin{bprooftree}
-        \AXC{\(\G \vdash A \land B\)}
-        \RL{\(\land E_L\)}
-        \UIC{\(\G \vdash A\)}
+        \AXC{\(\G \vdash N : A \times B\)}
+        \RL{\(\times E_L\)}
+        \UIC{\(\G \vdash \fst~N : A\)}
     \end{bprooftree}
     \qquad
-     \begin{bprooftree}
-        \AXC{\(\G \vdash A \land B\)}
-        \RL{\(\land E_D\)}
-        \UIC{\(\G \vdash A\)}
+    \begin{bprooftree}
+        \AXC{\(\G \vdash N : A \times B\)}
+        \RL{\(\times E_D\)}
+        \UIC{\(\G \vdash \snd~N : A\)}
     \end{bprooftree}
 \end{equation*}
 
-\pravilo{Implikacija}
-Malce bolj zahtevno pravilo vpeljave ima implikacija. Če lahko iz \(A\) izpeljemo \(B\), potem velja \(A \implies B\). To zapišemo kot
-%
-\begin{prooftree}
-    \AXC{\(\G, A \vdash B\)}
-    \RL{\(\Rightarrow I\)}
-    \UIC{\(\G \vdash A \implies B\)}
-\end{prooftree}
-%
-Torej če lahko iz konteksta \(\G\), ki mu je pridružena izjava \(A\), izpeljemo izjavo \(B\), potem lahko iz konteksta \(\G\) izpeljemo implikacijo \(A \implies B\). 
+Poleg pravil vpeljav iz uporabe imamo tudi pravila računanja (ang.~computation rule), ki v primeru produktnega tipa pove, kako se obnašata funkciji \(\fst\) in \(\snd\)
+\begin{align*}
+    \fst (N, M) \longrightarrow N  \\
+    \snd (N, M) \longrightarrow M 
+\end{align*}
 
-Da lahko vidiimo pravilo vpeljave na primeru, potrebujemo še emo pravilo sklepanja, in sicer pravilo aksioma
-%
-\begin{prooftree}
-    \AXC{}
-    \RL{\emph{Ax}}
-    \UIC{\(\G, A \vdash A\)}
-\end{prooftree}
-%
-To pravilo pravi, da brez dodatnih pogojev lahko sklepamo, da iz konteksta, ki vsebuje \(A\) lahko vzamemo \(A\). Bodimo pozorni, da kontekst tu ne pomeni samo \(\Gamma\), ampak \(\Gamma, A\), torej naboru izjav \(\Gamma = (A_1, \ldots, A_n)\) pridružimo še \(A\), da dobimo \(A_1, \ldots A_n, A\). Pogosto se v literaturi pojavlja tudi notacija
-%
-\begin{prooftree}
-    \AXC{\(A \in \G\)}
-    \RL{\emph{Ax}.}
-    \UIC{\(\G \vdash A\)}
-\end{prooftree}
 
-Sedaj si lahko pogledamo primer dokaza za \(A \Rightarrow (B \Rightarrow (A \land B))\)
-% ~\cite[stran 6]{pfenning2009lecture}.
+
+
+\pravilo{Pravilo aksioma}
+Preprosto pravilo je pravilo aksioma, ki pravi, da če imamo v konteksu vrednost \(x\) tipa \(A\) jo lahko uporabimo.
 %
-% TODO: spremeni potek dokaza
 \begin{prooftree}
     \AXC{}
     \RL{\emph{Ax}}
-    \UIC{\(A, B \vdash A\)}
-    \AXC{}
-    \RL{\emph{Ax}}
-    \UIC{\(A, B \vdash B\)}
-    \RL{\(\land I\)}
-    \BIC{\(A, B \vdash A \land B\)}
-    \RL{\(\Rightarrow I\)}
-    \UIC{\(A \vdash B \implies (A \land B)\)}
-    \RL{\(\Rightarrow I\)}
-    \UIC{\(\vdash A \implies (B \implies (A \land B))\)}
+    \UIC{\(\G, x : A \vdash x : A\)}
 \end{prooftree}
 %
-Pri tem primeru bi radi poudarili strukturo \emph{dokaznega drevesa}. Pravila dokazovanja se gradijo v večja \emph{izpeljana pravila} v obliki usmerjenega drevesnega grafa, kjer so vozlišča sodbe in povezave pravila med njimi.
-Razvidno je tudi, da trditev \(A \Rightarrow (B \Rightarrow (A \land B))\) drži sama po sebi in nismo potrebovali nobenih premis, da smo to pokazali. Pravilo aksioma deluje kot predpostavka. 
+Za to ne potrebujemo nobenih premis, torej je zgornja črta prazna.
 
-% Naj bralca ne zmoti dejstvo, da smo označevali pridružitev izjave h kontekstu ter združitev dveh izjav v kontekst z enako oznako ``\(,\)''. Kontekst namreč predstavlja izjave \(A_1, \ldots A_n\), torej notacija \(\G, A\) predstavlja \(A_1, \ldots A_n, A\). 
-
-Naj bralca ne zmoti pomankanje konteksta v zadnjem sklepu, namreč \(\G\) lahko predstavlja tudi prazen kontekst, torej smo še vedno upoštevali pravila sklepanja.
-
-
-Pravilo uporabe za implikacijo je enostavnejše.
+\pravilo{Funkcijski tip}
+Malce bolj zahtevno pravilo vpeljave ima funkcijski tip.
 %
+
 \begin{prooftree}
-    \AXC{\(\G \vdash A \implies B\)}
-    \AXC{\(\G \vdash A\)}
-    \RL{\(\Rightarrow E\)}
-    \BIC{\(\G \vdash B\)}
+    \AXC{\(\G, x : A \vdash M : B\)}
+    \RL{\(\rightarrow I\)}
+    \UIC{\(\G \vdash \la x. M : A \rightarrow B\)}
 \end{prooftree}
 %
-Če vemo, da iz \(A\) sledi \(B\), in vemo \(A\), potem vemo \(B\).
+Če imamo na voljo posamezen element \(x\) tipa \(A\) in lahko dobimo \(M\), potem lahko sestavimo funkcijo, ki elementu \(x  : A\) priredi \(M : B\). Tu je \(M\) lahko odvisen od \(x\), saj pride iz konteksta, ki vsebuje \(x : A\).
+Oznaka \(\la x. M\) pove, da je \(x\) vezana spremenljivka v izrazu \(M\) in predstavlja funkcijo, ki elementu \(x\) priredi vrednost \(M\). Pogosto tudi eksplicitno povemo tip vezane spremenlivke, torej pišemo \(\la x : A. M: B\) namesto \(\la x.M : A \rightarrow B\).
 
-\pravilo{Disjunkcija}
-Disjunkcija ima levo in desno pravilo vpeljave.
+Pravilo uporabe za funkcijski tip je
+\begin{prooftree}
+    \AXC{\(\G \vdash M : A \rightarrow B\)}
+    \AXC{\(\G \vdash N : A \)}
+    \RL{\( \rightarrow E\).}
+    \BIC{\(\G \vdash M~N : B\)}
+\end{prooftree}
+
+Pravilo računanja za funkcijski tip je
+\begin{equation*}
+    (\la x. M) N \longrightarrow M[N/x].
+\end{equation*}
+%
+Oznaka \(M[N/x]\) pove, da zamenjamo vse pojavitve \(x\) v \(M\) z \(N\).
+
+
+\begin{primer}
+    Poskusimo s temi pravili sestaviti element tipa \(A \rightarrow B \rightarrow (A \times B)\).
+    \begin{prooftree}
+        \AXC{?}
+        \UIC{\(\vdash ? : A \rightarrow B \rightarrow (A \times B)\)}
+    \end{prooftree}
+    Ker želimo dobiti funkcijo, bomo morali uporabiti pravilo vpeljave za funkcijo.
+    \begin{prooftree}
+        \AXC{?}
+        \UIC{\(x: A \vdash ? : B \rightarrow A \times B\)}
+        \RL{\(\rightarrow I\)}
+        \UIC{\(\vdash \la x. ? : A \rightarrow B \rightarrow (A \times B)\)}
+    \end{prooftree}
+    To nam razkrije že nekaj več kako bo izgledal končni term, namreč vemo, da bo \(x\) vezana spremenljivka.
+    \begin{prooftree}
+        \AXC{?}
+        \UIC{\(x: A, y: B \vdash ? : A \times B\)}
+        \RL{\(\rightarrow I\)}
+        \UIC{\(x: A \vdash \la y. ? : B \rightarrow A \times B\)}
+        \RL{\(\rightarrow I\)}
+        \UIC{\(\vdash \la x. \la y. ? : A \rightarrow B \rightarrow (A \times B)\)}
+    \end{prooftree}
+    Sedaj želimo dobiti nekaj tipa \(A \times B\). Edina možnost, ki jo imamo je, da uporabimo pravilo vpeljave za produktni tip.
+    \begin{prooftree}
+        \AXC{?}
+        \UIC{\(x:A, y: B \vdash x: A\)}
+        \AXC{?}
+        \UIC{\(x:A, y: B \vdash y: B\)}
+        \RL{\(\times I\)}
+        \BIC{\(x: A, y: B \vdash (x, y) : A \times B\)}
+        \RL{\(\rightarrow I\)}
+        \UIC{\(x: A \vdash \la y. (x, y): B \rightarrow A \times B\)}
+        \RL{\(\rightarrow I\)}
+        \UIC{\(\vdash \la x. \la y. (x, y) : A \rightarrow B \rightarrow (A \times B)\)}
+    \end{prooftree}
+    %
+    Na vrhu uporabimo pravilo aksioma in s tem zaključimo izpeljavo.
+    \begin{prooftree}
+        \AXC{}
+        \RL{\(Ax\)}
+        \UIC{\(x:A, y: B \vdash x: A\)}
+        \AXC{}
+        \RL{\(Ax\)}
+        \UIC{\(x:A, y: B \vdash y: B\)}
+        \RL{\(\times I\)}
+        \BIC{\(x: A, y: B \vdash (x, y) : A \times B\)}
+        \RL{\(\rightarrow I\)}
+        \UIC{\(x: A \vdash \la y. (x, y): B \rightarrow A \times B\)}
+        \RL{\(\rightarrow I\)}
+        \UIC{\(\vdash \la x. \la y. (x, y) : A \rightarrow B \rightarrow (A \times B)\)}
+    \end{prooftree}
+\end{primer}
+
+
+
+
+\pravilo{Vsotni tip}
+Vsotni tip ima levo in desno pravilo vpeljave.
 %
 \begin{equation*}
     \begin{bprooftree}
-        \AXC{\(\G \vdash A\)}
-        \RL{\(\lor I_L\)}
-        \UIC{\(\G \vdash A \lor B\)}
+        \AXC{\(\G \vdash M: A\)}
+        \RL{\(+ I_L\)}
+        \UIC{\(\G \vdash \inl~M :  A + B\)}
     \end{bprooftree}
     \begin{bprooftree}
-        \AXC{\(\G \vdash B\)}
+        \AXC{\(\G \vdash M : B\)}
         \RL{\(\lor I_D\)}
-        \UIC{\(\G \vdash A \lor B\)}
+        \UIC{\(\G \vdash \inr~M : A + B\)}
     \end{bprooftree}
 \end{equation*}
 %
-Ko v dokazu želimo uporabiti disjunkcijo, ne vemo, ali drži leva ali desna stran. Torej ju ločimo in pokažemo, da iz obeh lahko dobimo željen cilj.
-%
-\begin{prooftree}
-    \AXC{\(\G \vdash A \lor B\)}
-%
-    \AXC{\(\G, A \vdash C\)}
-%
-    \AXC{\(\G, B \vdash C\)}
-    \RL{\(\lor E\) }
-    \TIC{\(\G \vdash C\)}
-\end{prooftree}
-%
-Vidimo da je to pravilo sklepanja podobno pravilu uporabe za implikacijo, saj je spet potrebno pokazazati, da iz \(A\) lahko dobimo \(C\), kot da bi vpeljali implikacijo. 
-Poglejmo si primer kako uporabimo disjunkcijo, tako da dokažemo \((A \lor B) \implies (B \lor A)\). Najprej si samo vizualizirajmo, kaj sploh želimo dokazati.
-%
-\begin{prooftree}
-    \AXC{}
-    \RL{\emph{Ax}}
-    \UIC{\(A \lor B \vdash A \lor B\)}
-    \noLine
-    \UIC{\(\vdots\)}
-    \noLine
-    \UIC{\(A \lor B \vdash B \lor A\)}
-    \RL{\(\Rightarrow I\)}
-    \UIC{\( \vdash (A  \lor B) \implies (B \lor A)\)}
-\end{prooftree}
-%
-Nadaljujemo na edini način,  ki nam je na voljo, in sicer razdelitev \(A \lor B\) na primere.
-%
-\begin{prooftree}
-    \AXC{}
-    \RL{\emph{Ax}}
-    \UIC{\(A \lor B \vdash A \lor B\)}
-    \AXC{?}
-    \UIC{\(A \lor B, A \vdash B \lor A\)}
-    \AXC{?}
-    \UIC{\(A \lor B, B \vdash B \lor A\)}
-    \RL{\(\lor E\)}
-    \TIC{\(A \lor B \vdash B \lor A\)}
-    \RL{\(\Rightarrow I\)}
-    \UIC{\( \vdash (A  \lor B) \implies (B \lor A)\)}
-\end{prooftree}
-%
-Moramo samo še ugotoviti, kaj napisati namesto vprašajev.
-Lotimo se manjšega podprimera.
-\begin{prooftree}
-    \AXC{?}
-    \UIC{\(A \lor B, A \vdash B \lor A\)}
-\end{prooftree}
-%
-Glede na to, da v sklepu potrebujemo dijunkcijo, lahko poskusimo vpeljati to disjunkcijo. 
-\begin{prooftree}
-    \AXC{?}
-    \UIC{\(A \lor B, A \vdash A\)}
-    \RL{\(\lor I_D\)}
-    \UIC{\(A \lor B, A \vdash B \lor A\)}
-\end{prooftree}
-%
-Da iz konteksta \(A \lor B, A\) lahko vzamemo \(A\) pa nam pove pravilo hipoteze.
-%
-\begin{prooftree}
-    \AXC{}
-    \RL{\emph{Ax}}
-    \UIC{\(A \lor B, A \vdash A\)}
-    \RL{\(\lor I_D\)}
-    \UIC{\(A \lor B, A \vdash B \lor A\)}
-\end{prooftree}
-%
-Simetrično dobimo dokaz 
-\begin{prooftree}
-    \AXC{}
-    \UIC{\(A \lor B, B \vdash B \lor A\)}
-\end{prooftree}
-%
-Vstavimo to v naš večji dokaz, da dobimo celotno izpeljavo z osnovnimi pravili.
-%
-\begin{prooftree}
-    \AXC{}
-    \RL{\emph{Ax}}
-    \UIC{\(A \lor B \vdash A \lor B\)}
 
-    \AXC{}
-    \RL{\emph{Ax}}
-    \UIC{\(A \lor B, A \vdash A\)}
-    \RL{\(\lor I_D\)}
-    \UIC{\(A \lor B, A \vdash B \lor A\)}
-
-    \AXC{}
-    \RL{\emph{Ax}}
-    \UIC{\(A \lor B, B \vdash B\)}
-    \RL{\(\lor I_L\)}
-    \UIC{\(A \lor B, B \vdash B \lor A\)}
-
-    \RL{\(\lor E\)}
-    \TIC{\(A \lor B \vdash B \lor A\)}
-    \RL{\(\Rightarrow I\)}
-    \UIC{\( \vdash (A  \lor B) \implies (B \lor A)\)}
+Ko želimo uporabiti element vsotnega tipa ne vemo, ali priprada levi ali desni strani. Torej moramo znati delati tako z levo, kot tudi z desno stranjo.
+\begin{prooftree}
+    \AXC{\(\G \vdash M : A + B\)}
+%
+    \AXC{\(\G, x: A \vdash N_1 : C\)}
+%
+    \AXC{\(\G, y : B \vdash N_2 :  C\)}
+    \RL{\(+ E\) }
+    \TIC{\(\G \vdash \case~M~(\inl~x \mapsto N_1 \mid \inr~y \mapsto N_2) : C\)}
 \end{prooftree}
 
-V kasnejših poglavjih bomo povedali še pravila za eksistenčni in univerzalni kvantifikator ter za negacijo. 
 
 
-% \pravilo{Negacija}
-% Za negacijo imamo več možnosti osnovnih pravil. Navadno se negacija \(\neg A\) predstavi kot \(A \implies \bot\), se pravi, če iz \(A\) lahko pokažemo neresnico, potem \(A\) ne velja. To podre strukturo pravil vpeljave in uporabe
+\begin{primer}
+    Poskusimo pokazati, da so elementi \(A + B\) v korespondenci z elementi \(B + A\) oziroma. Dovolj bo, da pokažemo, da obstaja funkcija tipa \(A + B \rightarrow B + A\).
 
-% \pravilo{Resnica in neresnica}
+    
+    \begin{prooftree}
+        \AXC{?}
+        \UIC{\(\vdash ? : (A + B \rightarrow B + A)\)}
+    \end{prooftree}
+    Potrebujemo pravilo vpeljave za implikacijo
+    \begin{prooftree}
+        \AXC{?}
+        \UIC{\( x: A + B \vdash ? : B + A\)}
+        \RL{\(\rightarrow I\)}
+        \UIC{\(\vdash \la x.? : (A + B \rightarrow B + A)\)}
+    \end{prooftree}
+    V kontekstu imamo na voljo \(A + B\). To želimo uporabiti
+
+\begin{center}
+    \small
+        \begin{prooftree}
+            \AXC{}
+            \RL{\(Ax\)}
+            \UIC{\(x: A + B \vdash x : A + B\)}
+            \AXC{?}
+            \UIC{\(x: A + B, a: A \vdash ? : B + A\)}
+            \AXC{?}
+            \UIC{\(x: A + B, b : B \vdash ? : B + A\)}
+            \RL{\(+ E\)}
+            \TIC{\( x: A + B \vdash \case~x~(inl~a \mapsto ? \mid \inl~b \mapsto ?) : B + A\)}
+            \RL{\(\rightarrow I\)}
+            \UIC{\(\vdash \la x.\case~x~(\inl~a \mapsto ? \mid \inr~b \mapsto ?) : (A + B \rightarrow B + A)\)}
+        \end{prooftree}
+\end{center}
+    Potrebno je še najti 
+    \begin{prooftree}
+        \AXC{?}
+        \UIC{\(x: A + B, a: A \vdash ? : B + A\)}
+    \end{prooftree}
+    in simetrično
+    \begin{prooftree}
+        \AXC{?}
+        \UIC{\(x: A + B, b : B \vdash ? : B + A\)}
+    \end{prooftree}
+    Poskusimo s pravilom vpeljave za vsotni tip.
+    \begin{prooftree}
+        \AXC{?}
+        \UIC{\(x: A + B, a: A \vdash a: A\)}
+        \RL{\(+ I_R\)}
+        \UIC{\(x: A + B, a: A \vdash \inr~a : B + A\)}
+    \end{prooftree}
+    Sedaj pa uporabimo še pravilo aksioma.
+    \begin{prooftree}
+        \AXC{}
+        \RL{\(Ax\)}
+        \UIC{\(x: A + B, a: A \vdash a: A\)}
+        \RL{\(+ I_R\)}
+        \UIC{\(x: A + B, a: A \vdash \inr~a : B + A\)}
+    \end{prooftree}
+    Podobno naredimo tudi za drugo stran. Sedaj lahko vse skupaj združimo v dokazovalno drevo.
 
 
-% pravila za konjunkcijo, impolikacijo, disjunkcijo (cases), negacija, resnica
-% univerzalni kvantifikator, [t/x]A
-% eliminacija, vpeljava in klasična logika
-% kontekst, konkatenacija, razlaga notacije
+    \begin{center}
+        \small
+        \resizebox{0.8\textwidth}{!}{%
+        \vbox{\begin{prooftree}
+            \AXC{}
+            \RL{\(Ax\)}
+            \UIC{\(x: A + B \vdash x : A + B\)}
+            \AXC{}
+            \RL{\(Ax\)}
+            \UIC{\(x: A + B, a: A \vdash a: A\)}
+            \RL{\(+ I_R\)}
+            \UIC{\(x: A + B, a: A \vdash \inr~a : B + A\)}
+            \AXC{}
+            \RL{\(Ax\)}
+            \UIC{\(x: A + B, b : B \vdash b : B\)}
+            \RL{\(+ I_L\)}
+            \UIC{\(x: A + B, b : B \vdash \inl~b : B + A\)}
+            \RL{\(+ E\)}
+            \TIC{\( x: A + B \vdash \case~x~(inl~a \mapsto ? \mid \inl~b \mapsto ?) : B + A\)}
+            \RL{\(\rightarrow I\)}
+            \UIC{\(\vdash \la x.\case~x~(\inl~a \mapsto ? \mid \inr~b \mapsto ?) : (A + B \rightarrow B + A)\)}
+        \end{prooftree}}}
+    \end{center}
+\end{primer}
+
+
