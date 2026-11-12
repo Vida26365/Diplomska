@@ -1,8 +1,48 @@
 \section{Uvod}
 
-Cilj tega diplomskega dela je predstaviti linearne tipe, implementirati programske jezike, ki predstavijo koncepte različne koncepte iz linearne logike ter razmisliti, kje so linearni programski jeziki uporabni.
+Svet se vedno spreminja. Staro se spremeni v novo. Linearna logika poskuša modelirati to spremninjanje in porabljanje virov za doseganje cilja. 
+Če imamo dva evra, lahko kupimo eno čokolado ali pa dva paketa bombonov -- nič več, nič manj. 
 
-Linearno logiko je prvi predstavil Jean-Yves Girard~\cite{girard1987linear} in bo v tem delu predstavljena v poglavju TODO.
-Poglavje TODO je namenjeno osnovam naravne dedukcije in Crry-Howardove korespondence.
-V poglavju TODO predstavimo implementacijo popolnoma linearnega jezika, 
-v poglavjih TODO in TODO pa razdelimo tipe na linearne in nelinearne ter sestvimo programski jezik, ki zmore upoštevati to delitev.
+Linearno logiko lahko tudi uporabimo v programiranju. Oglejmo si tri funkcije na seznamih:
+\begin{align*}
+    & \cd{make} : \cd{Int} \rightarrow A \rightarrow A \cd{ Array} \\
+    & \cd{lookup} : \cd{Int} \rightarrow A \cd{ Array} \rightarrow A \\
+    & \cd{update} : \cd{Int} \rightarrow A \rightarrow A \cd{ Array} \rightarrow A \cd{ Array}
+\end{align*}
+Na problem naletimo pri \(\cd{update}\), ki med drugim sprejme seznam in vrne spremenjen seznam. Kaj se zgodi s starim seznamom. Še vedno obstaja, ali se je spremenil? Seznami se načeloma spreminjajo na mestu, torej naš stari seznam no obstaja več. S pomočjo linearnih tipov pa lahko zagotovimo, da do objektov ki ne obstajajo več, ne moremo dostpati.
+
+V okviru te diplomske naloge, sem za projekt The Programming Languages Zoo~\cite{plzoo} sestavila programski jezik Line Mix, ki predstavlja minimalno različico jezika z linearnimi tipi. V tem diplomskem delu bom predstavila linearne tipe, ki so implementiratni v Line Mix, katere probleme rešujejo, in kako rešiti nove probleme, ki se ustvarijo. 
+
+
+\section{Pravila sklepanja}
+
+Teoretični del programski jezikov bom predstavila s pomočjo pravil sklepanja. Splošna oblika pravila sklepanja je~\cite{Jazbec2022Primerjava}
+%
+\begin{prooftree}
+    \AXC{\(\mathcal{H}_1\)}
+    \AXC{\(\mathcal{H}_2\)}
+    \AXC{\(\ldots\)}
+    \AXC{\(\mathcal{H}_n\)}
+    % \RL{ime,}
+    \QuaternaryInfC{\(\mathcal{S}\)}
+\end{prooftree}
+%
+pri čemer so \(\mathcal{S}, \mathcal{H}_1, \ldots, \mathcal{H}_n\) sodbe oblike \(\G \vdash a: A\), kjer je \(\G\) kontekst, \(a\) pa je spremenljivka tipa \(A\), ki jo lahko dobimo iz tega konteksta. Poglejmo si to na primeru pravila vpeljave in uporabe za funckijski tip.
+
+
+\begin{primer}
+    Pravilo uporabe za funkcijo je preprosto: Če imamo funkcijo \(f : A \rightarrow B\) in element \(a : A\), potem lahko apliciramo \(a\) na \(f\) in dobimo element tipa \(B\).
+    \begin{prooftree}
+        \AXC{\(\G \vdash f : A \rightarrow B\)}
+        \AXC{\(\G \vdash a : A\)}
+        \RL{\(\rightarrow\)E}
+        \BIC{\(\G \vdash f~a : B\)}
+    \end{prooftree}
+    Pravilo vpeljave za funkcijo pa se glasu: Če lahko iz konteksta \(\G\) z elementom \(x: A\) dobimo \(b : B\), potem lahko iz konteksta \(\G\) dobimo funkcijo \(\la x : A. B : A \rightarrow B\). 
+
+    \begin{prooftree}
+        \AXC{\(\G, x: A \vdash b: B\)}
+        \RL{\(\rightarrow\)I}
+        \UIC{\(\G \vdash \la x : A. b : A \rightarrow B\)}
+    \end{prooftree}
+\end{primer}

@@ -1,0 +1,22 @@
+\section{Posebnosti}
+
+\subsection{Poskus !}
+
+Če je le možno, želimo imeti nelinearne tipe, saj nima smisla, da bi se omejili na restriktiven linearni tip. Tako za funkcije velja, da če uporabijo kakšno linearno spremenljivko, bo funkcija imela tip \(A \multimap B\), sicer pa \(!(A \multimap B)\). V kodi to definiramo takole.
+\begin{verbatim}
+    | Fun (x, ty, body) ->
+        let ctx1 = define ctx x ty in
+        let bty, ctx2 = infer ctx1 body in
+        let ctx2 = remove_bound ~loc ctx ctx2 x in
+        if consumes_linear ctx ctx2
+        then LLolli (ty, bty), ctx2
+        else LBang (LLolli (ty, bty)), ctx2
+\end{verbatim}
+
+\begin{prooftree}
+    \AXC{\([\G], x: A \vdash e : B\)}
+    \RL{\(!\multimap I\)}
+    \UIC{\([\G] \vdash \la x : A. b : !(A \multimap B)\)}
+\end{prooftree}
+
+Prav tako želimo, da povsod kjer se 

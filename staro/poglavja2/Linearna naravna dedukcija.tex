@@ -1,0 +1,124 @@
+\section{Linearni tipi}
+
+V poglavju~\ref{natded} smo obravavali elemente tipov kot da jih lahko uporabimo poljubno mnogokrat. Linearni tipi, pa so taki, da lahko njihoove elemente uporabimo natanko enkrat. Tako rekoč se ``porabijo''. To bolje odraža resnično življenje. Poglejmo si to na primeru.
+
+\begin{primer}
+    Oglejmo si preprosto kemijsko reakcijo.
+    %
+    \begin{equation*}
+        2 \mathsf{H_2} + \mathsf{O_2} \rightarrow 2 \mathsf{H_2 O}
+    \end{equation*}
+    %
+    Da dobimo vodo, se morajo vse molekule (obe molekuli vodika in molekula kisika) porabiti in ven lahko dobimo natanko dve molekuli vode. Nič več, nič manj.
+    To bi lahko zapiali kot
+    %
+    \begin{prooftree}
+        \AXC{\(2 \mathsf{H_2}\)}
+        \AXC{\(\mathsf{O_2}\)}
+        \RL{.}
+        \BIC{\(2 \mathsf{H_2 O}\)}
+    \end{prooftree}
+    %
+    V tem primeru molekule \(\mathsf{H_2}\) in \(\mathsf{O_2}\) imenujemo \emph{viri}, dobljene molekule vode \(\mathsf{H_2 O}\) pa \emph{cilj}. Lahko izpeljemo še malce močnejše pravilo.
+    %
+    \begin{prooftree}
+        \AXC{\(\G \vdash 2 \mathsf{H_2}\)}
+        \AXC{\(\D \vdash \mathsf{O_2}\)}
+        \BIC{\(\G, \D \vdash 2 \mathsf{H_2 O}\)}
+    \end{prooftree}
+    %
+    To bi prebrali kot: ``Če imamo skupino elementov (\(\G\)) iz katerih lahko dobimo dve molekuli vodika, in če imamo skupino elementov (\(\D\)) iz katere lahko dobimo molekulo kisika, potem lahko iz teh dveh skupin skupaj dobimo dve molekuli vode''.
+    %
+\end{primer}
+
+
+Poglejmo si kje pridejo koncepti iz linearne logike prav pri programiranju.
+
+
+\begin{primer}
+    V Pythonu (in večini normalnih jezikov) imamo laho dve spremenljivki, ki kažeta na isto vrednost na primer na dva seznama. V tem primeru, če spremenimo eno vrednost ene spremenljivke, se spremeni tudi vrednost druge spremenljivke. Na sliki~\ref{python:seznami} je primer Python code, ki naredi prav to.
+    %
+    \begin{center}
+        \begin{figure}[htb]
+            \begin{verbatim}
+>>> a = [1, 2, 3]
+>>> b = a
+>>> b[0] = 100
+>>> b
+[100, 2, 3]
+>>> a
+[100, 2, 3]
+>>> 
+            \end{verbatim}
+            \caption{Primer, ko si dve spremenljivki delita isto vrednost v Python-u}\label{python:seznami}
+        \end{figure}
+    \end{center}
+
+    Če pozabimo, ali pa se ne zavedamo, da \cd{a} in \cd{b} kažeta na isti seznam, lahko uporbljamo \cd{a} in \cd{b} na različnih mestih misloč, da sta različna in se sprašujemo, zakaj se program obnaša rugače kot bi pričakovali. Tega se lahko rešimo z bolj restriktivnimi linearnimi tipi. Če želimo nastaviti \cd{b = a}, potrebjemo \cd{a}, torej porabimo \cd{a} v tvorbi \cd{b}-ja. V programskem jeziku \verb|line_mix| je spisan primer~\ref{line_mix:seznami}. 
+        \begin{center}
+        \begin{figure}[ht]
+            \begin{verbatim}
+line_mix> let a = [1, 2, 3];
+line_mix> let b = a;
+line_mix> a;
+Type error: unbound variable a.
+line_mix> b;
+[1, 2, 3] : (!Int Array)
+line_mix> 
+            \end{verbatim}
+            \caption{Primer, ko se spremenljivka porabi ob uporabi.}\label{line_mix:seznami}
+        \end{figure}
+    \end{center}
+\end{primer}
+
+Line Mix je programski jezik, ki je bil za namen te diplomske naoge implementiran kot del projekta Programming Languages Zoo (or plzoo)~\cite{plzoo}. Poglejmo si, kako Line Mix implementira razne linearne tipe. Začnimo z konstruktorjem \cd{let}, ki smo jo že videli v primeru~\ref{line_mix:seznami}.
+
+Konstruktor \cd{let} na ime spremenljivke veže izraz oziroma z drugimi besedami poimenuje spremenljivko.
+\begin{prooftree}
+    \AXC{\(\G \vdash e : A\)}
+    \RL{\cd{Let}\(I\)}
+    \UIC{\(\G \vdash \cd{let } a = e : A\)}
+\end{prooftree}
+\begin{prooftree}
+    \AXC{\(\G \vdash \cd{let } a = e : A\)}
+    \RL{\cd{let}\(E\)}
+    \UIC{\(\G \vdash a : A\)}
+\end{prooftree}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+% Za linearne tipe imamo tako malce drugačna pravila sklepanja. Začnimo s pravilom aksioma. Naše nelinearno pravilo je
+% \begin{prooftree}
+%     \AXC{}
+%     \RL{\(Ax_{\text{nelinearno}}\).}
+%     \UIC{\(\G, x: A \vdash x: A\)}
+% \end{prooftree}
+% %
+% Ker pa se more vsak element porabiti natanko enkrat, se morajo vsi elementi v kontekstu pojaviti na desni strani rampe. Torej mora biti kontekst prazen.
+% %
+% \begin{prooftree}
+%     \AXC{}
+%     \RL{\(Ax\)}
+%     \UIC{\(x: A \vdash x: A\)}
+% \end{prooftree}
+
+
+
+
+
+
+

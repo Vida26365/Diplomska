@@ -1,0 +1,181 @@
+\section{Preverjevalec tipov}
+
+Glavni del, ki naredi Line Mix drugačnega od ostalih programskih jezikov je preverjevalec tipov (ang.\ typechecker). Poglejmo si kodo iz datoteke \verb|typechecker.ml|.
+
+Glavna funkcija v \verb|tzpchecker.ml| je funkcija \verb|infer|, ki sprejme kontekst in izraz, poskui ugotoviti kakšnega tipa je ta izraz in nato vrne tip izraza in kontekst, ki ostane ko se izraz izvede. 
+Kaj to pomeni v praksi? Recimo da imamo kodo
+%
+\begin{verbatim}
+line_mix> let a = [1, 2, 3]
+line_mix> let i = 0
+line_mix> lookup a i
+(1, [1, 2, 3]) : (!Int * (!Int Array))
+line_mix> a
+Type error: unbound variable a.
+line_mix> i
+0 : !Int
+line_mix> 
+(1, [1, 2, 3]) : (!Int * (!Int Array))
+\end{verbatim}
+Začnemo s praznim kontekstom. Z ukazom \verb|let| dodamo spremenljivko v kontekst, tako najprej dodamo \verb|a| nato pa še \verb|i|. V tretji vrstici ju uporabimo, da zgradimo nov tip \verb|!Int * (!Int Array)|. Ker je \verb|a| linearna spremenljivka, se porabi, torej odstranimo \verb|a| iz konteksta. Ko želimo uporabiti \verb|a| nam prevajalnik pove, da spremenljivke \verb|a| ni v kontekstu. Spremenljivka \verb|i| pa ni linearna, torej se ne porabi, ko jo uporabimo, ostane v kontekstu in jo lahko kličemo poljubno mnogokrat.
+
+
+Poglejmo si podrobneje implementacijo preverjevalce kode.
+
+\subsection{spremenljivka}
+Izraz, ki ga dobimo, je lahko spremenljivka. Vsaka spremenljivka ima v strukturi \verb|context| shranjen katerega tipa je. V primeru da je spremenljivka linearna jo odstranimo iz konteksta. S tem poskrbimo, da se vsaka linearna spremenljivka uporabi največ enkrat. Naslednjič ko bomo želeli uporabiti to spremenljivko, je ne bo več v kontekstu, zato bomo naleteli na napako. 
+\begin{verbatim}
+and infer ctx e : ltype * context =
+  match e with
+  | Var x -> (
+      match Context.find_opt x ctx with
+      | Some ty -> 
+        if is_linear ty then
+          (ty, Context.remove x ctx)
+        else
+          (ty, ctx)
+    | None -> typing_error "unbound variable %s." x
+  )
+\end{verbatim}
+
+
+\subsection{Par}
+
+Pravilo za vplejavo para se glasi
+\begin{prooftree}
+    \AXC{\(\G \vdash e_1 : A\)}
+    \AXC{\(\D \vdash e_2 : B\)}
+    \BIC{\(\G, \D \vdash (e_1, e_2) : A \otimes B\)}
+\end{prooftree}
+
+Pravilo za par je v kodi zapisano tako:
+%
+\begin{verbatim}
+| Pair (e1, e2) -> 
+    let ty1, ctx1 = infer ctx e1 in
+    let ty2, ctx2 = infer ctx1 e2 in
+    LAnd (ty1, ty2), ctx2
+\end{verbatim}
+Usmerila bi pozprnost na to, kaj je kontekst na posameznem delu. Prvi \verb|infer| vzame kontekst \verb|ctx|, vrne pa \verb|ctx1|, ki ga vzame kot argumnet drugi \verb|infer|. Kontekst \verb|ctx1| predstavlja tisti del konteksta, ki ga \verb|e1| ne uporabi. Torej je \(\G\) iz pravila vpeljave natanko \verb|ctx| brez spremenljivk iz \verb|ctx1| in podobno je \(\D\) natanko \verb|ctx1| brez \verb|ctx2|. Kontekst \verb|ctx2|, ki se ne porabi ni predstavljen v pravilu vpeljave, saj se morajo tam uporabiti vse linearne spremenljivke, torej bi moral \verb|ctx2| vsebovati samo nelinearne spremenljivke, vednar tega v kodi ne zahtevamo, saj se s tem ohranja kaj smo že definirali. Kodo
+%
+\begin{verbatim}
+line_mix> let a = [1, 2, 3] # kontekst: a : !Int Array
+line_mix> let i = 0         # kontekst: a : !Int Array, i : !Int
+line_mix> lookup a i        # kontekst: i : !Int
+(1, [1, 2, 3]) : (!Int * (!Int Array))
+\end{verbatim}
+%
+bi s pravili zapisali takole:
+\begin{prooftree}
+    \AXC{}
+    \RL{\(\cd{let}\)}
+    \UIC{\(a : \cd{!Int Array} \vdash a : \cd{!Int Array}\)}
+    \AXC{}
+    \RL{\(\cd{let}\)}
+    \UIC{\(i : \cd{!Int} \vdash i : \cd{!Int}\)}
+    \RL{\(\cd{lookup}\)}
+    \BIC{\(a : \cd{!Int Array}, i : \cd{!Int} \vdash \cd{lookup}\ a \ i \)}
+\end{prooftree}
+%
+Tak način pa je mogoč le zaradi drevesne strukture, ki jo imajo dokazovanlna drevesa, medtem ko je programiranje linearno.
+
+
+
+
+
+
+
+
+\subsection{karet in operacije na številih}
+Naslednja zanimiva stvar v Line Mix je, da lahko množiš dve števili, ki imata različna tipa. 
+Znak ">\(\caret\)"< spremeni nelinearni izraz tipa \(!A\) v linearen izraz tipa \(A\). Imamo torej pravilo:
+%
+\begin{prooftree}
+    \AXC{\(\G \vdash e :  !A\)}
+    \UIC{\(\G \vdash \caret e : A \)}
+\end{prooftree}
+%
+Tako imamo 
+%
+\begin{verbatim}
+line_mix> 5
+5 : !Int
+line_mix> ^5
+5 : Int
+\end{verbatim}
+%
+Lar pa si želimo je, da lahko s takimi števili še vedno računamo. Zato je v datoteki \verb|typechecker.ml| spodnja koda.
+%
+\begin{verbatim}
+| Times (e1, e2) 
+| Plus (e1, e2) 
+| Divide (e1, e2) 
+| Minus (e1, e2) 
+| Mod (e1, e2) ->
+      let ty1, ctx1 = checkish ctx e1 LInt in
+      let ty2, ctx2 = checkish ctx1 e2 ty1 in
+      merge_types ty1 ty2, ctx2
+\end{verbatim}
+%
+Najprej preverimo, da sta izraza \(\cd{e1}\) in \(\cd{e2}\) res oblike \(\cd{Int}\) ali \(\cd{!Int}\), tip ki ga vrnemo, pa je nelinearen, če je lahko, drugače pa je linearen. Torej če sta oba izraza tipa \(\cd{!Int}\) bo tudi rezultat tipa \(\cd{!Int}\), če pa uporabi kakšen linearen vir (kot je izraz tipa \(\cd{Int}\)), pa je rezultat tipa \(\cd{Int}\).
+To predstavljajo pravila
+%
+\begin{align*}
+    \begin{bprooftree}
+        \AXC{\(\G \vdash x : \cd{!Int}\)}
+        \AXC{\(\D \vdash y : \cd{!Int}\)}
+        \BIC{\(\G, \D \vdash x + y : \cd{!Int}\)}
+    \end{bprooftree}
+    \qquad
+    \begin{bprooftree}
+        \AXC{\(\G \vdash x : \cd{!Int}\)}
+        \AXC{\(\D \vdash y : \cd{Int}\)}
+        \BIC{\(\G, \D \vdash x + y : \cd{Int}\)}
+    \end{bprooftree}
+\end{align*}
+\begin{equation*}
+    \begin{bprooftree}
+        \AXC{\(\G \vdash x : \cd{Int}\)}
+        \AXC{\(\D \vdash y : \cd{Int}\)}
+        \RL{.}
+        \BIC{\(\G, \D \vdash x + y : \cd{Int}\)}
+    \end{bprooftree}
+\end{equation*}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\subsection{if-izjave}
+Pravilo vpeljave za if izjave se glasi
+\begin{prooftree}
+    \AXC{\(\G \vdash c : \cd{Bool}\)}
+    \AXC{\(\D \vdash a_1 : A\)}
+    \AXC{\(\D \vdash a_2 : A\)}
+    \RL{.}
+    \TIC{\(\G, \D \vdash \cd{if } c \cd{ then } a_1 \cd{ else } a_2\)}
+\end{prooftree}
+%
+To predstavimo s spodnjo kodo
+\begin{verbatim}
+| If (cond, e1, e2) ->
+    let _, ctx' = checkish ctx cond LBool in
+    let ty1, ctx_1 = infer ctx' e1 in
+    let ctx_2 = check ctx' e2 ty1 in
+    require_same_context ctx_1 ctx_2;
+    ty1, ctx_1
+\end{verbatim}
+Funkcija \verb|checkish : context -> expr -> ltype -> ltype * context| vzame kontekst, izraz in vhodni tip, preveri, če je tip izraza enak vhodnemu tipu, ali pa se razlikujeta za \verb|!|, vrne pa tip izraza in kontekst, ki preostane, da dobimo ta tip iz izraza.

@@ -53,12 +53,15 @@
 
 % - angleško-slovenski slovar strokovnih izrazov
 \slovar{
-\geslo{turnstile}{rampa}
-\geslo{computation rule}{pravilo računanja}
-\geslo{weakening rule}{pravilo ošibitve}
-\geslo{resource}{vir}
-\geslo{goal}{cilj}
-\geslo{inference rule}{pravilo sklepanja}
+  \geslo{resource}{vir}
+  \geslo{goal}{cilj}
+  \geslo{array}{seznam}
+  \geslo{inference rule}{pravilo sklepanja}
+  \geslo{simultaneous conjunction}{hkratna konjunkcija}
+
+% \geslo{turnstile}{rampa}
+% \geslo{computation rule}{pravilo računanja}
+% \geslo{weakening rule}{pravilo ošibitve}
 
 
 % \geslo{angleški izraz}{slovenski izraz}
@@ -67,7 +70,6 @@
 % \geslo{premise}{premisa}
 % \geslo{conclusion}{sklep}
 % \geslo{\(\beta\)-reduction}{\(\beta\)-redukcija}
-% \geslo{simultaneous conjunction}{hkratna konjunkcija}
 % \geslo{alternative conjunction}{alternativna konjunkcija}
 % \geslo{internal choice}{notranja izbira}
 % \geslo{cut}{rez}
@@ -128,6 +130,7 @@
 \newcommand{\inl}{\cd{inl}}
 \newcommand{\inr}{\cd{inr}}
 \newcommand{\with}{\mathbin{\&}}
+\newcommand\caret{\mathbin{\char`^}}
 \newcommand{\fst}{\cd{fst}}
 \newcommand{\snd}{\cd{snd}}
 \newcommand{\case}{\cd{case}}
@@ -145,8 +148,7 @@
 \begin{document}
 
 \input{../poglavja/uvod.tex}
-\input{../poglavja/Naravna dedukcija.tex}
-\input{../poglavja/Linearna naravna dedukcija.tex}
+
 
 % \section{Linearna naravna dedukcija\label{natded}}
 % \input{../Poglavja/Linearna logika.tex}
